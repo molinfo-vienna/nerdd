@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=cyplebrity:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: cyplebrity-checkpoints
-    path: patch-topic.yaml

@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=skin-doctor-cp:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: skin-doctor-cp-checkpoints
-    path: patch-topic.yaml

@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=skin-doctor-ternary:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: skin-doctor-ternary-checkpoints
-    path: patch-topic.yaml
