@@ -5,7 +5,6 @@ metadata:
   labels:
     app: hitdexter
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: hitdexter
