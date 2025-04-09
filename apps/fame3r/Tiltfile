@@ -1,5 +1,8 @@
 load('ext://git_resource', 'git_checkout')
 load('../../common.Tiltfile', 'kustomize_resource')
+load('ext://restart_process', 'custom_build_with_restart')
+
+USE_PRODUCTION_IMAGE = True
 
 # checkout source code
 project_name = 'fame3r'
@@ -12,26 +15,32 @@ if not os.path.exists(project_dir):
         checkout_dir=project_dir
     )
 
-# build docker image
-# custom_build(
-#     project_name,
-#     command="docker buildx build -f ../../k8s/cypstrate/Dockerfile -t $EXPECTED_REF --build-context nerdd-link=../nerdd-link --build-context nerdd-module=../nerdd-module .",
-#     deps=[project_dir, '../../repos/nerdd-module', '../../repos/nerdd-link', '.'],
-#     dir=project_dir,
-#     live_update=[
-#         sync(project_dir, '/app'),
-#         sync('../../repos/nerdd-module', '/deps/nerdd-module'),
-#         sync('../../repos/nerdd-link', '/deps/nerdd-link'),
-#         run('touch /app/RESTART')
-#     ]
-# )
-docker_build(
-    project_name,
-    context=project_dir,
-    live_update=[
-        sync(project_dir, '/app')
-    ],
-)
+if USE_PRODUCTION_IMAGE:
+    docker_build(
+        project_name,
+        context=project_dir,
+    )
+else:
+    # build the docker image
+    command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
+        os.path.join(project_dir, 'Dockerfile.dev'),
+        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/cypstrate'
+        #       -> repos directory is the parent directory of project_dir
+        os.path.join(project_dir, '..'),
+    )
+
+    custom_build_with_restart(
+        project_name,
+        command=command,
+        deps=[project_dir, "../../repos/nerdd-module", "../../repos/nerdd-link", "."],
+        dir=project_dir,
+        live_update=[
+            sync(project_dir, "/app"),
+            sync("../../repos/nerdd-module", "/deps/nerdd-module"),
+            sync("../../repos/nerdd-link", "/deps/nerdd-link"),
+        ],
+        entrypoint="micromamba run -p /env nerdd_prediction_server fame3r.fame3r_model.Fame3RModel --broker-url kafka-cluster-kafka-bootstrap.local:9092 --data-dir /data"
+    )
 
 # deploy to kubernetes
 kustomize_resource(
