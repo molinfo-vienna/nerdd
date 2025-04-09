@@ -21,7 +21,7 @@ else:
 
 # build docker image
 docker_build(
-    'nerdd-frontend',
+    project_name,
     context=project_dir,
     dockerfile=dockerfile,
     live_update=[
@@ -31,7 +31,7 @@ docker_build(
 
 # deploy to kubernetes
 kustomize_resource(
-    workload='nerdd-frontend',
+    workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local',
     resource_deps=['nerdd-backend', 'traefik'],
