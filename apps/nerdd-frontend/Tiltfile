@@ -15,19 +15,19 @@ if not os.path.exists(project_dir):
 
 # choose docker file
 if USE_PRODUCTION_IMAGE:
-    dockerfile = '{}/Dockerfile'.format(project_dir)
+    docker_build(
+        project_name,
+        context=project_dir,
+    )
 else:
-    dockerfile = '{}/Dockerfile.dev'.format(project_dir) 
-
-# build docker image
-docker_build(
-    project_name,
-    context=project_dir,
-    dockerfile=dockerfile,
-    live_update=[
-        sync(project_dir, '/app')
-    ],
-)
+    docker_build(
+        project_name,
+        context=project_dir,
+        dockerfile='{}/Dockerfile.dev'.format(project_dir) ,
+        live_update=[
+            sync(project_dir, '/app')
+        ],
+    )
 
 # deploy to kubernetes
 kustomize_resource(
