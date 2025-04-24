@@ -51,10 +51,11 @@ data:
         # * "self": never load resources from other websites
         # * "unsafe-inline": allow inline styles and scripts
         # * "unsafe-eval": allow eval() calls, because some libraries need that
+        # * "worker-src 'self' blob:": allow web workers (necessary for altcha challenges)
         # * "img-src 'self' data:": allow data URIs in images (we use base64 images all the time)
         # * "style-src 'self' 'unsafe-inline'"": allow inline styles
         # * "always": add the header to all responses
-        add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data:; style-src 'self' 'unsafe-inline';" always;
+        add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; img-src 'self' data:; style-src 'self' 'unsafe-inline';" always;
 
         # MIME sniffing protection. This header tells the browser to not try to guess the MIME type
         # of a file. This prevents MIME sniffing attacks.
