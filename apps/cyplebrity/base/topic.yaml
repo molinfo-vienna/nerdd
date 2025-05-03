@@ -7,3 +7,5 @@ metadata:
 spec:
   partitions: 10
   replicas: 3
+  config:
+    cleanup.policy: compact
