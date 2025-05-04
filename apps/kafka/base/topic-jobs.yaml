@@ -6,6 +6,6 @@ metadata:
     strimzi.io/cluster: kafka-cluster
 spec:
   partitions: 10
-  replicas: 3
+  replicas: 1
   config:
     cleanup.policy: compact
