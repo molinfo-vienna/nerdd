@@ -16,3 +16,4 @@ spec:
         type: persistent-claim
         size: 300Gi
         deleteClaim: false
+        kraftMetadata: shared
