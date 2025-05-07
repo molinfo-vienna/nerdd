@@ -72,6 +72,8 @@ dialing backend: tls: failed to verify certificate: x509: certificate is valid f
   kubectl patch kafkatopic/jobs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
   kubectl patch kafkatopic/results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
   kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+  kubectl patch kafkatopic/logs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+  kubectl patch kafkatopic/result-checkpoints -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
   kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge
   ```
 * Tilt reports `Build Failed: kubernetes apply retry: timeout waiting for delete: scaledobjects.keda.sh`. Try running:
