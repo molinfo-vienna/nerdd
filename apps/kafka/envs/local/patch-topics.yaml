@@ -1,8 +1,0 @@
-apiVersion: kafka.strimzi.io/v1beta2
-kind: KafkaTopic
-metadata:
-  # we have to specify a name (by specification), but it will be ignored
-  name: will-be-ignored
-  # finalizers keep tilt from deleting topics
-  # --> delete them (only in development environments)
-  finalizers: []

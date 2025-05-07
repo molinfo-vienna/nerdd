@@ -67,11 +67,16 @@ kubectl -n rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"clea
 dialing backend: tls: failed to verify certificate: x509: certificate is valid for 
 <list of IP addresses>, not <IP address>```
   * fix: refresh Kubernetes certificates, e.g. using ```sudo microk8s refresh-certs --cert ca.crt```
-* Tilt reports `Build Failed: kubernetes apply retry: timeout waiting for delete: kafkatopics.kafka.strimzi.io` meaning `tilt` is not able to clean up kafka topics
+* Tilt reports `Build Failed: kubernetes apply retry: timeout waiting for delete: kafkatopics.kafka.strimzi.io` meaning `tilt` is not able to clean up kafka topics. Try running:
   ```bash
   kubectl patch kafkatopic/jobs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
   kubectl patch kafkatopic/results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
   kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+  kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+  ```
+* Tilt reports `Build Failed: kubernetes apply retry: timeout waiting for delete: scaledobjects.keda.sh`. Try running:
+  ```bash
+  kubectl patch crd scaledobjects.keda.sh -p '{"metadata":{"finalizers":[]}}' --type=merge
   ```
 
 ## Contribute
