@@ -37,4 +37,3 @@ spec:
       consumer.max.request.size: 10485760
       max.partition.fetch.bytes: 10485760
       message.max.bytes: 10485760
-      inter.broker.protocol.version: "3.8"

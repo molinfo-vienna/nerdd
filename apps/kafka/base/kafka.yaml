@@ -2,6 +2,9 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: kafka-cluster
+  annotations:
+    strimzi.io/kraft: enabled
+    strimzi.io/node-pools: enabled
 spec:
   kafka:
     version: 3.8.0
@@ -31,7 +34,6 @@ spec:
       consumer.max.request.size: 10485760
       max.partition.fetch.bytes: 10485760
       message.max.bytes: 10485760
-      inter.broker.protocol.version: "3.8"
     # for prometheus / grafana:
     metricsConfig:
       type: jmxPrometheusExporter
