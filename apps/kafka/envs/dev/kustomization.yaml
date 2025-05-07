@@ -13,5 +13,5 @@ patches:
       name: controller
     patch: |
       - op: replace
-        path: /spec/storage/class
+        path: /spec/storage/volumes/0/class
         value: rook-ceph-block
