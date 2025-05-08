@@ -4,7 +4,6 @@ metadata:
   name: kafka-cluster
 spec:
   kafka:
-    replicas: 3
     # try to put kafka brokers on different machines
     template:
       pod:
@@ -22,11 +21,6 @@ spec:
                       values:
                         - Kafka
                 topologyKey: kubernetes.io/hostname
-    storage:
-      size: 300Gi
-      type: persistent-claim
-      class: rook-ceph-block
-      deleteClaim: false
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.replication.factor: 3
