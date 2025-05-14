@@ -1,0 +1,11 @@
+- op: add
+  path: /spec/template/spec/initContainers
+  value:
+    - name: wait-for-external-secrets-webhook
+      image: busybox
+      command:
+        [
+          "sh",
+          "-c",
+          "until nc -z release-name-external-secrets-webhook.external-secrets.svc 443; do echo waiting for webhook; sleep 5; done",
+        ]
