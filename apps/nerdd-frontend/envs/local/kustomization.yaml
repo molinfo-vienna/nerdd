@@ -11,7 +11,7 @@ patches:
     patch: |
       - op: replace
         path: /spec/routes/0/match
-        value: PathPrefix(`/`)
+        value: Host(`localhost`) && PathPrefix(`/`)
       - op: remove
         path: /spec/tls
   - target:
