@@ -10,10 +10,6 @@ patches:
       name: traefik-dashboard
     path: patch-ingressroute.yaml
   - target:
-      kind: Deployment
-      name: traefik
-    path: patch-deployment.yaml
-  - target:
       kind: Service
       name: traefik
     path: patch-service.yaml
