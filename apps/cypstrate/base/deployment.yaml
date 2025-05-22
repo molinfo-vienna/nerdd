@@ -5,7 +5,6 @@ metadata:
   labels:
     app: cypstrate
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: cypstrate

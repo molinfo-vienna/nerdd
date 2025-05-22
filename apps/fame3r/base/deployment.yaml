@@ -5,7 +5,6 @@ metadata:
   labels:
     app: fame3r
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: fame3r

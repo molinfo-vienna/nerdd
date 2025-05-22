@@ -5,7 +5,6 @@ metadata:
   labels:
     app: skin-doctor-ternary
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: skin-doctor-ternary
@@ -24,10 +23,10 @@ spec:
               mountPath: "/data"
           resources:
             requests:
-              cpu: 1
+              cpu: "1"
               memory: 10G
             limits:
-              cpu: 1
+              cpu: "1"
               memory: 12G
       imagePullSecrets:
         - name: ghcr-secret
