@@ -7,6 +7,11 @@ spec:
     spec:
       containers:
         - name: cypstrate
-          env:
-            - name: KAFKA_BROKER_URL
-              value: kafka-cluster-kafka-bootstrap.dev:9092
+          args:
+            [
+              "cypstrate.CypstrateModel",
+              "--broker-url",
+              "kafka-cluster-kafka-bootstrap.dev:9092",
+              "--data-dir",
+              "/data",
+            ]

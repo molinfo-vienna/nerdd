@@ -7,6 +7,11 @@ spec:
     spec:
       containers:
         - name: hitdexter
-          env:
-            - name: KAFKA_BROKER_URL
-              value: kafka-cluster-kafka-bootstrap.dev:9092
+          args:
+            [
+              "hitdexter.HitDexter3Model",
+              "--broker-url",
+              "kafka-cluster-kafka-bootstrap.dev:9092",
+              "--data-dir",
+              "/data",
+            ]

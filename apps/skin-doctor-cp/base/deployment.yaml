@@ -16,8 +16,7 @@ spec:
       containers:
         - name: skin-doctor-cp
           image: ghcr.io/molinfo-vienna/skin-doctor-cp:latest
-          env:
-            - name: KAFKA_BROKER_URL
+          command: ["/env/bin/nerdd_prediction_server"]
           volumeMounts:
             - name: data
               mountPath: "/data"

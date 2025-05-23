@@ -16,9 +16,7 @@ spec:
       containers:
         - name: fame3r
           image: ghcr.io/shirte/fame3r:latest
-          env:
-            - name: KAFKA_BROKER_URL
-              value: <to-patch>
+          command: ["/env/bin/nerdd_prediction_server"]
           volumeMounts:
             - name: data
               mountPath: "/data"

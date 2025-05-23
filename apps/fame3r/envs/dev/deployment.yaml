@@ -7,6 +7,11 @@ spec:
     spec:
       containers:
         - name: fame3r
-          env:
-            - name: KAFKA_BROKER_URL
-              value: kafka-cluster-kafka-bootstrap.dev:9092
+          args:
+            [
+              "fame3r.fame3r_model.Fame3RModel",
+              "--broker-url",
+              "kafka-cluster-kafka-bootstrap.dev:9092",
+              "--data-dir",
+              "/data",
+            ]

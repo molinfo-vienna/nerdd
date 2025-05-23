@@ -7,6 +7,11 @@ spec:
     spec:
       containers:
         - name: cyplebrity
-          env:
-            - name: KAFKA_BROKER_URL
-              value: kafka-cluster-kafka-bootstrap.dev:9092
+          args:
+            [
+              "cyplebrity.CyplebrityModel",
+              "--broker-url",
+              "kafka-cluster-kafka-bootstrap.dev:9092",
+              "--data-dir",
+              "/data",
+            ]

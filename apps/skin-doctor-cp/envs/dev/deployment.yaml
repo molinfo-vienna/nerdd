@@ -7,6 +7,11 @@ spec:
     spec:
       containers:
         - name: skin-doctor-cp
-          env:
-            - name: KAFKA_BROKER_URL
-              value: kafka-cluster-kafka-bootstrap.dev:9092
+          args:
+            [
+              "skin_doctor.SkinDoctorCPModel",
+              "--broker-url",
+              "kafka-cluster-kafka-bootstrap.dev:9092",
+              "--data-dir",
+              "/data",
+            ]
