@@ -13,17 +13,16 @@ base_repositories = [
 
 # use comments to select services in order to improve speed
 apps = [
-    # 'cypstrate',
+    'cypstrate',
     # 'cyplebrity',
     # 'hitdexter',
-    # 'np-scout',
+    'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
     # 'fame',
     'fame3r',
-    # 'glory',
+    'glory',
     # 'gloryx',
-    
 
     # essential:
     'storage',
@@ -33,6 +32,7 @@ apps = [
     'kafka',
     'keda',
     'rethinkdb',
+    'redpanda',
     'monitoring',
     'nerdd-init-system',
     'nerdd-backend',
