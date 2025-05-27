@@ -4,9 +4,6 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-deployment.yaml
-
 patches:
   - target:
       kind: IngressRoute
@@ -17,3 +14,12 @@ patches:
         value: PathPrefix(`/`)
       - op: remove
         path: /spec/tls
+  - target:
+      kind: Deployment
+      name: nerdd-frontend
+    patch: |
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: nerdd-frontend:latest
+      - op: remove
+        path: /spec/template/spec/imagePullSecrets
