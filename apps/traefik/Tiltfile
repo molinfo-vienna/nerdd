@@ -14,6 +14,7 @@ local_resource(
     kubectl wait --for=condition=available --timeout=300s deployment/release-name-external-secrets-webhook -n external-secrets
     ''',
     resource_deps=['external-secrets'],
+    labels=['infra'],
 )
 
 kustomize_resource(
