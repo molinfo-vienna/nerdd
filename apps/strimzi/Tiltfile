@@ -1,9 +1,25 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
+# Sometimes, deleting Strimzi resources fails due to finalizers. Avoid that by removing them. We
+# do not need them in th local development.
+local_resource(
+    'remove-strimzi-finalizers',
+    cmd='''
+    kubectl patch kafkatopic/jobs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+    kubectl patch kafkatopic/results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+    kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+    kubectl patch kafkatopic/logs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+    kubectl patch kafkatopic/result-checkpoints -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
+    kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+    ''',
+    labels=['infra'],
+)
+
 kustomize_resource(
     workload='strimzi', 
     kustomization_path='./envs/local', 
     namespace='strimzi', 
-    create_namespace=True, 
+    create_namespace=True,
+    resource_deps=['remove-strimzi-finalizers'], 
     labels=['infra']
 )
