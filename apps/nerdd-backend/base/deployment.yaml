@@ -19,13 +19,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
-          env:
-            - name: KAFKA_BROKER_URL
-              value: <to-patch>
-            - name: RETHINK_DB_HOST
-              value: <to-patch>
-            - name: RETHINK_DB_PORT
-              value: <to-patch>
           volumeMounts:
             - name: data
               mountPath: "/data"
