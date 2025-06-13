@@ -17,12 +17,12 @@ apps = [
     # 'cyplebrity',
     # 'hitdexter',
     # 'np-scout',
-    'skin-doctor-cp',
-    'skin-doctor-ternary',
-    'fame',
-    # 'fame3r',
-    # 'glory',
-    'gloryx',
+    # 'skin-doctor-cp',
+    # 'skin-doctor-ternary',
+    # 'fame',
+    'fame3r',
+    'glory',
+    # 'gloryx',
 
     # essential:
     'storage',
