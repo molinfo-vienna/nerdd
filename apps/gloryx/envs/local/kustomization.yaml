@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: gloryx
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: gloryx-scaler
+    path: patch-scaler.yaml
