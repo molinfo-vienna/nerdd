@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: skin-doctor-ternary
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: skin-doctor-ternary-scaler
+    path: patch-scaler.yaml
