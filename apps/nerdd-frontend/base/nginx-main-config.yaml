@@ -55,26 +55,36 @@ data:
 
         # Content Security Policy (CSP) header. This header tells the browser which resources are
         # allowed to be loaded on the website. 
-        # * all resource types (script, img, object, etc.):
-        #   * 'self': never load resources from external websites
-        # * script-src: sets allowed values for <script src=...>
+        # * "default-src: 'none'": do not allow loading any resources that were not explicitly 
+        #     specified below
+        # * most specified resource types (script, img, font, etc.):
+        #   * 'self': allow loading resources from NERDD website and explicitly rule out requests
+        #             to external websites
+        # * connect-src: javascript requests (e.g. fetch or WebSocket)
+        # * script-src: javascript modules, e.g. loaded via <script src=...>
         #   * 'unsafe-inline': allow inline scripts (JSME needs that)
-        # * "worker-src 
-        #   * blob: : allow web workers (necessary for altcha challenges)
-        # * img-src: sets allowed values for <img src=...>
+        # * worker-src: web worker scripts, e.g. from code new Worker("...")
+        #   * blob: : allow web workers specified with blob data (necessary for altcha challenges)
+        # * img-src: image URLs, e.g. loaded via <img src=...>
         #   * data: : allow data URIs in images (not a significant risk; necessary for bootstrap, 
         #             https://getbootstrap.com/docs/5.3/customize/overview/#csps-and-embedded-svgs)
-        # * object-src: rule out any legacy objects like <object> or <embed>
-        # * font-src: rule out inline fonts
-        # * style-src: rule out inline styles <style>...</style>
+        # * object-src: legacy objects like <object> or <embed>
+        # * font-src: font objects, e.g. loaded via @font-face { src: url(...); }
+        # * style-src: style resources; implicitly blocks inline styles <style>...</style>
+        # * form-action: destination of form actions used in <form action="">
+        #   * this does not prevent inline javascript actions <form action="javascript: ...">
+        # * frame-ancestors: rules out embedding this web page in an iframe
         # * always: add the header to all responses
-        add_header Content-Security-Policy "default-src 'self'; 
+        add_header Content-Security-Policy "default-src 'none'; 
+                                            connect-src 'self';
                                             script-src 'self' 'unsafe-inline'; 
                                             worker-src 'self' blob:; 
                                             img-src 'self' data:; 
                                             object-src 'none';
                                             font-src 'self';
-                                            style-src 'self';" always;
+                                            style-src 'self';
+                                            form-action 'self';
+                                            frame-ancestors 'none';" always;
 
         # MIME sniffing protection. This header tells the browser to not try to guess the MIME type
         # of a file. This prevents MIME sniffing attacks.
@@ -99,6 +109,8 @@ data:
         # | https://nerdd.univie.ac.at           | http://nerdd.univie.ac.at             | (nothing)
         #
         add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+        add_header Cross-Origin-Resource-Policy "same-origin";
 
         location / {
             # for each request on url $uri:
