@@ -32,7 +32,14 @@ data:
         # wildcard to disable all features at once
         # (https://github.com/w3c/webappsec-permissions-policy/issues/483). Therefore, we have to
         # disable each feature individually.
-        add_header Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()";
+        add_header Permissions-Policy "accelerometer=(), 
+                                       camera=(), 
+                                       geolocation=(), 
+                                       gyroscope=(), 
+                                       magnetometer=(), 
+                                       microphone=(), 
+                                       payment=(), 
+                                       usb=()";
 
         # HSTS: ensures that browsers always connect over HTTPS. This prevents downgrade attacks.
         # Note: 365 days = 365 * 24 * 60 * 60 seconds = 31536000 seconds.
@@ -48,14 +55,26 @@ data:
 
         # Content Security Policy (CSP) header. This header tells the browser which resources are
         # allowed to be loaded on the website. 
-        # * "self": never load resources from other websites
-        # * "unsafe-inline": allow inline styles and scripts
-        # * "unsafe-eval": allow eval() calls, because some libraries need that
-        # * "worker-src 'self' blob:": allow web workers (necessary for altcha challenges)
-        # * "img-src 'self' data:": allow data URIs in images (we use base64 images all the time)
-        # * "style-src 'self' 'unsafe-inline'"": allow inline styles
-        # * "always": add the header to all responses
-        add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; img-src 'self' data:; style-src 'self' 'unsafe-inline';" always;
+        # * all resource types (script, img, object, etc.):
+        #   * 'self': never load resources from external websites
+        # * script-src: sets allowed values for <script src=...>
+        #   * 'unsafe-inline': allow inline scripts (JSME needs that)
+        # * "worker-src 
+        #   * blob: : allow web workers (necessary for altcha challenges)
+        # * img-src: sets allowed values for <img src=...>
+        #   * data: : allow data URIs in images (not a significant risk; necessary for bootstrap, 
+        #             https://getbootstrap.com/docs/5.3/customize/overview/#csps-and-embedded-svgs)
+        # * object-src: rule out any legacy objects like <object> or <embed>
+        # * font-src: rule out inline fonts
+        # * style-src: rule out inline styles <style>...</style>
+        # * always: add the header to all responses
+        add_header Content-Security-Policy "default-src 'self'; 
+                                            script-src 'self' 'unsafe-inline'; 
+                                            worker-src 'self' blob:; 
+                                            img-src 'self' data:; 
+                                            object-src 'none';
+                                            font-src 'self';
+                                            style-src 'self';" always;
 
         # MIME sniffing protection. This header tells the browser to not try to guess the MIME type
         # of a file. This prevents MIME sniffing attacks.
