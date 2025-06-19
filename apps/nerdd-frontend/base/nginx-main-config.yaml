@@ -137,7 +137,8 @@ data:
                        text/xml 
                        application/xml 
                        application/xml+rss 
-                       text/javascript;
+                       text/javascript
+                       image/x-icon;
         }
 
         error_page 404 /index.html;
