@@ -1,7 +1,9 @@
 # Nerdd
 
-NERDD is a platform to create and run prediction models for computational chemistry. This repository 
-provides the configuration files for setting up and running all components on a Kubernetes cluster.
+NERDD is a platform to create and run prediction models for computational chemistry. This repository
+reflects the current state of the NERDD instances deployed at the COMP3D group (University of
+Vienna) and provides the configuration files for setting up and running all components on a
+Kubernetes cluster.
 
 ## Prerequisites
 
@@ -18,7 +20,7 @@ provides the configuration files for setting up and running all components on a 
 kubectl apply -f https://raw.githubusercontent.com/molinfo-vienna/nerdd/refs/heads/main/root.yaml
 ```
 
-* Option 1: ArgoCD CLI
+* Option 2: ArgoCD CLI
 ```sh
 argocd app create nerdd \
   --repo https://github.com/molinfo-vienna/nerdd \
@@ -27,7 +29,7 @@ argocd app create nerdd \
   --dest-namespace default
 ```
 
-* Option 2: ArgoCD Web UI
+* Option 3: ArgoCD Web UI
   * (sign in)
   * create a new app (by clicking on "+ New App" on the top left)
   * set **application name** to **nerdd**
@@ -36,6 +38,20 @@ argocd app create nerdd \
   * set **path** to **/**
   * set **cluster URL** to **https://kubernetes.default.svc**
   * set **namespace** to **default**
+
+
+### Passwords
+
+We use `external-secrets` to generate passwords for all dashboards and external tools in the
+cluster. After deploying, the passwords can be retrieved using `kubectl`:
+
+```bash
+kubectl get secret prometheus-auth -n monitoring -o jsonpath="{.data.password}" | base64 --decode
+kubectl get secret dashboard-auth -n traefik -o jsonpath="{.data.password}" | base64 --decode
+kubectl get secret grafana-auth -n monitoring -o jsonpath="{.data.password}" | base64 --decode
+kubectl get secret redpanda-auth -n dev -o jsonpath="{.data.password}" | base64 --decode
+kubectl get secret -n argocd git-creds -o jsonpath='{.data.githubAppPrivateKey}' | base64 -d
+```
 
 
 ## Infrastructure
@@ -63,7 +79,7 @@ kubectl -n rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"clea
 
 ## Troubleshooting
 
-* Running tilt up leads to error messages of the form ```error: error upgrading connection: error 
+* Running `tilt up` leads to error messages of the form ```error: error upgrading connection: error 
 dialing backend: tls: failed to verify certificate: x509: certificate is valid for 
 <list of IP addresses>, not <IP address>```
   * fix: refresh Kubernetes certificates, e.g. using ```sudo microk8s refresh-certs --cert ca.crt```
