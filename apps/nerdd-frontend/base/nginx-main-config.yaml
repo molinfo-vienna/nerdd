@@ -130,7 +130,14 @@ data:
             gzip_static on;
             gzip on;
             gzip_proxied any;
-            gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+            gzip_types text/plain 
+                       text/css 
+                       application/json 
+                       application/javascript 
+                       text/xml 
+                       application/xml 
+                       application/xml+rss 
+                       text/javascript;
         }
 
         error_page 404 /index.html;
