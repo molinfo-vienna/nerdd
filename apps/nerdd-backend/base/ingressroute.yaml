@@ -8,11 +8,13 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`nerdd.univie.ac.at`) && (PathPrefix(`/api`) || PathPrefix(`/websocket`))
+    # The trailing slashes at the end of prefixes are important: traefik should not forward
+    # URLs like /api-docs to the backend service
+    - match: Host(`nerdd.univie.ac.at`) && (PathPrefix(`/api/`) || PathPrefix(`/websocket/`))
       kind: Rule
       services:
         - name: nerdd-backend
           port: 8000
-    # Note: we do not (and should not) use a middleware to strip the prefixes /api or /websocket,
+    # Note: we do not (and should not) use a middleware to strip the prefixes /api/ or /websocket/,
     # because nerdd-backend / fastapi expects URLs to have these prefixes. However, traefik does
     # forward important headers like X-FORWARDED-FOR, etc. to enable route rewriting in fastapi.
