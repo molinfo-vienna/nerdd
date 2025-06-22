@@ -1,17 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nerdd-backend
-spec:
-  template:
-    spec:
-      containers:
-        - name: nerdd-backend
-          args:
-            [
-              "--config-name",
-              "production",
-              "++db.host=rethinkdb-service.dev",
-              "++db.port=28015",
-              "++channel.broker_url=kafka-cluster-kafka-bootstrap.dev:9092",
-            ]
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    [
+      "--config-name",
+      "production",
+      "++db.host=rethinkdb-service.dev",
+      "++db.port=28015",
+      "++channel.broker_url=kafka-cluster-kafka-bootstrap.dev:9092",
+    ]
