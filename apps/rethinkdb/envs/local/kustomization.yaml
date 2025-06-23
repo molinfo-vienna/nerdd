@@ -4,5 +4,8 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-rethinkdb.yaml
+patches:
+  - target:
+      kind: PersistentVolumeClaim
+      name: rethinkdb-pvc
+    path: patch-rethinkdb.yaml
