@@ -3,7 +3,10 @@ kind: Kustomization
 
 resources: []
 # resources:
-# - ../../base
+#   - ../../base
 
-# patchesStrategicMerge:
-# - job.yaml
+# patches:
+#   - target:
+#       kind: Job
+#       name: nerdd-init-system-job
+#     path: patch-job.yaml
