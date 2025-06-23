@@ -1,0 +1,5 @@
+- op: replace
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: KAFKA_BROKER_URL
+      value: kafka-cluster-kafka-bootstrap.dev:9092
