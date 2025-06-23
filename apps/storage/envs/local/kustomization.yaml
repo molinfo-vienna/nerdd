@@ -4,5 +4,8 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-pvc.yaml
+patches:
+  - target:
+      kind: PersistentVolumeClaim
+      name: pvc-media
+    path: patch-pvc.yaml
