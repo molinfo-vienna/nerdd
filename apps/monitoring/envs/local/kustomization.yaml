@@ -8,36 +8,18 @@ patches:
   - target:
       kind: IngressRoute
       name: grafana
-    patch: |
-      - op: replace
-        path: /spec/routes/0/match
-        value: PathPrefix(`/grafana`)
-      - op: remove
-        path: /spec/tls
+    path: patch-grafana-ingressroute.yaml
   - target:
       kind: IngressRoute
       name: prometheus
-    patch: |
-      - op: replace
-        path: /spec/routes/0/match
-        value: PathPrefix(`/prometheus`)
-      - op: remove
-        path: /spec/routes/0/middlewares
-      - op: remove
-        path: /spec/tls
+    path: patch-prometheus-ingressroute.yaml
   - target:
       kind: Role
       name: prometheus-k8s
       namespace: default
-    patch: |
-      - op: replace
-        path: /metadata/namespace
-        value: local
+    path: patch-role.yaml
   - target:
       kind: RoleBinding
       name: prometheus-k8s
       namespace: default
-    patch: |
-      - op: replace
-        path: /metadata/namespace
-        value: local
+    path: patch-rolebinding.yaml
