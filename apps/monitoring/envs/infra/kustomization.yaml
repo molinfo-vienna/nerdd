@@ -9,15 +9,9 @@ patches:
       kind: Role
       name: prometheus-k8s
       namespace: default
-    patch: |
-      - op: replace
-        path: /metadata/namespace
-        value: dev
+    path: patch-role.yaml
   - target:
       kind: RoleBinding
       name: prometheus-k8s
       namespace: default
-    patch: |
-      - op: replace
-        path: /metadata/namespace
-        value: dev
+    path: patch-rolebinding.yaml

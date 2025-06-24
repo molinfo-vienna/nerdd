@@ -106,39 +106,14 @@ patches:
       kind: Secret
       name: grafana-config
       namespace: monitoring
-    patch: |
-      - op: replace
-        path: /stringData/grafana.ini
-        value: |
-          [date_formats]
-          default_timezone = UTC
-
-          [server]
-          root_url = %(protocol)s://%(domain)s/grafana/
-          serve_from_sub_path = true
+    path: patch-grafana-config.yaml
   - target:
       kind: Deployment
       name: grafana
       namespace: monitoring
-    patch: |
-      - op: replace
-        path: /spec/template/spec/containers/0/env
-        value:
-          - name: GF_SECURITY_ADMIN_USER
-            valueFrom:
-              secretKeyRef:
-                name: grafana-auth
-                key: username
-          - name: GF_SECURITY_ADMIN_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: grafana-auth
-                key: password
+    path: patch-grafana-deployment.yaml
   - target:
       kind: Prometheus
       name: k8s
       namespace: monitoring
-    patch: |
-      - op: replace
-        path: /spec/externalUrl
-        value: /prometheus
+    path: patch-prometheus.yaml
