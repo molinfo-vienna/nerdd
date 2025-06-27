@@ -26,7 +26,7 @@ spec:
               memory: 100Mi
             limits:
               cpu: "4"
-              memory: 9Gi
+              memory: 12Gi
       imagePullSecrets:
         - name: ghcr-secret
       volumes:
