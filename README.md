@@ -77,9 +77,9 @@ dialing backend: tls: failed to verify certificate: x509: certificate is valid f
 ## Contribute
 
 * Install docker
-* Install a variant of kubernetes, e.g. microk8s, Talos, k3s or kind
+* Install a variant of kubernetes, e.g. microk8s, minikube, k3s, k3d or kind
 * Install tilt
-* ```tilt up```
+* `tilt up`
 * visit localhost:10350 for tilt dashboard
 * visit localhost:8443 for frontend application
 * visit localhost:8443/api/ for backend api
