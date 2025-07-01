@@ -6,10 +6,3 @@ resources:
 
 patchesStrategicMerge:
   - patch-kafka.yaml
-
-patches:
-  - path: patch-topics.yaml
-    target:
-      group: kafka.strimzi.io
-      version: v1beta2
-      kind: KafkaTopic
