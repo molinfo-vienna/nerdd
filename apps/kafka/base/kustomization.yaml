@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - kafka.yaml
+  - node-pool.yaml
   - topic-jobs.yaml
   - topic-results.yaml
   - topic-system.yaml

@@ -15,11 +15,3 @@ spec:
       transaction.state.log.min.isr: 1
       default.replication.factor: 1
       min.insync.replicas: 1
-  zookeeper:
-    replicas: 1
-    storage:
-      size: 100Gi
-      type: persistent-claim
-      deleteClaim: false
-    configuration:
-      standaloneEnabled: true
