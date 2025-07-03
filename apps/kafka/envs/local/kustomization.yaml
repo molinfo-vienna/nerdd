@@ -6,3 +6,15 @@ resources:
 
 patchesStrategicMerge:
   - patch-kafka.yaml
+
+patches:
+  - target:
+      kind: KafkaNodePool
+      name: controller
+    patch: |
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/storage/volumes/0/type
+        value: ephemeral
