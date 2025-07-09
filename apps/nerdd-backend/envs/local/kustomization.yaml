@@ -4,6 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-deployment.yaml
-  - patch-ingressroute.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: nerdd-backend
+    path: patch-deployment.yaml
+  - target:
+      kind: IngressRoute
+      name: nerdd-backend-ingressroute
+    path: patch-ingressroute.yaml

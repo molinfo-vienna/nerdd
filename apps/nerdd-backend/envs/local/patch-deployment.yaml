@@ -1,19 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nerdd-backend
-spec:
-  template:
-    spec:
-      containers:
-        - name: nerdd-backend
-          image: nerdd-backend:latest
-          args:
-            [
-              "--config-name",
-              "production",
-              "++db.host=rethinkdb-service.local",
-              "++db.port=28015",
-              "++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
-            ]
-      imagePullSecrets:
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: nerdd-backend:latest
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    [
+      "--config-name",
+      "production",
+      "++db.host=rethinkdb-service.local",
+      "++db.port=28015",
+      "++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
+    ]
+- op: remove
+  path: /spec/template/spec/imagePullSecrets
