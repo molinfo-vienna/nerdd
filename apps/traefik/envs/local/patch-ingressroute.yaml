@@ -1,0 +1,5 @@
+- op: replace
+  path: /spec/routes/0/match
+  value: PathPrefix(`/traefik/api`) || PathPrefix(`/traefik/dashboard`)
+- op: remove
+  path: /spec/routes/0/middlewares

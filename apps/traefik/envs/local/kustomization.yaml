@@ -4,16 +4,16 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-service.yaml
-
 patches:
   - target:
       kind: IngressRoute
       name: traefik-dashboard
-    patch: |
-      - op: replace
-        path: /spec/routes/0/match
-        value: PathPrefix(`/traefik/api`) || PathPrefix(`/traefik/dashboard`)
-      - op: remove
-        path: /spec/routes/0/middlewares
+    path: patch-ingressroute.yaml
+  - target:
+      kind: Deployment
+      name: traefik
+    path: patch-deployment.yaml
+  - target:
+      kind: Service
+      name: traefik
+    path: patch-service.yaml
