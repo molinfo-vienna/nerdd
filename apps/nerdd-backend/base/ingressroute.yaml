@@ -15,6 +15,14 @@ spec:
       services:
         - name: nerdd-backend
           port: 8000
+          # Sticky sessions: traefik will set a cookie to ensure that requests from the same client
+          # are always routed to the same backend pod. Note that these cookies are purely functional
+          # and do not contain any user information (-> no cookie banner needed).
+          sticky:
+            cookie:
+              name: nerdd-lb
+              secure: true
+              httpOnly: true
     # Note: we do not (and should not) use a middleware to strip the prefixes /api/ or /websocket/,
     # because nerdd-backend / fastapi expects URLs to have these prefixes. However, traefik does
     # forward important headers like X-FORWARDED-FOR, etc. to enable route rewriting in fastapi.
