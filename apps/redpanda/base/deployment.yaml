@@ -16,9 +16,9 @@ spec:
     spec:
       containers:
         - name: redpanda-console
-          image: docker.redpanda.com/vectorized/console
+          image: docker.redpanda.com/redpandadata/console:v3.1.2
           env:
-          - name: KAFKA_BROKERS
-            value: <to-patch>
+            - name: KAFKA_BROKERS
+              value: <to-patch>
           ports:
             - containerPort: 8080

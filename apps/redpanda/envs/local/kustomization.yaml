@@ -9,3 +9,7 @@ patches:
       kind: Deployment
       name: redpanda-console
     path: patch-deployment.yaml
+  - target:
+      kind: IngressRoute
+      name: redpanda-console
+    path: patch-ingressroute.yaml
