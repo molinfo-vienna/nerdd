@@ -61,8 +61,10 @@ data:
         #   * 'self': allow loading resources from NERDD website and explicitly rule out requests
         #             to external websites
         # * connect-src: javascript requests (e.g. fetch or WebSocket)
+        # * manifest-src: allow loading manifest.json (PWA support)
         # * script-src: javascript modules, e.g. loaded via <script src=...>
         #   * 'unsafe-inline': allow inline scripts (JSME needs that)
+        #   * 'unsafe-eval': allow eval() and new Function() (JSME needs that)
         # * worker-src: web worker scripts, e.g. from code new Worker("...")
         #   * blob: : allow web workers specified with blob data (necessary for altcha challenges)
         # * img-src: image URLs, e.g. loaded via <img src=...>
@@ -72,19 +74,21 @@ data:
         # * base-uri: used for <base> elements, but this webpage does not need it
         # * font-src: font objects, e.g. loaded via @font-face { src: url(...); }
         # * style-src: style resources; implicitly blocks inline styles <style>...</style>
+        #   * 'unsafe-inline': allow inline styles, e.g. <p style="..."> (JSME needs that)
         # * form-action: destination of form actions used in <form action="">
         #   * this does not prevent inline javascript actions <form action="javascript: ...">
         # * frame-ancestors: rules out embedding this web page in an iframe
         # * always: add the header to all responses
         add_header Content-Security-Policy "default-src 'none';
                                             connect-src 'self';
-                                            script-src 'self' 'unsafe-inline'; 
+                                            manifest-src 'self';
+                                            script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
                                             worker-src 'self' blob:; 
                                             img-src 'self' data:;
                                             base-uri 'none';
                                             object-src 'none';
                                             font-src 'self';
-                                            style-src 'self';
+                                            style-src 'self' 'unsafe-inline';
                                             form-action 'self';
                                             frame-ancestors 'none';" always;
 
