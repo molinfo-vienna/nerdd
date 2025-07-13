@@ -121,6 +121,8 @@ metadata:
   annotations:
 spec:
   type: LoadBalancer
+  # pass client IP addresses to service (instead of local kubernetes IPs)
+  externalTrafficPolicy: Local
   selector:
     app.kubernetes.io/name: traefik
     app.kubernetes.io/instance: traefik-traefik
