@@ -3,8 +3,7 @@ load('../../common.Tiltfile', 'kustomize_resource')
 kustomize_resource(
     workload='redpanda-console',
     kustomization_path='./envs/local/',
-    namespace='redpanda',
-    create_namespace=True,
+    namespace='local',
     resource_deps=['kafka', 'traefik'],
     labels=['infra']
 )
