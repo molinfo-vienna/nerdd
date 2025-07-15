@@ -5,12 +5,12 @@ load('../../common.Tiltfile', 'kustomize_resource')
 local_resource(
     'remove-strimzi-finalizers',
     cmd='''
-    kubectl patch kafkatopic/jobs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
-    kubectl patch kafkatopic/results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
-    kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
-    kubectl patch kafkatopic/logs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
-    kubectl patch kafkatopic/result-checkpoints -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}'
-    kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge
+    kubectl patch kafkatopic/jobs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/logs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/result-checkpoints -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge || true
     ''',
     labels=['infra'],
 )
