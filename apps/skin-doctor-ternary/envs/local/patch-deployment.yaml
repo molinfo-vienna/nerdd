@@ -1,0 +1,15 @@
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: skin-doctor-ternary:latest
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    [
+      "skin_doctor.SkinDoctorTernaryModel",
+      "--broker-url",
+      "kafka-cluster-kafka-bootstrap.local:9092",
+      "--data-dir",
+      "/data",
+    ]
+- op: remove
+  path: /spec/template/spec/imagePullSecrets

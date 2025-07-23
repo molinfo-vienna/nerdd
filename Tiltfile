@@ -16,7 +16,7 @@ apps = [
     'cypstrate',
     # 'cyplebrity',
     # 'hitdexter',
-    'np-scout',
+    # 'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
     # 'fame',

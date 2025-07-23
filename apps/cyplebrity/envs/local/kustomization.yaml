@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: cyplebrity
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: cyplebrity-scaler
+    path: patch-scaler.yaml

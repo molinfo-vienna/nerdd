@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: hitdexter
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: hitdexter3-scaler
+    path: patch-scaler.yaml

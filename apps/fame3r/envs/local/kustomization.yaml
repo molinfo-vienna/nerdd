@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - deployment.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: fame3r
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: fame3r-scaler
+    path: patch-scaler.yaml

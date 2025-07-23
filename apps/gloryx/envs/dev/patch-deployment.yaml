@@ -1,0 +1,10 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    [
+      "gloryx.GloryXModel",
+      "--broker-url",
+      "kafka-cluster-kafka-bootstrap.dev:9092",
+      "--data-dir",
+      "/data",
+    ]
