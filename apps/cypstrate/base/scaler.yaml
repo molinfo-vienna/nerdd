@@ -8,14 +8,14 @@ spec:
   scaleTargetRef:
     name: cypstrate
   pollingInterval: 1
-  cooldownPeriod:  30
-  minReplicaCount: 0
+  cooldownPeriod: 30
+  minReplicaCount: 1
   maxReplicaCount: 10
   triggers:
     - type: kafka
       metadata:
         topic: cypstrate-checkpoints
         offsetResetPolicy: earliest
-        bootstrapServers: my-cluster-kafka-bootstrap.kafka:9092
-        consumerGroup: cypstrate-model-consumer-group
-        lagThreshold: '5'
+        bootstrapServers: kafka-cluster-kafka-bootstrap.dev:9092
+        consumerGroup: predict-checkpoints-cypstrate
+        lagThreshold: "5"

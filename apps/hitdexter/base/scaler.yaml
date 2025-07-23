@@ -1,21 +1,21 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: hitdexter-scaler
+  name: hitdexter3-scaler
   labels:
-    deploymentName: hitdexter-scaler
+    deploymentName: hitdexter3-scaler
 spec:
   scaleTargetRef:
     name: hitdexter
   pollingInterval: 1
-  cooldownPeriod:  30
-  minReplicaCount: 0
+  cooldownPeriod: 30
+  minReplicaCount: 1
   maxReplicaCount: 10
   triggers:
     - type: kafka
       metadata:
-        topic: hitdexter-checkpoints
+        topic: hitdexter3-checkpoints
         offsetResetPolicy: earliest
-        bootstrapServers: my-cluster-kafka-bootstrap.kafka:9092
-        consumerGroup: hitdexter-model-consumer-group
-        lagThreshold: '5'
+        bootstrapServers: kafka-cluster-kafka-bootstrap.dev:9092
+        consumerGroup: predict-checkpoints-hitdexter3
+        lagThreshold: "5"

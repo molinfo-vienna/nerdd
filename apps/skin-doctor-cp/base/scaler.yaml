@@ -1,21 +1,21 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: skindoctor-cp-scaler
+  name: skin-doctor-cp-scaler
   labels:
-    deploymentName: skindoctor-cp-scaler
+    deploymentName: skin-doctor-cp-scaler
 spec:
   scaleTargetRef:
-    name: skindoctor-cp
+    name: skin-doctor-cp
   pollingInterval: 1
-  cooldownPeriod:  30
-  minReplicaCount: 0
+  cooldownPeriod: 30
+  minReplicaCount: 1
   maxReplicaCount: 10
   triggers:
     - type: kafka
       metadata:
         topic: skin-doctor-cp-checkpoints
         offsetResetPolicy: earliest
-        bootstrapServers: my-cluster-kafka-bootstrap.kafka:9092
-        consumerGroup: skindoctorcp-consumer-group
-        lagThreshold: '5'
+        bootstrapServers: kafka-cluster-kafka-bootstrap.dev:9092
+        consumerGroup: predict-checkpoints-skin-doctor-cp
+        lagThreshold: "5"
