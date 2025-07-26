@@ -69,17 +69,19 @@ data:
         #   * data: : allow data URIs in images (not a significant risk; necessary for bootstrap, 
         #             https://getbootstrap.com/docs/5.3/customize/overview/#csps-and-embedded-svgs)
         # * object-src: legacy objects like <object> or <embed>
+        # * base-uri: used for <base> elements, but this webpage does not need it
         # * font-src: font objects, e.g. loaded via @font-face { src: url(...); }
         # * style-src: style resources; implicitly blocks inline styles <style>...</style>
         # * form-action: destination of form actions used in <form action="">
         #   * this does not prevent inline javascript actions <form action="javascript: ...">
         # * frame-ancestors: rules out embedding this web page in an iframe
         # * always: add the header to all responses
-        add_header Content-Security-Policy "default-src 'none'; 
+        add_header Content-Security-Policy "default-src 'none';
                                             connect-src 'self';
                                             script-src 'self' 'unsafe-inline'; 
                                             worker-src 'self' blob:; 
-                                            img-src 'self' data:; 
+                                            img-src 'self' data:;
+                                            base-uri 'none';
                                             object-src 'none';
                                             font-src 'self';
                                             style-src 'self';
