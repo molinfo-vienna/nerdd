@@ -130,14 +130,22 @@ data:
             gzip_static on;
             gzip on;
             gzip_proxied any;
+            gzip_vary on;
+
+            # do not compress woff2 fonts: there is nothing to gain, because they are already 
+            # highly compressed
             gzip_types text/plain 
+
                        text/css 
+
                        application/json 
                        application/javascript 
+                       text/javascript
+
                        text/xml 
                        application/xml 
                        application/xml+rss 
-                       text/javascript
+
                        image/x-icon;
         }
 
