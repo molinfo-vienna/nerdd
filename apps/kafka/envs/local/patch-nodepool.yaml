@@ -1,0 +1,6 @@
+- op: replace
+  path: /spec/replicas
+  value: 1
+- op: replace
+  path: /spec/storage/volumes/0/type
+  value: ephemeral

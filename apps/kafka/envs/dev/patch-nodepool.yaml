@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/storage/volumes/0/class
+  value: rook-ceph-block

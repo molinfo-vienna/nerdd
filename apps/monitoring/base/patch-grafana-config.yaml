@@ -1,0 +1,9 @@
+- op: replace
+  path: /stringData/grafana.ini
+  value: |
+    [date_formats]
+    default_timezone = UTC
+
+    [server]
+    root_url = %(protocol)s://%(domain)s/grafana/
+    serve_from_sub_path = true

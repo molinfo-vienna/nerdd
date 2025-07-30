@@ -3,3 +3,5 @@
   value: Host(`localhost`) && PathPrefix(`/redpanda`)
 - op: remove
   path: /spec/tls
+- op: remove
+  path: /spec/routes/0/middlewares/1

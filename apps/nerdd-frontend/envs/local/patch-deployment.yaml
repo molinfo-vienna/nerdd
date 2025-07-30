@@ -1,0 +1,5 @@
+- op: replace
+  path: /spec/template/spec/containers/0/image
+  value: nerdd-frontend:latest
+- op: remove
+  path: /spec/template/spec/imagePullSecrets

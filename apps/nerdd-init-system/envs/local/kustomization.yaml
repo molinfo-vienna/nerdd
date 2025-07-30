@@ -4,5 +4,8 @@ kind: Kustomization
 resources:
   - ../../base
 
-patchesStrategicMerge:
-  - patch-job.yaml
+patches:
+  - target:
+      kind: Job
+      name: nerdd-init-system-job
+    path: patch-job.yaml

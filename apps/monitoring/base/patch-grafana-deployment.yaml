@@ -1,0 +1,13 @@
+- op: replace
+  path: /spec/template/spec/containers/0/env
+  value:
+    - name: GF_SECURITY_ADMIN_USER
+      valueFrom:
+        secretKeyRef:
+          name: grafana-auth
+          key: username
+    - name: GF_SECURITY_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: grafana-auth
+          key: password
