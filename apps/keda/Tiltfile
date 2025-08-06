@@ -1,10 +1,20 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
+# Sometimes, deleting KEDA resources fails due to finalizers. Avoid that by removing them. We
+# do not need them in the local development.
+local_resource(
+    'remove-keda-finalizers',
+    cmd='''
+    kubectl patch crd scaledobjects.keda.sh -p '{"metadata":{"finalizers":[]}}' --type=merge || true
+    ''',
+    labels=['infra'],
+)
+
 kustomize_resource(
     workload='keda',
     kustomization_path='./envs/local/',
     namespace='keda',
     create_namespace=True,
-    resource_deps=['kafka'],
+    resource_deps=['kafka', 'remove-keda-finalizers'],
     labels=["infra"]
 )
