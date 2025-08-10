@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nerdd-backend
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nerdd-backend
