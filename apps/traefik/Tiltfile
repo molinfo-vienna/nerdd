@@ -1,28 +1,15 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
-# We have to wait for the external-secrets webhook to be available before applying the Traefik 
-# configuration. Otherwise, traefik fails with the error message:
-#   Build Failed: Internal error occurred: failed calling webhook 
-#   "validate.externalsecret.external-secrets.io": failed to call webhook: ... connection refused
-local_resource(
-    'wait-for-external-secrets-webhook',
-    cmd='''
-    until kubectl get deployment release-name-external-secrets-webhook -n external-secrets 2>/dev/null; do
-      echo "Waiting for deployment to exist..."
-      sleep 2
-    done
-    kubectl wait --for=condition=available --timeout=300s deployment/release-name-external-secrets-webhook -n external-secrets
-    ''',
-    resource_deps=['external-secrets'],
-    labels=['infra'],
-)
-
 kustomize_resource(
     workload='traefik',
     kustomization_path='./envs/local/',
     namespace='traefik',
     create_namespace=True,
     port_forwards=['8443:8443', '8000:8000'],
-    resource_deps=['external-secrets', 'wait-for-external-secrets-webhook'],
+    # We have to wait for the external-secrets webhook to be available before applying the Traefik 
+    # configuration. Otherwise, traefik fails with the error message:
+    #   Build Failed: Internal error occurred: failed calling webhook 
+    #   "validate.externalsecret.external-secrets.io": failed to call webhook: ...connection refused
+    resource_deps=['release-name-external-secrets-webhook'],
     labels=['infra']
 )
