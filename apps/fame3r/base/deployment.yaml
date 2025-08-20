@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: fame3r
-          image: ghcr.io/shirte/fame3r:latest
+          image: ghcr.io/molinfo-vienna/fame3r:latest
           command: ["/env/bin/nerdd_prediction_server"]
           volumeMounts:
             - name: data
