@@ -2,7 +2,7 @@
   path: /spec/template/spec/containers/0/args
   value:
     [
-      "fame3r.fame3r_model.Fame3RModel",
+      "fame3r._nerdd.FAME3RModel",
       "--broker-url",
       "kafka-cluster-kafka-bootstrap.dev:9092",
       "--data-dir",

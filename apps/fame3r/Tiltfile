@@ -1,46 +1,22 @@
 load('ext://git_resource', 'git_checkout')
 load('../../common.Tiltfile', 'kustomize_resource')
-load('ext://restart_process', 'custom_build_with_restart')
-
-USE_PRODUCTION_IMAGE = True
 
 # checkout source code
 project_name = 'fame3r'
-repository_name = 'FAME3R'
-repository_url = 'https://github.com/shirte/{}'.format(repository_name)
+repository_name = 'FAME3R-image'
+repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
 project_dir = '../../repos/{}'.format(repository_name)
 if not os.path.exists(project_dir):
     git_checkout(
-        repository_url, 
+        repository_url,
         checkout_dir=project_dir
     )
 
-if USE_PRODUCTION_IMAGE:
-    docker_build(
-        project_name,
-        context=project_dir,
-    )
-else:
-    # build the docker image
-    command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
-        os.path.join(project_dir, 'Dockerfile.dev'),
-        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/cypstrate'
-        #       -> repos directory is the parent directory of project_dir
-        os.path.join(project_dir, '..'),
-    )
-
-    custom_build_with_restart(
-        project_name,
-        command=command,
-        deps=[project_dir, "../../repos/nerdd-module", "../../repos/nerdd-link", "."],
-        dir=project_dir,
-        live_update=[
-            sync(project_dir, "/app"),
-            sync("../../repos/nerdd-module", "/deps/nerdd-module"),
-            sync("../../repos/nerdd-link", "/deps/nerdd-link"),
-        ],
-        entrypoint="micromamba run -p /env nerdd_prediction_server fame3r.fame3r_model.Fame3RModel --broker-url kafka-cluster-kafka-bootstrap.local:9092 --data-dir /data"
-    )
+# build docker image
+docker_build(
+    project_name,
+    context=project_dir,
+)
 
 # deploy to kubernetes
 kustomize_resource(
