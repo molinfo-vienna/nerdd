@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/fame3r:latest@sha256:f12fd7b1408e972565441f465eb3911c45a2c2e3818ff0925b79d5874489f878
+  - ghcr.io/molinfo-vienna/fame3r:latest@sha256:5eb0dde2b6ad0253adc69403cc8c5fbcfb13afc38f91c29af6c7c18d8f9464fb
