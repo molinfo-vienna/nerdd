@@ -4,3 +4,6 @@
 - op: replace
   path: /spec/storage/volumes/0/type
   value: ephemeral
+- op: replace
+  path: /spec/storage/volumes/0/size
+  value: 10Gi
