@@ -1,7 +1,7 @@
 load('ext://git_resource', 'git_checkout')
 load('../../common.Tiltfile', 'kustomize_resource')
 
-USE_PRODUCTION_IMAGE = True
+USE_PRODUCTION_IMAGE = False
 
 # checkout source code
 project_name = 'nerdd-frontend'
