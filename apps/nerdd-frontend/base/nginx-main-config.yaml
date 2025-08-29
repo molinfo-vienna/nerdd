@@ -121,11 +121,23 @@ data:
 
         add_header Cross-Origin-Resource-Policy "same-origin";
 
+        # disable caching for index.html, because it changes with every deployment
+        location @no-cache {
+            add_header Cache-Control "no-store, no-cache, must-revalidate";
+            add_header Pragma "no-cache";
+            add_header Expires "0";
+            try_files /index.html =404;
+        }
+
         location / {
             # for each request on url $uri:
             # * first, try to get the file $uri/ (e.g. static images)
             # * second, route request to index.html (react router will render the correct page)
-            try_files $uri $uri/ /index.html;
+            try_files $uri $uri/ @no-cache;
+
+            # cache static files aggressively, because they have a unique hash in their filename
+            add_header Cache-Control "public, immutable";
+            expires max;
             
             # rate limiting: 
             # * use rate limiting zone specified at the start of this file
@@ -133,7 +145,6 @@ data:
             limit_req zone=one burst=20;
 
             # not vital, but improves performance:
-            expires max;
             gzip_static on;
             gzip on;
             gzip_proxied any;
