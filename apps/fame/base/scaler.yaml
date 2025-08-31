@@ -9,8 +9,8 @@ spec:
     name: fame
   pollingInterval: 1
   cooldownPeriod: 30
-  minReplicaCount: 1
-  maxReplicaCount: 10
+  minReplicaCount: 5
+  maxReplicaCount: 5
   triggers:
     - type: kafka
       metadata:
