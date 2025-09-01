@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/skin-doctor-cp:latest@sha256:2aff63a47eb11331e8daa3edc2648166de24b03c6e584dd4f3ebe478e4a6ebee
+  - ghcr.io/molinfo-vienna/skin-doctor-cp:latest@sha256:9008e43dd4fdfb268b47601e0a7a4ff92ac1f9f2334ad324c572f42c98ee6938
