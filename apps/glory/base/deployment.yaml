@@ -19,11 +19,11 @@ spec:
           command: ["/env/bin/nerdd_prediction_server"]
           resources:
             requests:
-              cpu: 10m
-              memory: 1Gi
+              cpu: "3"
+              memory: 3Gi
             limits:
-              cpu: "4"
-              memory: 10Gi
+              cpu: "6"
+              memory: 7Gi
           volumeMounts:
             - name: data
               mountPath: "/data"
