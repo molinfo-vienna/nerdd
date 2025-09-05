@@ -19,8 +19,8 @@ spec:
           command: ["/env/bin/nerdd_prediction_server"]
           resources:
             requests:
-              cpu: "3"
-              memory: 3Gi
+              cpu: "4"
+              memory: 4Gi
             limits:
               cpu: "6"
               memory: 7Gi
