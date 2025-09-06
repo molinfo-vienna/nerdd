@@ -121,54 +121,56 @@ data:
 
         add_header Cross-Origin-Resource-Policy "same-origin";
 
-        # disable caching for index.html, because it changes with every deployment
-        location @no-cache {
-            add_header Cache-Control "no-store, no-cache, must-revalidate";
-            add_header Pragma "no-cache";
-            add_header Expires "0";
-            try_files /index.html =404;
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|svg)$ {
+            try_files $uri =404;
+            
+            # cache static files aggressively, because they have a unique hash in their filename
+            expires max; 
+            add_header Cache-Control "public, immutable";
         }
 
+        # disable caching for index.html, because it changes with every deployment
         location / {
             # for each request on url $uri:
             # * first, try to get the file $uri/ (e.g. static images)
             # * second, route request to index.html (react router will render the correct page)
-            try_files $uri $uri/ @no-cache;
+            try_files $uri $uri/ /index.html;
 
-            # cache static files aggressively, because they have a unique hash in their filename
-            add_header Cache-Control "public, immutable";
-            expires max;
-            
-            # rate limiting: 
-            # * use rate limiting zone specified at the start of this file
-            # * allow bursts of 20 requests
-            limit_req zone=one burst=20;
-
-            # not vital, but improves performance:
-            gzip_static on;
-            gzip on;
-            gzip_proxied any;
-            gzip_vary on;
-
-            gzip_types text/plain 
-                       # ---- stylesheets ----
-                       text/css 
-                       # ---- javascript ----
-                       application/json 
-                       application/javascript 
-                       text/javascript
-                       # ---- xml ----
-                       text/xml 
-                       application/xml 
-                       application/xml+rss 
-                       # ---- fonts ----
-                       # do not compress woff2 fonts: there is nothing to gain, because they are 
-                       # already highly compressed
-                       # ---- images ----
-                       image/gif
-                       image/png
-                       image/x-icon;
+            add_header Cache-Control "no-store, no-cache, must-revalidate";
+            add_header Pragma "no-cache";
+            add_header Expires "0";
         }
+
+        # rate limiting: 
+        # * use rate limiting zone specified at the start of this file
+        # * allow bursts of 20 requests
+        limit_req zone=one burst=20;
+
+        # not vital, but improves performance:
+        gzip_static on;
+        gzip on;
+        gzip_proxied any;
+        gzip_vary on;
+
+        gzip_types text/plain 
+                    # ---- stylesheets ----
+                    text/css 
+                    # ---- javascript ----
+                    application/json 
+                    application/javascript 
+                    text/javascript
+                    # ---- xml ----
+                    text/xml 
+                    application/xml 
+                    application/xml+rss 
+                    # ---- fonts ----
+                    # do not compress woff2 fonts: there is nothing to gain, because they are 
+                    # already highly compressed
+                    # ---- images ----
+                    image/gif
+                    image/png
+                    image/x-icon;
 
         error_page 404 /index.html;
     }
