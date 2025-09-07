@@ -1,3 +1,6 @@
 - op: replace
   path: /spec/triggers/0/metadata/bootstrapServers
   value: kafka-cluster-kafka-bootstrap.local:9092
+- op: replace
+  path: /spec/maxReplicaCount
+  value: 2
