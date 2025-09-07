@@ -8,7 +8,7 @@ spec:
   scaleTargetRef:
     name: glory
   pollingInterval: 1
-  cooldownPeriod: 600
+  cooldownPeriod: 30
   minReplicaCount: 1
   maxReplicaCount: 10
   triggers:
