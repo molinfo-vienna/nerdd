@@ -13,3 +13,7 @@ patches:
       kind: ScaledObject
       name: glory-scaler
     path: patch-scaler.yaml
+  - target:
+      kind: KafkaTopic
+      name: glory-checkpoints
+    path: patch-topic.yaml

@@ -13,3 +13,7 @@ patches:
       kind: ScaledObject
       name: skin-doctor-ternary-scaler
     path: patch-scaler.yaml
+  - target:
+      kind: KafkaTopic
+      name: skin-doctor-ternary-checkpoints
+    path: patch-topic.yaml

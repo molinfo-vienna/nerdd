@@ -13,3 +13,7 @@ patches:
       kind: ScaledObject
       name: hitdexter3-scaler
     path: patch-scaler.yaml
+  - target:
+      kind: KafkaTopic
+      name: hitdexter3-checkpoints
+    path: patch-topic.yaml
