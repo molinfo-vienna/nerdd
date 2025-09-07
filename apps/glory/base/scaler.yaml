@@ -11,7 +11,6 @@ spec:
   cooldownPeriod: 30
   minReplicaCount: 1
   maxReplicaCount: 10
-  limitToPartitionsWithLag: true
   triggers:
     - type: kafka
       metadata:
@@ -20,3 +19,4 @@ spec:
         bootstrapServers: kafka-cluster-kafka-bootstrap.dev:9092
         consumerGroup: predict-checkpoints-glory
         lagThreshold: "5"
+        limitToPartitionsWithLag: "true"
