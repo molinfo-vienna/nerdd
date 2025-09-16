@@ -18,6 +18,7 @@ spec:
       containers:
         - name: rethinkdb-container
           image: rethinkdb:2.4.2
+          args: ["rethinkdb", "--bind", "all", "--cache-size", "2048"]
           ports:
             - containerPort: 8080 # administrative HTTP connections
             - containerPort: 28015 # client driver connections
