@@ -25,6 +25,11 @@ data:
         address: :8443
         http:
           tls: true
+        transport:
+          respondingTimeouts:
+            readTimeout: 300s
+            writeTimeout: 0
+            idleTimeout: 300s
     providers:
       kubernetesCRD:
         allowEmptyServices: true
