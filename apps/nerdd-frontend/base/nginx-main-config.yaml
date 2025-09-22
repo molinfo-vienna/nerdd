@@ -26,6 +26,9 @@ data:
         server_tokens off;
 
         # Set the maximum size of an upload file (or a request in general) to 500MB.
+        # There are two places where limits are applied:
+        # 1) In the nginx config of nerdd-frontend (here)
+        # 2) In the traefik middleware of nerdd-backend (maxRequestBodyBytes directive)
         client_max_body_size 500M;
 
         # Indicate that the website doesn't use any browser features. At the moment, there is no
