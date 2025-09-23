@@ -1,5 +1,8 @@
 load('ext://git_resource', 'git_checkout')
 load('../../common.Tiltfile', 'kustomize_resource')
+load('ext://restart_process', 'custom_build_with_restart')
+
+USE_PRODUCTION_IMAGE = False
 
 # checkout source code
 project_name = 'fame3r'
