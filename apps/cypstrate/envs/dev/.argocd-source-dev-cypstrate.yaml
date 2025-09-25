@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/cypstrate:latest@sha256:4bb9346d1d79fa012a8b3e74eb29c5a38879250f5edc7fc112201aaf70d4e989
+  - ghcr.io/molinfo-vienna/cypstrate:latest@sha256:0a12d8a4147b994630023b45c74ea8c7ee7693ed2e077246c8c2b7e58541a5b0
