@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: trialblazer
+    path: patch-deployment.yaml
+  - target:
+      kind: ScaledObject
+      name: trialblazer-scaler
+    path: patch-scaler.yaml
+  - target:
+      kind: KafkaTopic
+      name: trialblazer-checkpoints
+    path: patch-topic.yaml
