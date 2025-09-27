@@ -1,0 +1,26 @@
+load('ext://git_resource', 'git_checkout')
+load('../../common.Tiltfile', 'kustomize_resource')
+
+# checkout source code
+project_name = 'trialblazer'
+repository_url = 'https://github.com/shirte/{}'.format(project_name)
+project_dir = '../../repos/{}'.format(project_name)
+if not os.path.exists(project_dir):
+    git_checkout(
+        repository_url, 
+        checkout_dir=project_dir
+    )
+
+docker_build(
+    project_name,
+    context=project_dir,
+)
+
+# deploy to kubernetes
+kustomize_resource(
+    workload=project_name,
+    kustomization_path='./envs/local/',
+    namespace='local',
+    resource_deps=['kafka', 'keda', 'storage'],
+    labels=['modules']
+)

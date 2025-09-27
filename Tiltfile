@@ -14,12 +14,13 @@ base_repositories = [
 # use comments to select services in order to improve speed
 apps = [
     # openly accessible:
-    'cypstrate',
+    # 'cypstrate',
     # 'cyplebrity',
     # 'hitdexter',
     # 'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
+    'trialblazer',
 
     # github permissions are necessary for these modules:
     # 'fame',
