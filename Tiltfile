@@ -13,15 +13,18 @@ base_repositories = [
 
 # use comments to select services in order to improve speed
 apps = [
+    # openly accessible:
     'cypstrate',
     # 'cyplebrity',
     # 'hitdexter',
     # 'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
+
+    # github permissions are necessary for these modules:
     # 'fame',
-    'fame3r',
-    'glory',
+    # 'fame3r',
+    # 'glory',
     # 'gloryx',
 
     # essential:
@@ -33,7 +36,7 @@ apps = [
     'keda',
     'rethinkdb',
     'redpanda',
-    'monitoring',
+    # 'monitoring',
     'nerdd-init-system',
     'nerdd-backend',
     'nerdd-frontend',

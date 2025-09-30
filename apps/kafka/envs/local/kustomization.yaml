@@ -13,3 +13,7 @@ patches:
       kind: KafkaNodePool
       name: controller
     path: patch-nodepool.yaml
+  - target:
+      kind: PodMonitor
+      name: kafka-resources-metrics
+    path: patch-pod-monitor.yaml

@@ -4,6 +4,6 @@ kustomize_resource(
     workload='kafka',
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['strimzi', 'monitoring'],
+    resource_deps=['strimzi'],
     labels=["infra"]
 )
