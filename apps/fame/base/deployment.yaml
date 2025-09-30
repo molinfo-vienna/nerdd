@@ -22,11 +22,11 @@ spec:
               mountPath: "/data"
           resources:
             requests:
-              cpu: 10m
+              cpu: "3"
               memory: 12Gi
             limits:
               cpu: "5"
-              memory: 20Gi
+              memory: 17Gi
       imagePullSecrets:
         - name: ghcr-secret
       volumes:
