@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: trialblazer
-          image: ghcr.io/shirte/trialblazer:latest
+          image: ghcr.io/molinfo-vienna/trialblazer:latest
           command: ["/env/bin/nerdd_prediction_server"]
           volumeMounts:
             - name: data
@@ -23,10 +23,10 @@ spec:
           resources:
             requests:
               cpu: "4"
-              memory: 2Gi
+              memory: 3Gi
             limits:
               cpu: "5"
-              memory: 4Gi
+              memory: 6Gi
           # trialblazer uses sklearn MPLs which use all available cores by default
           # -> limit to 4 cores
           env:
