@@ -17,3 +17,23 @@ patches:
       kind: PodMonitor
       name: kafka-resources-metrics
     path: patch-pod-monitor.yaml
+  - target:
+      kind: KafkaTopic
+      name: jobs
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: logs
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: results
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: serialization-requests
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: serialization-results
+    path: patch-topic.yaml

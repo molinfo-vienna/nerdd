@@ -13,3 +13,8 @@ patches:
       kind: ScaledObject
       name: np-scout-scaler
     path: patch-scaler.yaml
+  - target:
+      kind: KafkaTopic
+      name: np-scout-checkpoints
+    path: patch-topic.yaml
+

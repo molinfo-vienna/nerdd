@@ -10,6 +10,8 @@ local_resource(
     kubectl patch kafkatopic/system -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
     kubectl patch kafkatopic/logs -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
     kubectl patch kafkatopic/result-checkpoints -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/serialization-requests -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl patch kafkatopic/serialization-results -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
     kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge || true
     ''',
     labels=['infra'],
