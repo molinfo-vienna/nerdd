@@ -27,6 +27,8 @@ spec:
             limits:
               cpu: 3000m
               memory: 5000Mi
+      # important for long-running requests: we give 1h to terminate the current prediction task
+      terminationGracePeriodSeconds: 3600
       imagePullSecrets:
         - name: ghcr-secret
       volumes:
