@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: haproxy-ingress
+  name: haproxy-kubernetes-ingress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: haproxy-ingress
+  template:
+    metadata:
+      labels:
+        run: haproxy-ingress
+    spec:
+      serviceAccountName: haproxy-kubernetes-ingress
+      containers:
+        - name: haproxy-ingress
+          image: haproxytech/kubernetes-ingress
+          args:
+            - --configmap=haproxy-controller/haproxy-kubernetes-ingress
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_BIND_SERVICE
+            seccompProfile:
+              type: RuntimeDefault
+          resources:
+            limits:
+              memory: 2560Mi
+            requests:
+              memory: 2048Mi
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 1042
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: https
+              containerPort: 8443
+            - name: stat
+              containerPort: 1024
+          env:
+            - name: TZ
+              value: "Etc/UTC"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
