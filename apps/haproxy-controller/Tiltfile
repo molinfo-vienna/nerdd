@@ -1,0 +1,11 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='haproxy-kubernetes-ingress',
+    kustomization_path='./envs/local/',
+    namespace='haproxy-controller',
+    create_namespace=True,
+    port_forwards=['8443:8443', '8080:8080', '1024:1024'],
+    resource_deps=['release-name-external-secrets-webhook'],
+    labels=['infra']
+)
