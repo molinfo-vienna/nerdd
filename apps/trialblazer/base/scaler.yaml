@@ -1,0 +1,22 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: trialblazer-scaler
+  labels:
+    deploymentName: trialblazer-scaler
+spec:
+  scaleTargetRef:
+    name: trialblazer
+  pollingInterval: 1
+  cooldownPeriod: 30
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+    - type: kafka
+      metadata:
+        topic: trialblazer-checkpoints
+        offsetResetPolicy: earliest
+        bootstrapServers: kafka-cluster-kafka-bootstrap.dev:9092
+        consumerGroup: predict-checkpoints-trialblazer
+        lagThreshold: "5"
+        limitToPartitionsWithLag: "true"
