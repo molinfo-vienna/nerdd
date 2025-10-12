@@ -6,8 +6,10 @@ spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: nerdd@gmail.com
+    profile: tlsserver
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-dev
     solvers:
       - http01:
-          ingress: {}
+          ingress:
+            ingressClassName: haproxy
