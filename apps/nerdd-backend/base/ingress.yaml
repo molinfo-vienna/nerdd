@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nerdd-backend-ingress
+  annotations:
+    haproxy.org/proxy-body-size: "524288000"
+    haproxy.org/cookie-persistence: "nerdd-lb"
+    cert-manager.io/cluster-issuer: nerdd-issuer
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: nerdd.univie.ac.at
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: nerdd-backend
+                port:
+                  number: 8000
+          - path: /websocket
+            pathType: Prefix
+            backend:
+              service:
+                name: nerdd-backend
+                port:
+                  number: 8000
+  tls:
+    - hosts:
+        - nerdd.univie.ac.at
+      secretName: nerdd-backend-tls
