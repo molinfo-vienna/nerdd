@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/gloryx:latest@sha256:57844f31f27f8e8a63a6ce1f047663b0cfc5ba16336edc6f09eefd244088507d
+  - ghcr.io/molinfo-vienna/gloryx:latest@sha256:4498d5035ada3ebb7a94869ae9bb5797ef6e2f137f90dd0eeff2ac16185f48da
