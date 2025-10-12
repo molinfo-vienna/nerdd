@@ -10,6 +10,6 @@ patches:
       name: nerdd-backend
     path: patch-deployment.yaml
   - target:
-      kind: IngressRoute
-      name: nerdd-backend-ingressroute
-    path: patch-ingressroute.yaml
+      kind: Ingress
+      name: nerdd-backend-ingress
+    path: patch-ingress.yaml
