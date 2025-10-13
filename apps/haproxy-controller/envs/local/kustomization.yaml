@@ -10,10 +10,6 @@ patches:
       name: haproxy-kubernetes-ingress
     path: patch-service.yaml
   - target:
-      kind: ConfigMap
-      name: haproxy-kubernetes-ingress
-    path: patch-configmap.yaml
-  - target:
       kind: ClusterIssuer
       name: nerdd-issuer
     path: patch-issuer.yaml
