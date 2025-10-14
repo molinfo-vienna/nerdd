@@ -1,5 +1,0 @@
-- op: replace
-  path: /spec/routes/0/match
-  value: PathPrefix(`/grafana`)
-- op: remove
-  path: /spec/tls
