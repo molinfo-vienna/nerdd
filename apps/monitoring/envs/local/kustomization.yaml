@@ -10,9 +10,9 @@ patches:
       name: grafana
     path: patch-grafana-ingress.yaml
   - target:
-      kind: IngressRoute
+      kind: Ingress
       name: prometheus
-    path: patch-prometheus-ingressroute.yaml
+    path: patch-prometheus-ingress.yaml
   - target:
       kind: Role
       name: prometheus-k8s
