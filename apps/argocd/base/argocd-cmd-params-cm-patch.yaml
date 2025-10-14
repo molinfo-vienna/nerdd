@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: argocd-cmd-params-cm
 data:
-  # set server.insecure to true, because tls is applied in traefik
+  # set server.insecure to true, because tls is applied in haproxy
   server.insecure: "true"
   server.basehref: "/argocd"
   server.rootpath: "/argocd"
