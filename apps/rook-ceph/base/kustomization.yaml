@@ -2,14 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- crds.yaml
-- common.yaml
-- operator.yaml
-- cluster.yaml
-- toolbox.yaml
-# cephfs storage
-- filesystem.yaml
-- storageclass-cephfs.yaml
-# block storage
-- blockpool.yaml
-- storageclass-block.yaml
+  - crds.yaml
+  - common.yaml
+  - operator.yaml
+  - cluster.yaml
+  - toolbox.yaml
+  # cephfs storage
+  - filesystem.yaml
+  - storageclass-cephfs.yaml
