@@ -1,0 +1,13 @@
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: rethinkdb-pool
+spec:
+  failureDomain: host
+  # do not use erasure coding for DBs
+  replicated:
+    size: 3
+  deviceClass: ssd
+  parameters:
+    # do not use compression for DBs
+    compression_mode: none
