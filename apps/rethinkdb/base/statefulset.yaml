@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rethinkdb
+spec:
+  serviceName: rethinkdb
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rethinkdb
+  template:
+    metadata:
+      labels:
+        app: rethinkdb
+    spec:
+      # distribute instances across nodes
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rethinkdb
+              topologyKey: "kubernetes.io/hostname"
+      initContainers:
+        - name: wait-for-seed
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              echo "Waiting for seed rethinkdb-service:29015...";
+              until nc -z rethinkdb-service 29015; do
+                echo "Waiting...";
+                sleep 5;
+              done
+              echo "Seed node available!";
+      containers:
+        - name: rethinkdb
+          image: rethinkdb:2.4.2
+          command:
+            - sh
+            - -c
+            - |
+              ordinal=$(hostname | awk -F- '{print $NF}');
+              echo "Starting rethinkdb node rethinkdb-$ordinal...";
+              rethinkdb create;
+              exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-service:29015 --canonical-address rethinkdb-$ordinal.rethinkdb.dev.svc.cluster.local:29015;
+              # if [ "$ordinal" -eq 0 ]; then
+              #   echo "Starting seed node rethinkdb-0...";
+              #   exec rethinkdb --bind all --cache-size 8192;
+              # else
+              #   echo "Starting peer node with join rethinkdb-0...";
+              #   exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb;
+              # fi
+          volumeMounts:
+            - name: data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: rethinkdb-rook-ceph-block
+        resources:
+          requests:
+            storage: 200Gi
