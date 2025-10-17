@@ -3,9 +3,10 @@ kind: Ingress
 metadata:
   name: nerdd-backend-ingress
   annotations:
-    haproxy.org/proxy-body-size: "524288000"
-    haproxy.org/cookie-persistence: "nerdd-lb"
+    haproxy.org/load-balance: "source"
     cert-manager.io/cluster-issuer: nerdd-issuer
+    # increase timeout for large file uploads
+    haproxy.org/timeout-server: 600s
 spec:
   ingressClassName: haproxy
   rules:
