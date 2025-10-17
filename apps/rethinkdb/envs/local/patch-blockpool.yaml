@@ -1,0 +1,5 @@
+$patch: delete
+apiVersion: batch/v1
+kind: CephBlockPool
+metadata:
+  name: rethinkdb-pool

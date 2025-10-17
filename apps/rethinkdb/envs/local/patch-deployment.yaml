@@ -1,0 +1,12 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    [
+      "rethinkdb",
+      "--bind",
+      "all",
+      "--cache-size",
+      "8192",
+      "--canonical-address",
+      "rethinkdb-service.local.svc.cluster.local",
+    ]
