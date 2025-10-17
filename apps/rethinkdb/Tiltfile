@@ -1,10 +1,20 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
+local_resource(
+    name='reset-statefulset-data',
+    cmd='kubectl delete pvc -l app=rethinkdb -n local || true',
+    deps=[],
+    trigger_mode=TRIGGER_MODE_MANUAL,
+    labels=['infra']
+)
+
 kustomize_resource(
     workload='rethinkdb',
     kustomization_path='./envs/local/',
     namespace='local',
-    port_forwards=['8084:8080'],
-    resource_deps=['storage'],
+    port_forwards=['8084:8080', '28015:28015', '29015:29015'],
+    resource_deps=[
+        'storage', 'haproxy-kubernetes-ingress', 'external-secrets', 'reset-statefulset-data'
+    ],
     labels=['infra']
 )
