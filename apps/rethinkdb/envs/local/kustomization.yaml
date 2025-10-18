@@ -18,10 +18,6 @@ patches:
       name: rethinkdb
     path: patch-statefulset.yaml
   - target:
-      kind: Ingress
-      name: rethinkdb-dashboard
-    path: patch-ingress.yaml
-  - target:
       kind: PersistentVolumeClaim
       name: rethinkdb-data-pvc
     path: patch-pvc.yaml
