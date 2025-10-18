@@ -5,6 +5,3 @@ resources:
   - rethinkdb.yaml
   - statefulset.yaml
   - service.yaml
-  # storage
-  - blockpool.yaml
-  - storageclass.yaml

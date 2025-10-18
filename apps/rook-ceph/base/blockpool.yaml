@@ -1,7 +1,7 @@
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name: rethinkdb-pool
+  name: blockpool
 spec:
   failureDomain: host
   # do not use erasure coding for DBs
