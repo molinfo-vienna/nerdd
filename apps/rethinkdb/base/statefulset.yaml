@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: rethinkdb
 spec:
-  serviceName: rethinkdb
+  serviceName: rethinkdb-internal
   replicas: 3
   selector:
     matchLabels:
@@ -46,20 +46,23 @@ spec:
             - |
               ordinal=$(hostname | awk -F- '{print $NF}');
               echo "Starting rethinkdb node rethinkdb-$ordinal...";
+              # avoid creating default databases
               rethinkdb create;
-              exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-service:29015 --canonical-address rethinkdb-$ordinal.rethinkdb.dev.svc.cluster.local:29015;
+              exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-service:29015 --canonical-address rethinkdb-$ordinal.rethinkdb-internal.dev.svc.cluster.local:29015;
               # if [ "$ordinal" -eq 0 ]; then
               #   echo "Starting seed node rethinkdb-0...";
               #   exec rethinkdb --bind all --cache-size 8192;
               # else
               #   echo "Starting peer node with join rethinkdb-0...";
-              #   exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb;
+              #   exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb-internal;
               # fi
           volumeMounts:
             - name: data
               mountPath: /data
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
         name: data
       spec:
         accessModes: ["ReadWriteOnce"]
