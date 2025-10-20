@@ -6,22 +6,6 @@ resources:
 
 patches:
   - target:
-      kind: PersistentVolumeClaim
-      name: rethinkdb-pvc
-    path: patch-rethinkdb.yaml
-  - target:
-      kind: Deployment
-      name: rethinkdb-deployment
-    path: patch-deployment.yaml
-  - target:
       kind: StatefulSet
       name: rethinkdb
     path: patch-statefulset.yaml
-  - target:
-      kind: PersistentVolumeClaim
-      name: rethinkdb-data-pvc
-    path: patch-pvc.yaml
-  - target:
-      kind: CephBlockPool
-      name: rethinkdb-pool
-    path: patch-blockpool.yaml
