@@ -26,4 +26,4 @@ spec:
   tls:
     - hosts:
         - nerdd.univie.ac.at
-      secretName: prometheus-tls
+      secretName: monitoring-tls
