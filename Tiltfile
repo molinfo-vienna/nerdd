@@ -20,7 +20,7 @@ apps = [
     # 'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
-    'trialblazer',
+    # 'trialblazer',
 
     # github permissions are necessary for these modules:
     # 'fame',
@@ -37,13 +37,15 @@ apps = [
     'kafka',
     'keda',
     'rethinkdb',
-    'redpanda',
-    # 'monitoring',
     'nerdd-init-system',
     'nerdd-backend',
     'nerdd-frontend',
     'nerdd-process-jobs',
     'nerdd-serialize-jobs',
+
+    # optional for monitoring:
+    # 'monitoring',
+    # 'redpanda',
 ]
 
 # check out base repositories
