@@ -147,6 +147,14 @@ data:
             # * allow bursts of 20 requests
             limit_req zone=one burst=30;
 
+            # optimizations for static file delivery
+            # * sendfile: use kernel-level file transfer (more efficient than user-level)
+            # * tcp_nopush: send HTTP headers in one packet (reduces number of packets)
+            # * tcp_nodelay: send small packets immediately (reduces latency)
+            sendfile on;
+            tcp_nopush on;
+            tcp_nodelay on;
+
             # not vital, but improves performance:
             gzip_static on;
             gzip on;
