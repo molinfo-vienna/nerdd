@@ -155,6 +155,12 @@ data:
             tcp_nopush on;
             tcp_nodelay on;
 
+            # cache file descriptors for static files
+            open_file_cache max=10000 inactive=30s;
+            open_file_cache_valid 60s;
+            open_file_cache_min_uses 2;
+            open_file_cache_errors on;
+
             # not vital, but improves performance:
             gzip_static on;
             gzip on;
