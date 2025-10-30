@@ -6,7 +6,7 @@
   value: 10Gi
 - op: replace
   path: /spec/replicas
-  value: 3
+  value: 1
 - op: remove
   path: /spec/template/spec/affinity
 - op: replace
