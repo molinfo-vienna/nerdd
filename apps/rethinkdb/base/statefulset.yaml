@@ -27,6 +27,9 @@ spec:
       containers:
         - name: rethinkdb
           image: rethinkdb:2.4.2
+          # use a custom command to
+          # (1) set up the rethinkdb cluster communication and
+          # (2) avoid creating default databases
           command:
             - sh
             - -c
