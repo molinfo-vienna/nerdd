@@ -29,8 +29,6 @@ spec:
             limits:
               cpu: 1000m
               memory: 256Mi
-      imagePullSecrets:
-        - name: ghcr-secret
       volumes:
         - name: nginx-main-config-volume
           configMap:
