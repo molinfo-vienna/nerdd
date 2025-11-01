@@ -1,0 +1,23 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: APP_NAME-scaler
+  labels:
+    app: APP_NAME
+    deploymentName: APP_NAME-scaler
+spec:
+  scaleTargetRef:
+    name: APP_NAME
+  pollingInterval: 1
+  cooldownPeriod: 30
+  minReplicaCount: 3
+  maxReplicaCount: 3
+  triggers:
+    - type: kafka
+      metadata:
+        topic: TOPIC
+        offsetResetPolicy: earliest
+        bootstrapServers: BROKER_URL
+        consumerGroup: CONSUMER_GROUP
+        lagThreshold: "5"
+        limitToPartitionsWithLag: "true"

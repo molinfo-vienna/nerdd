@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: APP_NAME
+  labels:
+    app: APP_NAME
+spec:
+  selector:
+    matchLabels:
+      app: APP_NAME
+  template:
+    metadata:
+      labels:
+        app: APP_NAME
+    spec:
+      containers:
+        - name: APP_NAME
+          image: IMAGE
+          command: ["/env/bin/nerdd_prediction_server"]
+          args:
+            - MODEL_CLASS
+            - --broker-url
+            - BROKER_URL
+            - --data-dir
+            - /data
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
+          resources:
+            requests:
+              cpu: CPU_REQUEST
+              memory: MEM_REQUEST
+            limits:
+              cpu: CPU_LIMIT
+              memory: MEM_LIMIT
+      # important for long-running requests: we give 1h to terminate the current prediction task
+      terminationGracePeriodSeconds: 3600
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-media
