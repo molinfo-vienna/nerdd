@@ -4,12 +4,14 @@ kind: Kustomization
 resources:
   - ../../base
 
-patches:
-  - target:
-      kind: Deployment
-      name: cypstrate
-    path: patch-deployment.yaml
-  - target:
-      kind: ScaledObject
-      name: cypstrate-scaler
-    path: patch-scaler.yaml
+components:
+  - ../../../_common/nerdd-module
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - image=ghcr.io/molinfo-vienna/cypstrate:latest
+      - brokerUrl=kafka-cluster-kafka-bootstrap.dev:9092
+      - minReplicaCount=3
+      - maxReplicaCount=3

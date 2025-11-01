@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/triggers/0/metadata/bootstrapServers
-  value: kafka-cluster-kafka-bootstrap.dev:9092
