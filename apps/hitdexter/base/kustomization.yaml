@@ -1,7 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - deployment.yaml
-  - topic.yaml
-  - scaler.yaml
+configMapGenerator:
+  - name: app-config
+    literals:
+      - appName=hitdexter
+      - modelClass=hitdexter.HitDexter3Model
+      - topic=hitdexter3-checkpoints
+      - consumerGroup=predict-checkpoints-hitdexter3
+      - minReplicaCount=3
+      - maxReplicaCount=3
+      - cpuRequest=10m
+      - memRequest=600Mi
+      - cpuLimit=4000m
+      - memLimit=2G
