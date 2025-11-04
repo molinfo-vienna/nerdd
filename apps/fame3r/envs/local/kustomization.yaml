@@ -4,15 +4,19 @@ kind: Kustomization
 resources:
   - ../../base
 
+components:
+  - ../../../_common/nerdd-module
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - image=fame3r:latest
+      - brokerUrl=kafka-cluster-kafka-bootstrap.local:9092
+      - minReplicaCount=1
+      - maxReplicaCount=1
+
 patches:
-  - target:
-      kind: Deployment
-      name: fame3r
-    path: patch-deployment.yaml
-  - target:
-      kind: ScaledObject
-      name: fame3r-scaler
-    path: patch-scaler.yaml
   - target:
       kind: KafkaTopic
       name: fame3r-checkpoints
