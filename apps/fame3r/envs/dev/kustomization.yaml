@@ -13,7 +13,6 @@ configMapGenerator:
     literals:
       - image=ghcr.io/molinfo-vienna/fame3r:latest
       - brokerUrl=kafka-cluster-kafka-bootstrap.dev:9092
-      - modelClass=fame3r._nerdd.FAME3RModel
 
 patches:
   - target:
