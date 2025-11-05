@@ -1,7 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - deployment.yaml
-  - topic.yaml
-  - scaler.yaml
+configMapGenerator:
+  - name: app-config
+    literals:
+      - appName=skin-doctor-ternary
+      - modelClass=skin_doctor.SkinDoctorTernaryModel
+      - topic=skin-doctor-ternary-checkpoints
+      - consumerGroup=predict-checkpoints-skin-doctor-ternary
+      - minReplicaCount=1
+      - maxReplicaCount=1
+      - cpuRequest=1
+      - memRequest=10G
+      - cpuLimit=1
+      - memLimit=12G
