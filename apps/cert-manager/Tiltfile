@@ -1,0 +1,9 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='cert-manager',
+    kustomization_path='./envs/infra/',
+    namespace='cert-manager',
+    create_namespace=True,
+    labels=["infra"]
+)
