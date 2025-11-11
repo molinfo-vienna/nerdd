@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nerdd-frontend-ingress-https
+  labels:
+    app: nerdd-frontend
+  annotations:
+    cert-manager.io/cluster-issuer: nerdd-issuer
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: nerdd.univie.ac.at
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nerdd-frontend
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - nerdd.univie.ac.at
+      secretName: nerdd-frontend-tls

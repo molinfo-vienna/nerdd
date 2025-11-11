@@ -34,6 +34,6 @@ kustomize_resource(
     workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['nerdd-backend', 'traefik'],
+    resource_deps=['nerdd-backend', 'haproxy-kubernetes-ingress'],
     labels=['frontend']
 )

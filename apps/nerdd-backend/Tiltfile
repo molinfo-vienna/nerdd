@@ -45,6 +45,6 @@ kustomize_resource(
     workload='nerdd-backend',
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['kafka', 'storage', 'rethinkdb', 'traefik'],
+    resource_deps=['kafka', 'storage', 'rethinkdb', 'haproxy-kubernetes-ingress'],
     labels=['backend']
 )
