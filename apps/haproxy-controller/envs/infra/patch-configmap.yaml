@@ -1,3 +1,0 @@
-- op: replace
-  path: /data/ssl-certificate
-  value: nerdd-tls

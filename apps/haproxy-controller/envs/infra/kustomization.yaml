@@ -3,9 +3,3 @@ kind: Kustomization
 
 resources:
   - ../../base
-
-patches:
-  - target:
-      kind: ConfigMap
-      name: haproxy-kubernetes-ingress
-    path: patch-configmap.yaml
