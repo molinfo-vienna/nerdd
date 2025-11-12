@@ -4,6 +4,6 @@ kustomize_resource(
     workload='redpanda-console',
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['kafka', 'traefik'],
+    resource_deps=['kafka', 'haproxy-kubernetes-ingress'],
     labels=['infra']
 )

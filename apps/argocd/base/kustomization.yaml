@@ -7,7 +7,7 @@ resources:
   # argocd image updater
   - https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/v0.15.2/manifests/install.yaml
   # route
-  - ingressroute.yaml
+  - ingress.yaml
 
 patches:
   - path: argocd-cmd-params-cm-patch.yaml

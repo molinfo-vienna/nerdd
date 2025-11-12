@@ -97,8 +97,9 @@ resources:
   - kube-prometheus-0.14.0/prometheusOperator-clusterRole.yaml
   - kube-prometheus-0.14.0/prometheus-roleSpecificNamespaces.yaml
   - kube-prometheus-0.14.0/prometheus-roleBindingSpecificNamespaces.yaml
-  - grafana-ingressroute.yaml
-  - prometheus-ingressroute.yaml
+  - grafana-ingress.yaml
+  - prometheus-ingress.yaml
+  - prometheus-secret.yaml
   - grafana-auth.yaml
 
 patches:

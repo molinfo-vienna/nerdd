@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: redpanda-console
+  annotations:
+    haproxy.org/path-rewrite-target: /
+    haproxy.org/auth-type: basic
+    haproxy.org/auth-secret: redpanda-auth
+    haproxy.org/auth-realm: "Redpanda Console"
+    cert-manager.io/cluster-issuer: nerdd-issuer
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: nerdd.univie.ac.at
+      http:
+        paths:
+          - path: /redpanda
+            pathType: Prefix
+            backend:
+              service:
+                name: redpanda-console
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - nerdd.univie.ac.at
+      secretName: redpanda-tls

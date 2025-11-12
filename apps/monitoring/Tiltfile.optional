@@ -6,6 +6,6 @@ kustomize_resource(
     namespace='monitoring',
     create_namespace=True,
     keep_namespaces=['default', 'kube-system', 'local'],
-    resource_deps=['storage', 'traefik'],
+    resource_deps=['storage', 'haproxy-kubernetes-ingress'],
     labels=["monitoring"]
 )

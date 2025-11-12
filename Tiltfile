@@ -14,7 +14,7 @@ base_repositories = [
 # use comments to select services in order to improve speed
 apps = [
     # openly accessible:
-    # 'cypstrate',
+    'cypstrate',
     # 'cyplebrity',
     # 'hitdexter',
     # 'np-scout',
@@ -31,7 +31,8 @@ apps = [
     # essential:
     'storage',
     'external-secrets',
-    'traefik',
+    'cert-manager',
+    'haproxy-controller',
     'strimzi',
     'kafka',
     'keda',

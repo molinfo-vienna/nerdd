@@ -1,7 +1,0 @@
-- op: replace
-  path: /spec/routes/0/match
-  value: PathPrefix(`/prometheus`)
-- op: remove
-  path: /spec/routes/0/middlewares
-- op: remove
-  path: /spec/tls

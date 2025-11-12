@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prometheus
+  annotations:
+    haproxy.org/path-rewrite-target: /
+    haproxy.org/auth-type: basic
+    haproxy.org/auth-secret: prometheus-auth
+    haproxy.org/auth-realm: "Prometheus"
+    cert-manager.io/cluster-issuer: nerdd-issuer
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: nerdd.univie.ac.at
+      http:
+        paths:
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus-k8s
+                port:
+                  number: 9090
+  tls:
+    - hosts:
+        - nerdd.univie.ac.at
+      secretName: prometheus-tls
