@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   - rethinkdb.yaml
   - statefulset.yaml
-  - ingress.yaml
-  - secret.yaml
   - service.yaml
   # storage
   - blockpool.yaml
