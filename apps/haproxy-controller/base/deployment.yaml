@@ -19,7 +19,9 @@ spec:
         - name: haproxy-ingress
           image: haproxytech/kubernetes-ingress
           args:
-            - --configmap=haproxy-controller/haproxy-kubernetes-ingress
+            - --configmap=$(POD_NAMESPACE)/haproxy-kubernetes-ingress
+            # write status to ingress resource
+            - --publish-service=$(POD_NAMESPACE)/haproxy-kubernetes-ingress
           securityContext:
             runAsNonRoot: true
             allowPrivilegeEscalation: false
