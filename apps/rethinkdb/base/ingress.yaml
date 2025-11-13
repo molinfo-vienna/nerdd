@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rethinkdb-dashboard
+  annotations:
+    haproxy.org/path-rewrite-target: /
+    cert-manager.io/cluster-issuer: nerdd-issuer
+spec:
+  ingressClassName: haproxy
+  rules:
+    - host: nerdd.univie.ac.at
+      http:
+        paths:
+          - path: /rethinkdb
+            pathType: Prefix
+            backend:
+              service:
+                name: rethinkdb-service
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - nerdd.univie.ac.at
+      secretName: rethinkdb-tls

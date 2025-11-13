@@ -18,11 +18,25 @@ spec:
       containers:
         - name: rethinkdb-container
           image: rethinkdb:2.4.2
-          args: ["rethinkdb", "--bind", "all", "--cache-size", "2048"]
+          args:
+            [
+              "rethinkdb",
+              "--bind",
+              "all",
+              "--cache-size",
+              "8192",
+              "--canonical-address",
+              "rethinkdb-service.dev.svc.cluster.local",
+            ]
           ports:
             - containerPort: 8080 # administrative HTTP connections
             - containerPort: 28015 # client driver connections
             - containerPort: 29015 # intracluster connections
+          readinessProbe:
+            tcpSocket:
+              port: 29015
+            initialDelaySeconds: 10
+            successThreshold: 1
           volumeMounts:
             - mountPath: /data
               name: volume
