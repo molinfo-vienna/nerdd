@@ -17,7 +17,7 @@ spec:
       serviceAccountName: haproxy-kubernetes-ingress
       containers:
         - name: haproxy-ingress
-          image: haproxytech/kubernetes-ingress
+          image: haproxytech/kubernetes-ingress:3.1.14
           args:
             - --configmap=$(POD_NAMESPACE)/haproxy-kubernetes-ingress
             # write status to ingress resource
@@ -35,9 +35,11 @@ spec:
             seccompProfile:
               type: RuntimeDefault
           resources:
-            limits:
-              memory: 2560Mi
             requests:
+              cpu: "4"
+              memory: 1024Mi
+            limits:
+              cpu: "4"
               memory: 2048Mi
           livenessProbe:
             httpGet:
