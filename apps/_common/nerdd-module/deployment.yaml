@@ -20,9 +20,12 @@ spec:
           args:
             - MODEL_CLASS
             - --broker-url
-            - BROKER_URL
+            - "$(KAFKA_BROKER_URL)"
             - --data-dir
             - /data
+          env:
+            - name: KAFKA_BROKER_URL
+              value: BROKER_URL
           volumeMounts:
             - name: data
               mountPath: "/data"
