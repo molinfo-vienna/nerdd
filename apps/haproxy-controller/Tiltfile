@@ -5,7 +5,7 @@ kustomize_resource(
     kustomization_path='./envs/local/',
     namespace='haproxy-controller',
     create_namespace=True,
-    port_forwards=['8443:8443', '8080:8080', '1024:1024'],
-    resource_deps=['release-name-external-secrets-webhook'],
+    port_forwards=['8443:8443', '8080:80', '1024:1024'],
+    resource_deps=['release-name-external-secrets-webhook', 'cert-manager-webhook', 'cert-manager'],
     labels=['infra']
 )
