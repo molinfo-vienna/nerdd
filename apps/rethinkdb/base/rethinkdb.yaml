@@ -52,31 +52,6 @@ spec:
           persistentVolumeClaim:
             claimName: rethinkdb-pvc
 ---
-kind: Service
-apiVersion: v1
-metadata:
-  name: rethinkdb-service
-  labels:
-    app: rethinkdb
-spec:
-  selector:
-    app: rethinkdb
-    tier: backend
-  ports:
-    - name: admin
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
-    - name: intracluster
-      protocol: TCP
-      port: 29015
-      targetPort: 29015
-    - name: client
-      protocol: TCP
-      port: 28015
-      targetPort: 28015
-  type: ClusterIP
----
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

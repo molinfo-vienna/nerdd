@@ -38,7 +38,7 @@ else:
             sync("../../repos/nerdd-module", "/deps/nerdd-module"),
             sync("../../repos/nerdd-link", "/deps/nerdd-link"),
         ],
-        entrypoint="micromamba run -n nerdd_backend python -m nerdd_backend.main --config-name production ++db.host=rethinkdb-service.local ++db.port=28015 ++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
+        entrypoint="micromamba run -n nerdd_backend python -m nerdd_backend.main --config-name production ++db.host=rethinkdb.local ++db.port=28015 ++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
     )
 
 kustomize_resource(

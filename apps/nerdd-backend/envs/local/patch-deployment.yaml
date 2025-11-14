@@ -10,7 +10,7 @@
     [
       "--config-name",
       "production",
-      "++db.host=rethinkdb-service.local",
+      "++db.host=rethinkdb.local",
       "++db.port=28015",
       "++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
     ]

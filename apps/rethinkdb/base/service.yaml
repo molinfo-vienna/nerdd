@@ -1,15 +1,24 @@
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: rethinkdb-internal
+  name: rethinkdb
+  labels:
+    app: rethinkdb
 spec:
-  clusterIP: None
   selector:
     app: rethinkdb
+    tier: backend
   ports:
-    - name: driver
-      port: 29015
-    - name: cluster
-      port: 29016
     - name: admin
+      protocol: TCP
       port: 8080
+      targetPort: 8080
+    - name: intracluster
+      protocol: TCP
+      port: 29015
+      targetPort: 29015
+    - name: client
+      protocol: TCP
+      port: 28015
+      targetPort: 28015
+  type: ClusterIP

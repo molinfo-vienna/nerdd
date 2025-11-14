@@ -5,3 +5,4 @@ resources:
   - rethinkdb.yaml
   - statefulset.yaml
   - service.yaml
+  - service-internal.yaml
