@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: rethinkdb
-    tier: backend
   ports:
     - name: admin
       protocol: TCP

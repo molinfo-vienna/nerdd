@@ -24,19 +24,6 @@ spec:
                     values:
                       - rethinkdb
               topologyKey: "kubernetes.io/hostname"
-      initContainers:
-        - name: wait-for-seed
-          image: busybox
-          command:
-            - sh
-            - -c
-            - |
-              echo "Waiting for seed rethinkdb-service:29015...";
-              until nc -z rethinkdb-service 29015; do
-                echo "Waiting...";
-                sleep 5;
-              done
-              echo "Seed node available!";
       containers:
         - name: rethinkdb
           image: rethinkdb:2.4.2
@@ -48,14 +35,16 @@ spec:
               echo "Starting rethinkdb node rethinkdb-$ordinal...";
               # avoid creating default databases
               rethinkdb create;
-              exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-service:29015 --canonical-address rethinkdb-$ordinal.rethinkdb-internal.dev.svc.cluster.local:29015;
-              # if [ "$ordinal" -eq 0 ]; then
-              #   echo "Starting seed node rethinkdb-0...";
-              #   exec rethinkdb --bind all --cache-size 8192;
-              # else
-              #   echo "Starting peer node with join rethinkdb-0...";
-              #   exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb-internal;
-              # fi
+              # create the cluster
+              if [ "$ordinal" -eq 0 ]; then
+                # the first pod is the seed node
+                echo "Starting seed node rethinkdb-0...";
+                exec rethinkdb --bind all --cache-size 8192;
+              else
+                # all other pods join the first pod
+                echo "Starting peer node with join rethinkdb-0...";
+                exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb-internal;
+              fi
           volumeMounts:
             - name: data
               mountPath: /data
