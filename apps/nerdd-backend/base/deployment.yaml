@@ -46,3 +46,13 @@ spec:
                   matchLabels:
                     app: rethinkdb
                 topologyKey: kubernetes.io/hostname
+        # distribute instances across nodes
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nerdd-backend
+              topologyKey: "kubernetes.io/hostname"
