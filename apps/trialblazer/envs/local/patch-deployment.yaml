@@ -1,11 +1,20 @@
 - op: add
-  path: /spec/template/spec/containers/0/env
+  path: /spec/template/spec/containers/0/env/-
   value:
-    - name: OMP_NUM_THREADS
-      value: "4"
-    - name: MKL_NUM_THREADS
-      value: "4"
-    - name: OPENBLAS_NUM_THREADS
-      value: "4"
-    - name: NUMEXPR_NUM_THREADS
-      value: "4"
+    name: OMP_NUM_THREADS
+    value: "4"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: MKL_NUM_THREADS
+    value: "4"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: OPENBLAS_NUM_THREADS
+    value: "4"
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: NUMEXPR_NUM_THREADS
+    value: "4"
