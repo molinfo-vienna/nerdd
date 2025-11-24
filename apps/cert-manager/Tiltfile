@@ -5,5 +5,6 @@ kustomize_resource(
     kustomization_path='./envs/infra/',
     namespace='cert-manager',
     create_namespace=True,
+    resource_deps=['gateway-api'],
     labels=["infra"]
 )
