@@ -31,6 +31,7 @@ apps = [
     # essential:
     'storage',
     'external-secrets',
+    'gateway-api',
     'cert-manager',
     'haproxy-controller',
     'strimzi',
