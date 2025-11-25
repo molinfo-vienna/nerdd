@@ -2,5 +2,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  # external-secrets generated from helm template external-secrets/external-secrets
-  - external-secrets-0.14.4.yaml
+  - https://github.com/external-secrets/external-secrets/releases/download/v0.14.4/external-secrets.yaml
