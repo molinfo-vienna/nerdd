@@ -1,5 +1,0 @@
-- op: replace
-  path: /spec/type
-  value: ClusterIP
-- op: remove
-  path: /spec/externalTrafficPolicy
