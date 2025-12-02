@@ -1,0 +1,59 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-gateway-ca
+spec:
+  isCA: true
+  commonName: nginx-gateway
+  secretName: nginx-gateway-ca
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: nginx-gateway-issuer
+  namespace: nginx-gateway
+spec:
+  ca:
+    secretName: nginx-gateway-ca
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-gateway
+spec:
+  secretName: server-tls
+  usages:
+    - digital signature
+    - key encipherment
+  dnsNames:
+    - nginx-gateway.nginx-gateway.svc
+  issuerRef:
+    name: nginx-gateway-issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx
+spec:
+  secretName: agent-tls
+  usages:
+    - "digital signature"
+    - "key encipherment"
+  dnsNames:
+    - "*.cluster.local"
+  issuerRef:
+    name: nginx-gateway-issuer
