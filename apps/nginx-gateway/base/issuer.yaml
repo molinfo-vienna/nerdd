@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: nerdd-issuer
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: nerdd@gmail.com
+    profile: tlsserver
+    privateKeySecretRef:
+      name: letsencrypt-dev
+    solvers:
+      - http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: nerdd-gateway
+                namespace: nginx-gateway

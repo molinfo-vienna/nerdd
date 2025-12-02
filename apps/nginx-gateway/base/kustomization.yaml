@@ -6,3 +6,6 @@ resources:
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.5.1/deploy/crds.yaml
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.5.1/deploy/default/deploy.yaml
   - nginx-gateway-issuer.yaml
+
+  - issuer.yaml
+  - gateway.yaml

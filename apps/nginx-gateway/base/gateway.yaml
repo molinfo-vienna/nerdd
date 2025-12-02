@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: nerdd-gateway
+  annotations:
+    cert-manager.io/issuer: nerdd-issuer
+    nginx.gateway.nginx.org/service-type: ClusterIP
+spec:
+  gatewayClassName: nginx
+  listeners:
+    - name: https
+      hostname: nerdd.univie.ac.at
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: nerdd-tls
+      allowedRoutes:
+        namespaces:
+          from: All
