@@ -8,6 +8,13 @@ metadata:
 spec:
   gatewayClassName: nginx
   listeners:
+    - name: http
+      hostname: nerdd.univie.ac.at
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
     - name: https
       hostname: nerdd.univie.ac.at
       port: 443
