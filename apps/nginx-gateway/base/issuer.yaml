@@ -13,5 +13,7 @@ spec:
       - http01:
           gatewayHTTPRoute:
             parentRefs:
-              - name: nerdd-gateway
+              - group: gateway.networking.k8s.io
+                kind: Gateway
+                name: nerdd-gateway
                 namespace: nginx-gateway
