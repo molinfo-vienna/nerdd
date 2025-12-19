@@ -4,7 +4,9 @@ metadata:
   name: backend-route
 spec:
   parentRefs:
-    - name: nerdd-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: nerdd-gateway
       namespace: nginx-gateway
   hostnames:
     - nerdd.univie.ac.at
@@ -17,5 +19,8 @@ spec:
             type: PathPrefix
             value: /websocket
       backendRefs:
-        - name: nerdd-backend
+        - group: ""
+          kind: Service
+          name: nerdd-backend
           port: 8000
+          weight: 1
