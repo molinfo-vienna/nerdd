@@ -22,7 +22,9 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: nerdd-tls
+          - group: ""
+            kind: Secret
+            name: nerdd-tls
       allowedRoutes:
         namespaces:
           from: All
