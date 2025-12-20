@@ -1,0 +1,12 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    - webhook
+    - --port=10250
+    - --dns-name=external-secrets-webhook.external-secrets.svc
+    - --cert-dir=/tmp/certs
+    - --check-interval=5m
+    - --metrics-addr=:8080
+    - --healthz-addr=:8081
+    - --loglevel=info
+    - --zap-time-encoding=epoch
