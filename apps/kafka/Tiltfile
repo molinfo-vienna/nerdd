@@ -1,7 +1,7 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
 kustomize_resource(
-    workload='kafka',
+    workload='message-broker',
     kustomization_path='./envs/local/',
     namespace='local',
     resource_deps=['strimzi'],
