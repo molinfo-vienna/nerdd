@@ -4,7 +4,12 @@ kind: Kustomization
 resources:
   # nginx gateway fabric
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.5.1/deploy/crds.yaml
-  - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.5.1/deploy/default/deploy.yaml
+  - rbac.yaml
+  - gateway-class.yaml
+  - proxy.yaml
+  - config.yaml
+  - deployment.yaml
+  - service.yaml
   - nginx-gateway-issuer.yaml
 
   - issuer.yaml

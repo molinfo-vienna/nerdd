@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: nginx-gateway
+    app.kubernetes.io/name: nginx-gateway
+    app.kubernetes.io/version: 2.5.1
+  name: nginx-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: nginx-gateway
+      app.kubernetes.io/name: nginx-gateway
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9113"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/instance: nginx-gateway
+        app.kubernetes.io/name: nginx-gateway
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - controller
+        - --gateway-ctlr-name=gateway.nginx.org/nginx-gateway-controller
+        - --gatewayclass=nginx
+        - --config=nginx-gateway-config
+        - --service=nginx-gateway
+        - --agent-tls-secret=agent-tls
+        - --metrics-port=9113
+        - --health-port=8081
+        - --leader-election-lock-name=nginx-gateway-leader-election
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.uid
+        - name: INSTANCE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/instance']
+        - name: IMAGE_NAME
+          value: ghcr.io/nginx/nginx-gateway-fabric:2.5.1
+        image: ghcr.io/nginx/nginx-gateway-fabric:2.5.1
+        imagePullPolicy: IfNotPresent
+        name: nginx-gateway
+        ports:
+        - containerPort: 8443
+          name: agent-grpc
+        - containerPort: 9113
+          name: metrics
+        - containerPort: 8081
+          name: health
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: health
+          initialDelaySeconds: 3
+          periodSeconds: 1
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsUser: 101
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /var/run/secrets/ngf
+          name: nginx-agent-tls
+      securityContext:
+        fsGroup: 1001
+        runAsNonRoot: true
+      serviceAccountName: nginx-gateway
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: nginx-agent-tls
+        secret:
+          secretName: server-tls
