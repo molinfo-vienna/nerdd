@@ -43,10 +43,11 @@ else:
         entrypoint=extract_entrypoint('./envs/local/', project_name, dockerfile_path),
     )
 
+
 kustomize_resource(
     workload='nerdd-backend',
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['kafka', 'storage', 'rethinkdb', 'nginx-gateway'],
+    resource_deps=['message-broker', 'storage', 'rethinkdb', 'nginx-gateway'],
     labels=['backend']
 )
