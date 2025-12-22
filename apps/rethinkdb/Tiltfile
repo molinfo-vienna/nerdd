@@ -14,7 +14,7 @@ kustomize_resource(
     namespace='local',
     port_forwards=['8084:8080', '28015:28015', '29015:29015'],
     resource_deps=[
-        'storage', 'nginx-gateway', 'external-secrets', 'reset-statefulset-data'
+        'storage', 'nginx-gateway', 'external-secrets-check', 'reset-statefulset-data'
     ],
     labels=['infra']
 )
