@@ -5,6 +5,7 @@ load('../../common.Tiltfile', 'kustomize_resource')
 local_resource(
     'remove-keda-finalizers',
     cmd='''
+    kubectl get scaledobjects -A -o json | kubectl patch -f - --type=merge -p '{"metadata":{"finalizers":null}}' || true
     kubectl patch crd scaledobjects.keda.sh -p '{"metadata":{"finalizers":[]}}' --type=merge || true
     ''',
     labels=['infra'],
