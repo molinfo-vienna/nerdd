@@ -1,6 +1,6 @@
 load('ext://namespace', 'namespace_create', 'namespace_inject')
 
-def replace_namespace(yaml, new_namespace, keep_namespaces=['default', 'kube-system']):
+def replace_namespace(yaml, new_namespace, replaceable_namespaces=['default']):
     # read yaml 
     if type(yaml) == 'string':
         objects = read_yaml_stream(yaml)
@@ -9,7 +9,7 @@ def replace_namespace(yaml, new_namespace, keep_namespaces=['default', 'kube-sys
     else:
         fail('only takes string or blob, got: %s' % type(yaml))
 
-    def _r(obj, path):
+    def _replace(obj, path):
         for p in path[:-1]:
             if p in obj:
                 obj = obj[p]
@@ -18,8 +18,8 @@ def replace_namespace(yaml, new_namespace, keep_namespaces=['default', 'kube-sys
 
         # check if
         # a) the key does not exist (-> unspecified hints at patchable namespace)
-        # b) the key does exist and is not in the forbidden namespaces (e.g. "default")
-        if (path[-1] not in obj) or (obj[path[-1]] not in keep_namespaces):
+        # b) the key does exist and its namespace is replaceable (e.g. "default")
+        if (path[-1] not in obj) or (obj[path[-1]] in replaceable_namespaces):
             obj[path[-1]] = new_namespace
 
 
@@ -27,17 +27,17 @@ def replace_namespace(yaml, new_namespace, keep_namespaces=['default', 'kube-sys
     for obj in objects:
         kind = obj['kind']
 
-        _r(obj, ['metadata', 'namespace'])
+        _replace(obj, ['metadata', 'namespace'])
 
         #
         # SPECIAL CASES
         #
 
         if kind == 'Deployment': # templates in deployments
-            _r(obj, ['spec', 'template', 'metadata', 'namespace'])
+            _replace(obj, ['spec', 'template', 'metadata', 'namespace'])
         elif kind == 'RoleBinding': # subjects in role bindings
             for subject in obj['subjects']:
-                _r(subject, ['namespace'])
+                _replace(subject, ['namespace'])
 
     return encode_yaml_stream(objects)
 
