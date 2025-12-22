@@ -5,7 +5,7 @@ load('../../common.Tiltfile', 'kustomize_resource')
 local_resource(
     'remove-strimzi-finalizers',
     cmd='''
-    kubectl patch kafkatopic --all -n local --type=merge  --patch '{"metadata":{"finalizers":[]}}' || true
+    kubectl get kafkatopic -A -o json | kubectl patch -f - --type=merge -p '{"metadata":{"finalizers":null}}'
     kubectl patch crd kafkatopics.kafka.strimzi.io -p '{"metadata":{"finalizers":[]}}' --type=merge || true
     ''',
     labels=['infra'],
