@@ -1,47 +1,11 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: kafka-config
+  name: broker-config
 type: Opaque
 stringData:
   channel: "kafka"
   broker_url: <to-patch>
   broker_username: ""
   broker_password: ""
----
-apiVersion: external-secrets.io/v1alpha1
-kind: PushSecret
-metadata:
-  name: kafka-config-hub-push
-spec:
-  secretStoreRefs:
-    - kind: ClusterSecretStore
-      name: kubernetes-cluster-store
-  selector:
-    secret:
-      name: kafka-config
-  data:
-    - conversionStrategy: None 
-      match:
-        secretKey: channel
-        remoteRef:
-          remoteKey: broker-config
-          property: channel
-    - conversionStrategy: None 
-      match:
-        secretKey: broker_url
-        remoteRef:
-          remoteKey: broker-config
-          property: broker_url
-    - conversionStrategy: None 
-      match:
-        secretKey: broker_username
-        remoteRef:
-          remoteKey: broker-config
-          property: broker_username
-    - conversionStrategy: None 
-      match:
-        secretKey: broker_password
-        remoteRef:
-          remoteKey: broker-config
-          property: broker_password
+
