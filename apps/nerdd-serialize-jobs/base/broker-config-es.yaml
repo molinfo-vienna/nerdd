@@ -1,0 +1,34 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: broker-config-serialize-jobs
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: kubernetes-cluster-store
+  target:
+    name: broker-config-serialize-jobs
+    template:
+      type: Opaque
+      data:
+        channel: "{{ .channel }}"
+        broker_url: "{{ .broker_url }}"
+        broker_username: "{{ .broker_username }}"
+        broker_password: "{{ .broker_password }}"
+  data:
+    - secretKey: channel
+      remoteRef:
+        key: broker-config
+        property: channel
+    - secretKey: broker_url
+      remoteRef:
+        key: broker-config
+        property: broker_url
+    - secretKey: broker_username
+      remoteRef:
+        key: broker-config
+        property: broker_username
+    - secretKey: broker_password
+      remoteRef:
+        key: broker-config
+        property: broker_password
