@@ -1,0 +1,3 @@
+- op: replace
+  path: /stringData/broker_url
+  value: kafka-cluster-kafka-bootstrap.dev:9092
