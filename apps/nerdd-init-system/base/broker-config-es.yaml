@@ -1,0 +1,50 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: broker-config-init-system
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: broker-store
+  target:
+    name: broker-config-init-system
+    template:
+      type: Opaque
+      data:
+        channel: "{{ .channel }}"
+        broker_url: "{{ .broker_url }}"
+        broker_username: "{{ .broker_username }}"
+        broker_password: "{{ .broker_password }}"
+  data:
+    - secretKey: channel
+      remoteRef:
+        key: broker-config
+        property: channel
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: broker_url
+      remoteRef:
+        key: broker-config
+        property: broker_url
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: broker_username
+      remoteRef:
+        key: broker-config
+        property: broker_username
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: broker_password
+      remoteRef:
+        key: broker-config
+        property: broker_password
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
