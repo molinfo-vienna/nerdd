@@ -3,9 +3,3 @@ kind: Kustomization
 
 resources:
   - ../../base
-
-patches:
-  - target:
-      kind: Deployment
-      name: nerdd-serialize-jobs
-    path: patch-deployment.yaml
