@@ -35,6 +35,10 @@ patches:
     path: patch-topic.yaml
   - target:
       kind: KafkaTopic
+      name: result-checkpoints
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
       name: serialization-requests
     path: patch-topic.yaml
   - target:
