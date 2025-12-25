@@ -18,6 +18,40 @@ spec:
         - name: nerdd-backend
           image: ghcr.io/molinfo-vienna/nerdd-backend:latest
           imagePullPolicy: Always
+          args:
+            - --config-name
+            - production
+            - ++db.host=$(DB_HOST)
+            - ++db.port=$(DB_PORT)
+            - ++channel.name=$(CHANNEL)
+            - ++channel.broker_url=$(BROKER_URL)
+            - ++channel.broker_username=$(BROKER_USERNAME)
+            - ++channel.broker_password=$(BROKER_PASSWORD)
+          env:
+            - name: DB_HOST
+              value: ""
+            - name: DB_PORT
+              value: ""
+            - name: CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-backend
+                  key: channel
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-backend
+                  key: broker_url
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-backend
+                  key: broker_username
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-backend
+                  key: broker_password
           ports:
             - containerPort: 8000
           volumeMounts:
