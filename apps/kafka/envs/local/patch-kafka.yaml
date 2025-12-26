@@ -1,4 +1,8 @@
 - op: replace
+  path: /spec/entityOperator/topicOperator
+  value:
+    watchedNamespace: local
+- op: replace
   path: /spec/kafka/config
   value:
     auto.create.topics.enable: "false"

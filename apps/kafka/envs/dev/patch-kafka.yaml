@@ -1,4 +1,8 @@
 - op: replace
+  path: /spec/entityOperator/topicOperator
+  value:
+    watchedNamespace: dev
+- op: replace
   path: /spec/kafka/template
   value:
     pod:
