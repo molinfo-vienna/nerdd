@@ -49,3 +49,7 @@ patches:
       kind: KafkaTopic
       name: serialization-results
     path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: modules
+    path: patch-topic.yaml
