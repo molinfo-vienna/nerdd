@@ -30,6 +30,7 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 5
     config:
+      auto.create.topics.enable: "false"
       producer.max.request.size: 10485760
       consumer.max.request.size: 10485760
       max.partition.fetch.bytes: 10485760
