@@ -12,7 +12,6 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=ghcr.io/molinfo-vienna/gloryx:latest
-      - brokerUrl=kafka-cluster-kafka-bootstrap.dev:9092
 
 patches:
   - target:
