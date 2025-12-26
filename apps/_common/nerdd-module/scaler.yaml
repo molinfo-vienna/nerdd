@@ -17,7 +17,7 @@ spec:
       metadata:
         topic: TOPIC
         offsetResetPolicy: earliest
-        bootstrapServers: BROKER_URL
+        bootstrapServersFromEnv: BROKER_URL
         consumerGroup: CONSUMER_GROUP
         lagThreshold: "5"
         limitToPartitionsWithLag: "true"
