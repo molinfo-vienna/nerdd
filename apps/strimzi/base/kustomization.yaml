@@ -6,3 +6,44 @@ resources:
   - clusterrolebinding1.yaml
   - clusterrolebinding2.yaml
   - clusterrolebinding3.yaml
+
+patches:
+  # The upstream Strimzi bundle uses "myproject" as a namespace placeholder in RBAC subjects. Patch
+  # those subjects to the namespace where this operator service account actually runs.
+  - target:
+      kind: RoleBinding
+      name: strimzi-cluster-operator
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: RoleBinding
+      name: strimzi-cluster-operator-entity-operator-delegation
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: RoleBinding
+      name: strimzi-cluster-operator-leader-election
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: RoleBinding
+      name: strimzi-cluster-operator-watched
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: ClusterRoleBinding
+      name: strimzi-cluster-operator
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: ClusterRoleBinding
+      name: strimzi-cluster-operator-kafka-broker-delegation
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: ClusterRoleBinding
+      name: strimzi-cluster-operator-kafka-client-delegation
+    path: patch-subject-namespace.yaml
+  - target:
+      kind: Deployment
+      name: strimzi-cluster-operator
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/env/0/valueFrom
+      - op: add
+        path: /spec/template/spec/containers/0/env/0/value
+        value: "*"
