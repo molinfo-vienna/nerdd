@@ -5,7 +5,7 @@ resources:
   - ../../base
 
 components:
-  - ../../../_common/nerdd-module
+  - ../../../_common/nerdd-module/envs/local
 
 configMapGenerator:
   - name: app-config
@@ -13,7 +13,7 @@ configMapGenerator:
     literals:
       - image=cypstrate:latest
       - minReplicaCount=1
-      - maxReplicaCount=1
+      - maxReplicaCount=3
 
 patches:
   - target:
