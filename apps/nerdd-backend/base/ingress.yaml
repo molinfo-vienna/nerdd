@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: nerdd-backend-ingress
   annotations:
-    haproxy.org/load-balance: "source"
     cert-manager.io/cluster-issuer: nerdd-issuer
     # increase timeout for large file uploads
     haproxy.org/timeout-server: 600s
