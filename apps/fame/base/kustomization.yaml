@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=fame.Fame3Model
       - topic=fame3-checkpoints
       - consumerGroup=predict-checkpoints-fame3
-      - minReplicaCount=1
-      - maxReplicaCount=10
       - cpuRequest=3
       - memRequest=17G
       - cpuLimit=5

@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=cyplebrity.CyplebrityModel
       - topic=cyplebrity-checkpoints
       - consumerGroup=predict-checkpoints-cyplebrity
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=10m
       - memRequest=50Mi
       - cpuLimit=2000m

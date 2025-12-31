@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=hitdexter.HitDexter3Model
       - topic=hitdexter3-checkpoints
       - consumerGroup=predict-checkpoints-hitdexter3
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=10m
       - memRequest=600Mi
       - cpuLimit=4000m

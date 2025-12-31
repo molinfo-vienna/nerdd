@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=glory.GloryModel
       - topic=glory-checkpoints
       - consumerGroup=predict-checkpoints-glory
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=4
       - memRequest=4Gi
       - cpuLimit=6
