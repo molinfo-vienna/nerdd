@@ -2,11 +2,12 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
   name: TOPIC
+  namespace: KAFKA_NAMESPACE
   labels:
     app: APP_NAME
     strimzi.io/cluster: kafka-cluster
 spec:
   partitions: 10
-  replicas: 3
+  replicas: 1
   config:
     cleanup.policy: compact

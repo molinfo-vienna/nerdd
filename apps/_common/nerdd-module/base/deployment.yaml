@@ -16,14 +16,14 @@ spec:
       containers:
         - name: APP_NAME
           image: IMAGE
-          command: [ "/env/bin/nerdd_prediction_server" ]
+          command: ["/env/bin/nerdd_prediction_server"]
           args:
             - MODEL_CLASS
             - --channel=$(CHANNEL)
             - --broker-url=$(BROKER_URL)
             # TODO: add these args once we upgraded nerdd-link everywhere
-            # - --broker-username=$(BROKER_USERNAME)
-            # - --broker-password=$(BROKER_PASSWORD)
+            - --broker-username=$(BROKER_USERNAME)
+            - --broker-password=$(BROKER_PASSWORD)
             - --data-dir=/data
           env:
             - name: CHANNEL
