@@ -22,8 +22,8 @@ spec:
             - --channel=$(CHANNEL)
             - --broker-url=$(BROKER_URL)
             # TODO: add these args once we upgraded nerdd-link everywhere
-            - --broker-username=$(BROKER_USERNAME)
-            - --broker-password=$(BROKER_PASSWORD)
+            # - --broker-username=$(BROKER_USERNAME)
+            # - --broker-password=$(BROKER_PASSWORD)
             - --data-dir=/data
           env:
             - name: CHANNEL
