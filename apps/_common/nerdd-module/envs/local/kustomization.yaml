@@ -4,6 +4,13 @@ kind: Component
 components:
   - ../../base
 
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - minReplicaCount=1
+      - maxReplicaCount=3
+
 patches:
   - target:
       kind: KafkaTopic
