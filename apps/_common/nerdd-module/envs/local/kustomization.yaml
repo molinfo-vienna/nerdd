@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+components:
+  - ../../base
+
+patches:
+  - target:
+      kind: KafkaTopic
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: local-kafka
