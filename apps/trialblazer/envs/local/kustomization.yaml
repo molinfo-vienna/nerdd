@@ -12,8 +12,6 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=trialblazer:latest
-      - minReplicaCount=1
-      - maxReplicaCount=1
 
 patches:
   - target:

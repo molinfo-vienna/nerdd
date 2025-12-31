@@ -12,8 +12,6 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=cypstrate:latest
-      - minReplicaCount=1
-      - maxReplicaCount=3
 
 patches:
   - target:

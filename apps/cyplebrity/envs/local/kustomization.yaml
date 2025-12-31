@@ -12,8 +12,6 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=cyplebrity:latest
-      - minReplicaCount=1
-      - maxReplicaCount=1
 
 patches:
   - target:
