@@ -90,16 +90,6 @@ replacements:
   - source:
       kind: ConfigMap
       name: app-config
-      fieldPath: data.consumerGroup
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.consumerGroup
-
-  - source:
-      kind: ConfigMap
-      name: app-config
       fieldPath: data.minReplicaCount
     targets:
       - select:
