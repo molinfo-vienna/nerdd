@@ -3,11 +3,12 @@ kind: Ingress
 metadata:
   name: redpanda-console
   annotations:
-    haproxy.org/path-rewrite-target: /
-    haproxy.org/auth-type: basic
-    haproxy.org/auth-secret: redpanda-auth
-    haproxy.org/auth-realm: "Redpanda Console"
+    # https
     cert-manager.io/cluster-issuer: nerdd-issuer
+    # authentication
+    haproxy.org/auth-type: basic-auth
+    haproxy.org/auth-secret: redpanda-auth
+    haproxy.org/auth-realm: "Redpanda Console Login"
 spec:
   ingressClassName: haproxy
   rules:
