@@ -9,6 +9,8 @@ metadata:
     haproxy.org/auth-type: basic-auth
     haproxy.org/auth-secret: redpanda-auth
     haproxy.org/auth-realm: "Redpanda Console Login"
+    # redpanda infers the root path from X-Forwarded-Prefix header
+    haproxy.org/request-set-header: X-Forwarded-Prefix /redpanda
 spec:
   ingressClassName: haproxy
   rules:
