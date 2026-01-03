@@ -1,0 +1,15 @@
+- op: replace
+  path: /spec/replicas
+  value: 1
+- op: replace
+  path: /spec/resources
+  value:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 200m
+      memory: 512Mi
+- op: replace
+  path: /spec/persistence/storageClassName
+  value: null
