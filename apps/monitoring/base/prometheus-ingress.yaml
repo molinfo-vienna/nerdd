@@ -3,11 +3,13 @@ kind: Ingress
 metadata:
   name: prometheus
   annotations:
-    haproxy.org/path-rewrite-target: /
-    haproxy.org/auth-type: basic
-    haproxy.org/auth-secret: prometheus-auth
-    haproxy.org/auth-realm: "Prometheus"
+    # https
     cert-manager.io/cluster-issuer: nerdd-issuer
+    # authentication
+    haproxy.org/auth-type: basic-auth
+    haproxy.org/auth-secret: prometheus-auth
+    haproxy.org/auth-realm: Prometheus
+    haproxy.org/path-rewrite-target: /
 spec:
   ingressClassName: haproxy
   rules:
