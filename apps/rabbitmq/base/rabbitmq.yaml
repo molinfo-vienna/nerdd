@@ -1,0 +1,26 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq
+spec:
+  replicas: 3
+  persistence:
+    storageClassName: rook-ceph-block
+    storage: 10Gi
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+  secretBackend:
+    externalSecret:
+      name: rabbitmq-config
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_stream
+    additionalConfig: |
+      log.console = true
+      cluster_partition_handling = pause_minority
+      vm_memory_high_watermark.relative = 0.4
