@@ -1,0 +1,20 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+# Sometimes, deleting Rabbitmq resources fails due to finalizers. Avoid that by removing them. We
+# do not need them in local development.
+local_resource(
+    'remove-rabbitmq-finalizers',
+    cmd='''
+    kubectl patch rabbitmqcluster rabbitmq -n rabbitmq -p '{"metadata":{"finalizers":null}}' --type=merge || true
+    ''',
+    labels=['infra'],
+)
+
+kustomize_resource(
+    workload='message-broker',
+    kustomization_path='./envs/local/',
+    namespace='rabbitmq',
+    create_namespace=True,
+    resource_deps=['rabbitmq-system', 'remove-rabbitmq-finalizers'],
+    labels=["infra"]
+)
