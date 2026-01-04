@@ -9,7 +9,7 @@ configMapGenerator:
     behavior: merge
     literals:
       - minReplicaCount=1
-      - maxReplicaCount=10
+      - maxReplicaCount=1
 
 patches:
   - target:
