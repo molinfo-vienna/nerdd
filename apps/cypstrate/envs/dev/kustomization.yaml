@@ -5,12 +5,10 @@ resources:
   - ../../base
 
 components:
-  - ../../../_common/nerdd-module/envs/dev
+  - ../../../_common/nerdd-module/envs/dev10
 
 configMapGenerator:
   - name: app-config
     behavior: merge
     literals:
       - image=ghcr.io/molinfo-vienna/cypstrate:latest
-      - minReplicaCount=1
-      - maxReplicaCount=10
