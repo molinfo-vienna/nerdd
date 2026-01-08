@@ -239,7 +239,7 @@ def extract_entrypoint(kustomization_path, workload_name, dockerfile_path):
     fail("Could not find Deployment '%s' in '%s'" % (workload_name, kustomization_path))
 
 
-def build_nerdd_module(
+def build_nerdd_image(
         project_name,
         repository_url,
         repository_name=None,
