@@ -1,24 +1,15 @@
-load('ext://git_resource', 'git_checkout')
-load('../../common.Tiltfile', 'kustomize_resource', 'extract_entrypoint')
-load('ext://restart_process', 'custom_build_with_restart')
+load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_module')
 
-USE_PRODUCTION_IMAGE = True
-
-# checkout source code
 project_name = 'awesom'
-repository_url = 'https://github.com/molinfo-vienna/aweSOM-image'
-project_dir = '../../repos/aweSOM-image'
-if not os.path.exists(project_dir):
-    git_checkout(
-        repository_url, 
-        checkout_dir=project_dir
-    )
+repository_name = 'aweSOM-image'
+repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
 
-docker_build(
+build_nerdd_module(
     project_name,
-    context=project_dir,
+    repository_url,
+    repository_name=repository_name,
+    live_update_module_and_link=False,
 )
-
 
 # deploy to kubernetes
 kustomize_resource(

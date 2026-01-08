@@ -1,21 +1,15 @@
-load('ext://git_resource', 'git_checkout')
-load('../../common.Tiltfile', 'kustomize_resource')
+load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_module')
 
-# checkout source code
 project_name = 'skin-doctor-ternary'
 repository_name = 'skin-doctor'
 repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
-project_dir = '../../repos/{}'.format(repository_name)
-if not os.path.exists(project_dir):
-    git_checkout(
-        repository_url, 
-        checkout_dir=project_dir
-    )
 
-docker_build(
+build_nerdd_module(
     project_name,
-    dockerfile='{}/Dockerfile.skin-doctor-ternary'.format(project_dir),
-    context=project_dir,
+    repository_url,
+    repository_name=repository_name,
+    dockerfile_path='Dockerfile.{}'.format(project_name),
+    live_update_module_and_link=False,
 )
 
 # deploy to kubernetes
