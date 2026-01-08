@@ -273,9 +273,12 @@ def build_nerdd_module(
         changes are detected. When false, uses a standard Docker build without Live Update.
     live_update_module_and_link : bool, optional
         Whether to watch and synchronize ``nerdd-module`` and ``nerdd-link`` into
-        ``/deps/nerdd-module`` and ``/deps/nerdd-link`` during Live Update. Ignored when
-        ``live_update`` is false.
+        ``/deps/nerdd-module`` and ``/deps/nerdd-link`` during Live Update. Requires
+        ``live_update`` to be true.
     """
+    if live_update_module_and_link and not live_update:
+        fail("live_update_module_and_link requires live_update=True")
+
     if repository_name == None:
         repository_name = project_name
 
