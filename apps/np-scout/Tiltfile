@@ -1,13 +1,14 @@
-load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_module')
+load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_image')
 
 USE_PRODUCTION_IMAGE = False
 project_name = 'np-scout'
 repository_url = 'https://github.com/molinfo-vienna/{}'.format(project_name)
 
-build_nerdd_module(
+build_nerdd_image(
     project_name,
     repository_url,
     dockerfile_path='Dockerfile' if USE_PRODUCTION_IMAGE else 'Dockerfile.dev',
+    live_update=not USE_PRODUCTION_IMAGE,
     live_update_module_and_link=not USE_PRODUCTION_IMAGE,
 )
 
