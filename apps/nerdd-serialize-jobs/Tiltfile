@@ -1,35 +1,22 @@
-load('../../common.Tiltfile', 'kustomize_resource', 'extract_entrypoint')
-load('ext://restart_process', 'custom_build_with_restart')
+load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_image')
 
 USE_PRODUCTION_IMAGE = False
-
 project_name = 'nerdd-serialize-jobs'
-project_dir = '../../repos/nerdd-link'
+repository_name = 'nerdd-link'
+repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
 
-if USE_PRODUCTION_IMAGE:
-    docker_build(
-        project_name,
-        context=project_dir,
-        dockerfile='{}/Dockerfile.{}'.format(project_dir, project_name),
-    )
-else:
-    dockerfile_path = os.path.join(project_dir, 'Dockerfile.{}.dev'.format(project_name))
-    command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
-        dockerfile_path,
-        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/cypstrate'
-        #       -> repos directory is the parent directory of project_dir
-        os.path.join(project_dir, '..'),
-    )
-    custom_build_with_restart(
-        project_name,
-        command=command,
-        deps=[project_dir, "."],
-        dir=project_dir,
-        live_update=[
-            sync(project_dir, "/app"),
-        ],
-        entrypoint=extract_entrypoint('./envs/local', project_name, dockerfile_path)
-    )
+build_nerdd_image(
+    project_name,
+    repository_url,
+    repository_name=repository_name,
+    dockerfile_path=(
+        'Dockerfile.{}'.format(project_name)
+        if USE_PRODUCTION_IMAGE
+        else 'Dockerfile.{}.dev'.format(project_name)
+    ),
+    live_update=not USE_PRODUCTION_IMAGE,
+    live_update_module_and_link=False,
+)
 
 kustomize_resource(
     project_name,
