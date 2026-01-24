@@ -20,4 +20,4 @@ spec:
   tls:
     - hosts:
         - nerdd.univie.ac.at
-      secretName: grafana-tls
+      secretName: monitoring-tls
