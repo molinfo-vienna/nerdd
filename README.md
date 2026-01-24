@@ -5,6 +5,21 @@ reflects the current state of the NERDD instances deployed at the COMP3D group (
 Vienna) and provides the configuration files for setting up and running all components on a
 Kubernetes cluster.
 
+Part of the platform are:
+
+* [nerdd-frontend](https://github.com/molinfo-vienna/nerdd-frontend): the user interface
+* [nerdd-backend](https://github.com/molinfo-vienna/nerdd-frontend): the backend server
+* [nerdd-module](https://github.com/molinfo-vienna/nerdd-module): basis for creating new prediction modules
+* [nerdd-link](https://github.com/molinfo-vienna/nerdd-link): communication layer
+
+A few example modules can be found here:
+
+* [CYPstrate](https://github.com/molinfo-vienna/cypstrate)
+* [CYPlebrity](https://github.com/molinfo-vienna/cyplebrity)
+* [HitDexter](https://github.com/molinfo-vienna/hitdexter/)
+* [NPScout](https://github.com/molinfo-vienna/np-scout)
+
+
 ## Prerequisites
 
 * Kubernetes cluster
