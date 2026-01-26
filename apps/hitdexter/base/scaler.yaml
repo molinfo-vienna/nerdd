@@ -9,8 +9,8 @@ spec:
     name: hitdexter
   pollingInterval: 1
   cooldownPeriod: 30
-  minReplicaCount: 1
-  maxReplicaCount: 10
+  minReplicaCount: 3
+  maxReplicaCount: 3
   triggers:
     - type: kafka
       metadata:
