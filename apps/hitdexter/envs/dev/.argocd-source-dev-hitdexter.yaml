@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/hitdexter:latest@sha256:76de2b373710381fb0295e58d087dcf57344dcdd6a304e8182e45a4f8ad11187
+  - ghcr.io/molinfo-vienna/hitdexter:latest@sha256:7384f45fa90881cc8bd7219cefee6483d6f299c9b47ad67e97086eaf6e6cf620
