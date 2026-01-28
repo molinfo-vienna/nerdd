@@ -14,4 +14,3 @@ resources:
   # connect kafka metrics with prometheus
   - pod-monitor.yaml
   - kafka-metrics-config.yaml
-  - grafana-dashboard.yaml

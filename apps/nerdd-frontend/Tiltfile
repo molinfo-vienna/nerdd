@@ -23,7 +23,7 @@ else:
     docker_build(
         project_name,
         context=project_dir,
-        dockerfile='{}/Dockerfile.dev'.format(project_dir) ,
+        dockerfile='{}/Dockerfile.dev'.format(project_dir),
         live_update=[
             sync(project_dir, '/app')
         ],
