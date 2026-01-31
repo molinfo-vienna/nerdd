@@ -19,17 +19,21 @@
 - op: replace
   path: /spec/kafka/config
   value:
+    auto.create.topics.enable: "false"
+    # allow messages to have a size of 10MB = 10485760 bytes
+    producer.max.request.size: 10485760
+    consumer.max.request.size: 10485760
+    max.partition.fetch.bytes: 10485760
+    message.max.bytes: 10485760
+    # configure replication factor 3 and a tolerance of 1 failed broker
     offsets.topic.replication.factor: 3
     transaction.state.log.replication.factor: 3
     transaction.state.log.min.isr: 2
     default.replication.factor: 3
     min.insync.replicas: 2
+    # extend timeouts to accommodate slower broker registration and
+    # quorum elections in high-latency or unstable network environments.
     initial.broker.registration.timeout.ms: 300000
     controller.quorum.election.timeout.ms: 10000
+    controller.quorum.request.timeout.ms: 10000
     controller.quorum.election.backoff.max.ms: 5000
-    controller.quorum.fetch.timeout.ms: 10000
-    auto.create.topics.enable: "false"
-    producer.max.request.size: 10485760
-    consumer.max.request.size: 10485760
-    max.partition.fetch.bytes: 10485760
-    message.max.bytes: 10485760

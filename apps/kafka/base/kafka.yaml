@@ -30,11 +30,8 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 5
     config:
-      initial.broker.registration.timeout.ms: 300000
-      controller.quorum.election.timeout.ms: 10000
-      controller.quorum.election.backoff.max.ms: 5000
-      controller.quorum.fetch.timeout.ms: 10000
       auto.create.topics.enable: "false"
+      # allow messages to have a size of 10MB = 10485760 bytes
       producer.max.request.size: 10485760
       consumer.max.request.size: 10485760
       max.partition.fetch.bytes: 10485760
