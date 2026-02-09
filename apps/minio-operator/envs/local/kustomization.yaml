@@ -3,3 +3,9 @@ kind: Kustomization
 
 resources:
   - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: minio-operator
+    path: patch-deployment.yaml
