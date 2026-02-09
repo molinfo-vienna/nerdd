@@ -1,0 +1,1 @@
+Note: MinIO is only used in the environment "local" that is used for testing on developer machines.
