@@ -46,6 +46,26 @@ spec:
                 secretKeyRef:
                   name: broker-config
                   key: broker_password
+            - name: S3_URL
+              valueFrom:
+                secretKeyRef:
+                  name: APP_NAME-s3-config
+                  key: s3_url
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: APP_NAME-s3-config
+                  key: s3_bucket
+            - name: S3_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: APP_NAME-s3-config
+                  key: s3_username
+            - name: S3_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: APP_NAME-s3-config
+                  key: s3_password
           volumeMounts:
             - name: data
               mountPath: "/data"
