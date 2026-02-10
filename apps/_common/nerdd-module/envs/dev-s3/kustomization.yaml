@@ -30,7 +30,7 @@ patches:
         value: --s3-bucket=$(S3_BUCKET)
       - op: add
         path: /spec/template/spec/containers/0/args/-
-        value: --s3-username=$(S3_USERNAME)
+        value: --s3-access-key-id=$(S3_ACCESS_KEY_ID)
       - op: add
         path: /spec/template/spec/containers/0/args/-
-        value: --s3-password=$(S3_PASSWORD)
+        value: --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)

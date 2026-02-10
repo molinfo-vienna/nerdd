@@ -56,16 +56,16 @@ spec:
                 secretKeyRef:
                   name: APP_NAME-s3-config
                   key: s3_bucket
-            - name: S3_USERNAME
+            - name: S3_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
                   name: APP_NAME-s3-config
-                  key: s3_username
-            - name: S3_PASSWORD
+                  key: s3_access_key_id
+            - name: S3_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
                   name: APP_NAME-s3-config
-                  key: s3_password
+                  key: s3_secret_access_key
           volumeMounts:
             - name: data
               mountPath: "/data"

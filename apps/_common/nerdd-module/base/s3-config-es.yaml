@@ -13,8 +13,8 @@ spec:
       data:
         s3_url: "{{ .s3_url }}"
         s3_bucket: "{{ .s3_bucket }}"
-        s3_username: "{{ .s3_username }}"
-        s3_password: "{{ .s3_password }}"
+        s3_access_key_id: "{{ .s3_access_key_id }}"
+        s3_secret_access_key: "{{ .s3_secret_access_key }}"
   data:
     - secretKey: s3_url
       remoteRef:
@@ -30,17 +30,17 @@ spec:
         conversionStrategy: Default
         decodingStrategy: None
         metadataPolicy: None
-    - secretKey: s3_username
+    - secretKey: s3_access_key_id
       remoteRef:
         key: s3-config
-        property: s3_username
+        property: s3_access_key_id
         conversionStrategy: Default
         decodingStrategy: None
         metadataPolicy: None
-    - secretKey: s3_password
+    - secretKey: s3_secret_access_key
       remoteRef:
         key: s3-config
-        property: s3_password
+        property: s3_secret_access_key
         conversionStrategy: Default
         decodingStrategy: None
         metadataPolicy: None
