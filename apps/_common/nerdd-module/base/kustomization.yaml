@@ -5,6 +5,7 @@ resources:
   - deployment.yaml
   - topic.yaml
   - broker-config-es.yaml
+  - s3-config-es.yaml
   - scaler.yaml
 
 replacements:
