@@ -29,22 +29,22 @@ spec:
             - name: CHANNEL
               valueFrom:
                 secretKeyRef:
-                  name: broker-config
+                  name: APP_NAME-broker-config
                   key: channel
             - name: BROKER_URL
               valueFrom:
                 secretKeyRef:
-                  name: broker-config
+                  name: APP_NAME-broker-config
                   key: broker_url
             - name: BROKER_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: broker-config
+                  name: APP_NAME-broker-config
                   key: broker_username
             - name: BROKER_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: broker-config
+                  name: APP_NAME-broker-config
                   key: broker_password
             - name: S3_URL
               valueFrom:
