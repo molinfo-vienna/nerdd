@@ -13,3 +13,5 @@ resources:
   # block storage
   - blockpool.yaml
   - storageclass-block.yaml
+  # rados object storage
+  - objectstore.yaml
