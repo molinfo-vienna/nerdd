@@ -9,19 +9,3 @@
   value: 1
 - op: remove
   path: /spec/template/spec/affinity
-- op: replace
-  path: /spec/template/spec/containers/0/command
-  value:
-    - sh
-    - -c
-    - |
-      ordinal=$(hostname | awk -F- '{print $NF}');
-      echo "Starting rethinkdb node rethinkdb-$ordinal...";
-      rethinkdb create;
-      if [ "$ordinal" -eq 0 ]; then
-        echo "Starting seed node rethinkdb-0...";
-        exec rethinkdb --bind all --cache-size 8192;
-      else
-        echo "Starting peer node with join rethinkdb-0...";
-        exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb-internal;
-      fi
