@@ -15,7 +15,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: active-broker-store
+    name: broker-store
   refreshInterval: "100000h"
   target:
     name: broker-config
@@ -26,7 +26,7 @@ spec:
           default_user = admin
           default_pass = {{ .password }}
         channel: "rabbitmq_streams"
-        broker_url: "rabbitmq://rabbitmq.rabbitmq.svc.cluster.local:5552"
+        broker_url: "<this-will-be-patched>"
         broker_username: admin
         broker_password: "{{ .password }}"
   dataFrom:
