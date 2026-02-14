@@ -13,7 +13,7 @@ local_resource(
 kustomize_resource(
     workload='message-broker',
     kustomization_path='./envs/local/',
-    namespace='rabbitmq',
+    namespace='local-rabbitmq',
     create_namespace=True,
     resource_deps=['rabbitmq-system', 'remove-rabbitmq-finalizers'],
     labels=["infra"]
