@@ -4,17 +4,20 @@ kind: Kustomization
 resources:
   - ../../base
 
+components:
+  - ../../../_common/nerdd-module
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - image=np-scout:latest
+      - brokerUrl=kafka-cluster-kafka-bootstrap.local:9092
+      - minReplicaCount=1
+      - maxReplicaCount=1
+
 patches:
-  - target:
-      kind: Deployment
-      name: np-scout
-    path: patch-deployment.yaml
-  - target:
-      kind: ScaledObject
-      name: np-scout-scaler
-    path: patch-scaler.yaml
   - target:
       kind: KafkaTopic
       name: np-scout-checkpoints
     path: patch-topic.yaml
-
