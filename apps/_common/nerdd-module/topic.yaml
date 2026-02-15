@@ -1,8 +1,9 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: cyplebrity-checkpoints
+  name: TOPIC
   labels:
+    app: APP_NAME
     strimzi.io/cluster: kafka-cluster
 spec:
   partitions: 10
