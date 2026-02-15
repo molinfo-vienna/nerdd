@@ -1,8 +1,6 @@
 - op: replace
   path: /spec/template/spec/containers/0/image
   value: nerdd-frontend:latest
-- op: remove
-  path: /spec/template/spec/imagePullSecrets
 - op: replace
   path: /spec/template/spec/containers/0/resources/limits/memory
   value: 2048Mi
