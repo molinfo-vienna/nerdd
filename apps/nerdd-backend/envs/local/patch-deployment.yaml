@@ -14,5 +14,3 @@
       "++db.port=28015",
       "++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
     ]
-- op: remove
-  path: /spec/template/spec/imagePullSecrets
