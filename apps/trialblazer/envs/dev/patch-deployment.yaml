@@ -1,10 +1,11 @@
-- op: replace
-  path: /spec/template/spec/containers/0/args
+- op: add
+  path: /spec/template/spec/containers/0/env
   value:
-    [
-      "trialblazer.Nerdd.TrialblazerModel",
-      "--broker-url",
-      "kafka-cluster-kafka-bootstrap.dev:9092",
-      "--data-dir",
-      "/data",
-    ]
+    - name: OMP_NUM_THREADS
+      value: "4"
+    - name: MKL_NUM_THREADS
+      value: "4"
+    - name: OPENBLAS_NUM_THREADS
+      value: "4"
+    - name: NUMEXPR_NUM_THREADS
+      value: "4"
