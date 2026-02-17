@@ -4,15 +4,19 @@ kind: Kustomization
 resources:
   - ../../base
 
+components:
+  - ../../../_common/nerdd-module
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - image=skin-doctor-ternary:latest
+      - brokerUrl=kafka-cluster-kafka-bootstrap.local:9092
+      - minReplicaCount=1
+      - maxReplicaCount=1
+
 patches:
-  - target:
-      kind: Deployment
-      name: skin-doctor-ternary
-    path: patch-deployment.yaml
-  - target:
-      kind: ScaledObject
-      name: skin-doctor-ternary-scaler
-    path: patch-scaler.yaml
   - target:
       kind: KafkaTopic
       name: skin-doctor-ternary-checkpoints

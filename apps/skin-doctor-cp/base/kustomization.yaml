@@ -1,7 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - deployment.yaml
-  - topic.yaml
-  - scaler.yaml
+configMapGenerator:
+  - name: app-config
+    literals:
+      - appName=skin-doctor-cp
+      - modelClass=skin_doctor.SkinDoctorCPModel
+      - topic=skin-doctor-cp-checkpoints
+      - consumerGroup=predict-checkpoints-skin-doctor-cp
+      - minReplicaCount=3
+      - maxReplicaCount=3
+      - cpuRequest=10m
+      - memRequest=5Gi
+      - cpuLimit=1
+      - memLimit=5Gi
