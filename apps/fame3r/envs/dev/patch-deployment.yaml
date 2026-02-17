@@ -1,10 +1,4 @@
-- op: replace
-  path: /spec/template/spec/containers/0/args
+- op: add
+  path: /spec/template/spec/imagePullSecrets
   value:
-    [
-      "fame3r._nerdd.FAME3RModel",
-      "--broker-url",
-      "kafka-cluster-kafka-bootstrap.dev:9092",
-      "--data-dir",
-      "/data",
-    ]
+    - name: ghcr-secret
