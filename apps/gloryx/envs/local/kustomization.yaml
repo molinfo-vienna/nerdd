@@ -4,15 +4,19 @@ kind: Kustomization
 resources:
   - ../../base
 
+components:
+  - ../../../_common/nerdd-module
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - image=gloryx:latest
+      - brokerUrl=kafka-cluster-kafka-bootstrap.local:9092
+      - minReplicaCount=1
+      - maxReplicaCount=1
+
 patches:
-  - target:
-      kind: Deployment
-      name: gloryx
-    path: patch-deployment.yaml
-  - target:
-      kind: ScaledObject
-      name: gloryx-scaler
-    path: patch-scaler.yaml
   - target:
       kind: KafkaTopic
       name: gloryx-checkpoints
