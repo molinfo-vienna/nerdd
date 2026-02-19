@@ -16,7 +16,7 @@ spec:
       memory: 2Gi
   secretBackend:
     externalSecret:
-      name: rabbitmq-config
+      name: broker-config
   rabbitmq:
     additionalPlugins:
       - rabbitmq_stream

@@ -8,8 +8,8 @@
       cpu: 100m
       memory: 512Mi
     limits:
-      cpu: 200m
-      memory: 512Mi
+      cpu: 1000m
+      memory: 1Gi
 - op: replace
   path: /spec/persistence/storageClassName
   value: null
