@@ -1,12 +1,8 @@
-load('ext://git_resource', 'git_checkout')
-load('ext://namespace', 'namespace_inject')
+load('../../common.Tiltfile', 'kustomize_resource')
 
-# deploy yaml files
-k8s_yaml(namespace_inject(kustomize('./envs/local/'), 'local'))
-
-k8s_resource(
-    new_name='storage', 
-    objects=['pvc-media:persistentvolumeclaim'], 
-    resource_deps=['namespace'],
+kustomize_resource(
+    workload='storage',
+    kustomization_path='./envs/local/',
+    namespace='local',
     labels=['infra']
 )
