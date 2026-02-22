@@ -82,9 +82,10 @@ def is_handled_by_tilt(resource_object):
 def kustomize_resource(
         workload, 
         kustomization_path, 
-        namespace, 
+        namespace='default', 
         create_namespace=False, 
         replaceable_namespaces=['default'], 
+        only_crds=False,
         **kwargs
     ):
     # all resources should be loaded to the given namespace and grouped in Tilt
@@ -94,6 +95,10 @@ def kustomize_resource(
     resource_stream = kustomize(kustomization_path)
     resource_stream = replace_namespace(resource_stream, namespace, replaceable_namespaces)
     resources = decode_yaml_stream(resource_stream)
+
+    if only_crds:
+        resources = [r for r in resources if r.get('kind') == 'CustomResourceDefinition']
+        resource_stream = encode_yaml_stream(resources)
 
     all_objects = [
         convert_to_tilt_id(r)
