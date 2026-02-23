@@ -1,11 +1,19 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
 kustomize_resource(
+    workload='nginx-gateway-crds',
+    kustomization_path='./envs/local/',
+    resource_deps=['external-secrets-check', 'cert-manager-check', 'gateway-api'],
+    labels=['infra'],
+    only_crds=True,
+)
+
+kustomize_resource(
     workload='nginx-gateway',
     kustomization_path='./envs/local/',
     namespace='nginx-gateway',
     create_namespace=True,
     port_forwards=['8443:443', '8080:80'],
-    resource_deps=['external-secrets-check', 'cert-manager-check', 'gateway-api'],
+    resource_deps=['nginx-gateway-crds'],
     labels=['infra']
 )
