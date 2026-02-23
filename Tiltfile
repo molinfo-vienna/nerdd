@@ -15,7 +15,7 @@ DEFAULT_SCRUB_SECRETS = True
 config.define_bool("scrub_secrets")
 
 # number of parallel workflows to run when executing `tilt up`
-DEFAULT_PARALLEL_UPDATES = 2
+DEFAULT_PARALLEL_UPDATES = 3
 config.define_string("parallel_updates")
 
 # load config provided by the user via command line
