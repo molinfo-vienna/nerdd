@@ -22,6 +22,10 @@ spec:
             - --broker-username=$(BROKER_USERNAME)
             - --broker-password=$(BROKER_PASSWORD)
             - --data-dir=/data
+            - --s3-url=$(S3_URL)
+            - --s3-bucket=$(S3_BUCKET)
+            - --s3-access-key-id=$(S3_ACCESS_KEY_ID)
+            - --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)
           env:
             - name: CHANNEL
               valueFrom:
@@ -43,6 +47,26 @@ spec:
                 secretKeyRef:
                   name: broker-config-serialize-jobs
                   key: broker_password
+            - name: S3_URL
+              valueFrom:
+                secretKeyRef:
+                  name: s3-config-serialize-jobs
+                  key: s3_url
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: s3-config-serialize-jobs
+                  key: s3_bucket
+            - name: S3_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: s3-config-serialize-jobs
+                  key: s3_access_key_id
+            - name: S3_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: s3-config-serialize-jobs
+                  key: s3_secret_access_key
           volumeMounts:
             - name: data
               mountPath: "/data"
