@@ -26,10 +26,15 @@ patches:
         path: /spec/template/spec/containers/0/volumeMounts/0
       - op: remove
         path: /spec/template/spec/volumes/0
+      # Preserve the model class supplied by the underlying deployment while
+      # replacing all remaining arguments. The temporary label is moved back
+      # immediately, so it is absent from the rendered Deployment.
+      - op: move
+        from: /spec/template/spec/containers/0/args/0
+        path: /metadata/labels/nerdd.dev~1preserved-first-arg
       - op: replace
         path: /spec/template/spec/containers/0/args
         value:
-          - MODEL_CLASS
           - --channel=$(CHANNEL)
           - --broker-url=$(BROKER_URL)
           - --broker-username=$(BROKER_USERNAME)
@@ -38,3 +43,6 @@ patches:
           - --s3-bucket=$(S3_BUCKET)
           - --s3-access-key-id=$(S3_ACCESS_KEY_ID)
           - --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)
+      - op: move
+        from: /metadata/labels/nerdd.dev~1preserved-first-arg
+        path: /spec/template/spec/containers/0/args/0
