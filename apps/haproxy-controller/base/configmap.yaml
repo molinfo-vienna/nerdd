@@ -4,3 +4,4 @@ metadata:
   name: haproxy-kubernetes-ingress
 data:
   ssl-redirect-port: "443"
+  nbthread: "4"
