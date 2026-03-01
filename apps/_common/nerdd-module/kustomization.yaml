@@ -53,7 +53,7 @@ replacements:
       - select:
           kind: Deployment
         fieldPaths:
-          - spec.template.spec.containers.0.args.2
+          - spec.template.spec.containers.0.env.[name=KAFKA_BROKER_URL].value
       - select:
           kind: ScaledObject
         fieldPaths:
