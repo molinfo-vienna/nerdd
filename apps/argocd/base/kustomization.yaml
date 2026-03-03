@@ -10,5 +10,6 @@ resources:
   - route.yaml
 
 patches:
+  - path: argocd-cm-patch.yaml
   - path: argocd-cmd-params-cm-patch.yaml
   - path: argocd-image-updater-config-patch.yaml

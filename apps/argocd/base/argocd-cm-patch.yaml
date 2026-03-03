@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  # some resources are manipulated dynamically (e.g. by operators) after deployment
+  # -> ArgoCD shows "Out of sync" for these resources
+  # -> ignore these dynamically changed fields
+  resource.customizations.ignoreDifferences.external-secrets.io_ExternalSecret:
+    |
+    jqPathExpressions:
+      - .spec.data[]?.remoteRef.conversionStrategy
+      - .spec.data[]?.remoteRef.decodingStrategy
+      - .spec.data[]?.remoteRef.metadataPolicy
