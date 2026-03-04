@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - ghcr-secret.yaml
 
 components:
   - ../../../_common/nerdd-module/envs/dev
