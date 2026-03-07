@@ -13,7 +13,7 @@ local_resource(
 
 kustomize_resource(
     workload='strimzi', 
-    kustomization_path='./envs/local', 
+    kustomization_path='./envs/infra', 
     namespace='strimzi', 
     create_namespace=True,
     resource_deps=['remove-strimzi-finalizers'], 
