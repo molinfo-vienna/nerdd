@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  # keda creates the namespace "keda" by default
-  # if it should be installed in a different namespace, change the following value
-  name: keda

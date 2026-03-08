@@ -3,6 +3,3 @@ kind: Kustomization
 
 resources:
   - https://github.com/kedacore/keda/releases/download/v2.16.1/keda-2.16.1-core.yaml
-
-patches:
-  - path: patch-namespace.yaml
