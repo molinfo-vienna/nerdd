@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - broker-store.yaml
 
 patches:
   - target:
@@ -17,7 +18,3 @@ patches:
       kind: KafkaNodePool
       name: controller
     path: patch-nodepool.yaml
-  - target:
-      kind: ClusterSecretStore
-      name: broker-store
-    path: patch-store.yaml
