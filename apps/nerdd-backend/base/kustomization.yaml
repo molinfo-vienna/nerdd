@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - route.yaml
-  - broker-config-es.yaml
-  - s3-config-es.yaml
-  - client-settings.yaml

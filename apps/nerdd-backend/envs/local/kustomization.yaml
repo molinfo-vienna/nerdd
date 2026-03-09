@@ -3,13 +3,13 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - broker-config-es.yaml
+  - s3-config-es.yaml
+  - route.yaml
+  - client-settings.yaml
 
 patches:
   - target:
       kind: Deployment
       name: nerdd-backend
     path: patch-deployment.yaml
-  - target:
-      kind: HTTPRoute
-      name: backend-route
-    path: patch-route.yaml
