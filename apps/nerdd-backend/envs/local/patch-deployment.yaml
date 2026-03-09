@@ -26,45 +26,5 @@ spec:
           env:
             - name: DB_HOST
               value: rethinkdb.local
-            - name: DB_PORT
-              value: "28015"
-            - name: CHANNEL
-              valueFrom:
-                secretKeyRef:
-                  name: broker-config-backend
-                  key: channel
-            - name: BROKER_URL
-              valueFrom:
-                secretKeyRef:
-                  name: broker-config-backend
-                  key: broker_url
-            - name: BROKER_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: broker-config-backend
-                  key: broker_username
-            - name: BROKER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: broker-config-backend
-                  key: broker_password
-            - name: S3_URL
-              valueFrom:
-                secretKeyRef:
-                  name: s3-config-backend
-                  key: s3_url
-            - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: s3-config-backend
-                  key: s3_bucket
-            - name: S3_ACCESS_KEY_ID
-              valueFrom:
-                secretKeyRef:
-                  name: s3-config-backend
-                  key: s3_access_key_id
-            - name: S3_SECRET_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: s3-config-backend
-                  key: s3_secret_access_key
+
+
