@@ -1,3 +1,12 @@
-- op: replace
-  path: /spec/template/spec/containers/0/image
-  value: nerdd-serialize-jobs:latest
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nerdd-serialize-jobs
+spec:
+  template:
+    spec:
+      containers:
+        - name: nerdd-serialize-jobs
+          image: nerdd-serialize-jobs:latest
+
+

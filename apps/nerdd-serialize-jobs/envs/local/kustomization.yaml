@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - broker-config-es.yaml
+  - s3-config-es.yaml
 
 patches:
   - target:
