@@ -6,6 +6,8 @@ components:
 
 resources:
   - broker-config-es.yaml
+  - scaler.yaml
+
 
 patches:
   - target:
