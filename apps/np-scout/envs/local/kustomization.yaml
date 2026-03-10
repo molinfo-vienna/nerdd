@@ -5,7 +5,8 @@ resources:
   - ../../base
 
 components:
-  - ../../../_common/nerdd-module/envs/local-s3
+  - ../../../_common/nerdd-module/envs/local
+
 
 configMapGenerator:
   - name: app-config
