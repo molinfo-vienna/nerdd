@@ -1,3 +1,11 @@
-- op: replace
-  path: /spec/template/spec/containers/0/image
-  value: nerdd-init-system:latest
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nerdd-init-system
+spec:
+  template:
+    spec:
+      containers:
+        - name: nerdd-init-system
+          image: nerdd-init-system:latest
+
