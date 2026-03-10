@@ -1,6 +1,13 @@
-- op: replace
-  path: /spec/replicas
-  value: 1
-- op: replace
-  path: /spec/template/spec/containers/0/image
-  value: nerdd-process-jobs:latest
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nerdd-process-jobs
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: nerdd-process-jobs
+          image: nerdd-process-jobs:latest
+
+

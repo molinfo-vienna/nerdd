@@ -1,0 +1,13 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: broker-config-process-jobs
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: broker-store
+  target:
+    name: broker-config-process-jobs
+  dataFrom:
+    - extract:
+        key: broker-config
