@@ -4,8 +4,6 @@ kind: Component
 resources:
   - deployment.yaml
   - topic.yaml
-  - broker-config-es.yaml
-  - s3-config-es.yaml
   - scaler.yaml
 
 replacements:
@@ -22,19 +20,10 @@ replacements:
           - spec.selector.matchLabels.app
           - spec.template.metadata.labels.app
           - spec.template.spec.containers.0.name
-      - select:
-          kind: Deployment
-        fieldPaths:
           - spec.template.spec.containers.0.env.[name=CHANNEL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_URL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_USERNAME].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_PASSWORD].valueFrom.secretKeyRef.name
-        options:
-          delimiter: "-"
-          index: 0
-      - select:
-          kind: Deployment
-        fieldPaths:
           - spec.template.spec.containers.0.env.[name=S3_URL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=S3_BUCKET].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=S3_ACCESS_KEY_ID].valueFrom.secretKeyRef.name
@@ -53,34 +42,6 @@ replacements:
           kind: KafkaTopic
         fieldPaths:
           - metadata.labels.app
-      - select:
-          kind: ExternalSecret
-          name: APP_NAME-broker-config
-        fieldPaths:
-          - metadata.name
-          - spec.target.name
-        options:
-          delimiter: "-"
-          index: 0
-      - select:
-          kind: ExternalSecret
-          name: APP_NAME-s3-config
-        fieldPaths:
-          - metadata.name
-          - spec.target.name
-        options:
-          delimiter: "-"
-          index: 0
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.image
-    targets:
-      - select:
-          kind: Deployment
-        fieldPaths:
-          - spec.template.spec.containers.0.image
 
   - source:
       kind: ConfigMap
@@ -91,6 +52,16 @@ replacements:
           kind: Deployment
         fieldPaths:
           - spec.template.spec.containers.0.args.0
+
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.image
+    targets:
+      - select:
+          kind: Deployment
+        fieldPaths:
+          - spec.template.spec.containers.0.image
 
   - source:
       kind: ConfigMap

@@ -4,6 +4,10 @@ kind: Component
 components:
   - ../../base
 
+resources:
+  - broker-config-es.yaml
+  - s3-config-es.yaml
+
 configMapGenerator:
   - name: app-config
     behavior: merge
@@ -18,31 +22,41 @@ patches:
       - op: replace
         path: /metadata/namespace
         value: dev-kafka
-  # for now, we set S3 args only for modules that use the most recent version of nerdd-link
   - target:
       kind: Deployment
-    patch: |-
-      - op: remove
-        path: /spec/template/spec/containers/0/volumeMounts/0
-      - op: remove
-        path: /spec/template/spec/volumes/0
-      # Preserve the model class supplied by the underlying deployment while
-      # replacing all remaining arguments. The temporary label is moved back
-      # immediately, so it is absent from the rendered Deployment.
-      - op: move
-        from: /spec/template/spec/containers/0/args/0
-        path: /metadata/labels/nerdd.dev~1preserved-first-arg
-      - op: replace
-        path: /spec/template/spec/containers/0/args
-        value:
-          - --channel=$(CHANNEL)
-          - --broker-url=$(BROKER_URL)
-          - --broker-username=$(BROKER_USERNAME)
-          - --broker-password=$(BROKER_PASSWORD)
-          - --s3-url=$(S3_URL)
-          - --s3-bucket=$(S3_BUCKET)
-          - --s3-access-key-id=$(S3_ACCESS_KEY_ID)
-          - --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)
-      - op: move
-        from: /metadata/labels/nerdd.dev~1preserved-first-arg
-        path: /spec/template/spec/containers/0/args/0
+    path: patch-deployment.yaml
+
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.modelClass
+    targets:
+      - select:
+          kind: Deployment
+        fieldPaths:
+          - spec.template.spec.containers.0.args.0
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.appName
+    targets:
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-broker-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-s3-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0

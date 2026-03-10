@@ -4,6 +4,10 @@ kind: Component
 components:
   - ../../base
 
+resources:
+  - broker-config-es.yaml
+  - s3-config-es.yaml
+
 configMapGenerator:
   - name: app-config
     behavior: merge
@@ -21,3 +25,28 @@ patches:
       - op: replace
         path: /spec/replicas
         value: 1
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.appName
+    targets:
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-broker-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-s3-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
