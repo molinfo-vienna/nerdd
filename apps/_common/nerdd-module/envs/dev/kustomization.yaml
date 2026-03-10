@@ -13,10 +13,8 @@ patches:
     path: patch-deployment.yaml
   - target:
       kind: KafkaTopic
-    patch: |-
-      - op: replace
-        path: /metadata/namespace
-        value: dev-kafka
+    path: patch-topic.yaml
+
 
 configMapGenerator:
   - name: app-config

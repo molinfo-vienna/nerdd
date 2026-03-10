@@ -18,14 +18,10 @@ configMapGenerator:
 patches:
   - target:
       kind: KafkaTopic
-    patch: |-
-      - op: replace
-        path: /metadata/namespace
-        value: dev-kafka
+    path: patch-topic.yaml
   - target:
       kind: Deployment
     path: patch-deployment.yaml
-
 
 replacements:
   - source:

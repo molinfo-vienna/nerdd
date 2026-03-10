@@ -18,13 +18,8 @@ configMapGenerator:
 patches:
   - target:
       kind: KafkaTopic
-    patch: |-
-      - op: replace
-        path: /metadata/namespace
-        value: local-kafka
-      - op: replace
-        path: /spec/replicas
-        value: 1
+    path: patch-topic.yaml
+
 
 replacements:
   - source:
