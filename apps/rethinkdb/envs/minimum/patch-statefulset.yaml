@@ -1,0 +1,11 @@
+- op: replace
+  path: /spec/volumeClaimTemplates/0/spec/storageClassName
+  value: null
+- op: replace
+  path: /spec/volumeClaimTemplates/0/spec/resources/requests/storage
+  value: 10Gi
+- op: replace
+  path: /spec/replicas
+  value: 1
+- op: remove
+  path: /spec/template/spec/affinity
