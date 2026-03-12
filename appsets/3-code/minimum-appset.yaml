@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: minimum-appset
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: https://github.com/molinfo-vienna/nerdd.git
+        revision: HEAD
+        directories:
+          - path: apps/*/envs/minimum
+  template:
+    metadata:
+      name: "minimum-{{index .path.segments 1}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/molinfo-vienna/nerdd.git
+        targetRevision: HEAD
+        path: "{{.path.path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: minimum
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        automated:
+          prune: true
+          selfHeal: true
