@@ -72,6 +72,11 @@ kubectl -n minimum port-forward service/nerdd-proxy 8080:80
 # Open http://localhost:8080
 ```
 
+> [!TIP]
+> By default, only the `cypstrate` prediction module is loaded. You can enable additional 
+> prediction modules by running 
+> `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/<module>/envs/minimum?ref=main` 
+> and replacing `<module>` (e.g. with `cyplebrity`, `np-scout`).
 
 * ArgoCD deployed in that cluster
 * optional (but recommended): 
