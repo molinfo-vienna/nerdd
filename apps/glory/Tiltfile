@@ -16,7 +16,7 @@ build_nerdd_image(
 kustomize_resource(
     workload=project_name,
     kustomization_path='./envs/local/',
-    namespace='local',
+    namespace='local-{}'.format(project_name),
     resource_deps=['message-broker', 'keda', 'storage', 's3'],
     labels=['modules']
 )
