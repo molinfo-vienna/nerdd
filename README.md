@@ -46,6 +46,33 @@ tilt up
 > [!TIP]
 > By default, only the `cypstrate` prediction module is loaded. You can enable additional 
 > prediction modules by editing the `apps` list in `Tiltfile`.
+
+
+### Minimum cluster installation
+
+To deploy a lightweight version of NERDD into a cluster, you need the following infrastructure 
+components:
+
+* [Strimzi](https://strimzi.io/)
+  * option 1: official installation guide
+  * option 2: `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/strimzi/envs/infra?ref=main`
+* [MinIO](https://operator.min.io/)
+  * option 1: official installation guide
+  * option 2: `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/minio-operator/envs/minimum?ref=main`
+
+Install the NERDD components (i.e. frontend, backend, job workers, database, kafka, s3 storage, cypstrate):
+
+```sh
+kubectl create namespace minimum
+kubectl apply -k https://github.com/molinfo-vienna/nerdd//stacks/minimum?ref=main
+
+# Forward service ports
+kubectl -n minimum port-forward service/nerdd-proxy 8080:80
+
+# Open http://localhost:8080
+```
+
+
 * ArgoCD deployed in that cluster
 * optional (but recommended): 
   * at least 3 worker nodes (for Ceph Rook)
