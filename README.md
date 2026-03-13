@@ -20,9 +20,32 @@ A few example modules can be found here:
 * [NPScout](https://github.com/molinfo-vienna/np-scout)
 
 
-## Prerequisites
+## Installation
 
-* Kubernetes cluster
+### Quick Preview
+
+The fastest way to preview NERDD locally is with Tilt. You need the following components on your machine:
+
+* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
+* [Tilt](https://tilt.dev/)
+
+Then, run NERDD by following these steps:
+
+```sh
+# Clone the repository
+git clone https://github.com/molinfo-vienna/nerdd
+cd nerdd
+
+# Run tilt
+tilt up
+
+# Open Tilt UI at http://localhost:10350
+# Open NERDD UI at https://localhost:8443 (after Tilt has loaded all components)
+```
+
+> [!TIP]
+> By default, only the `cypstrate` prediction module is loaded. You can enable additional 
+> prediction modules by editing the `apps` list in `Tiltfile`.
 * ArgoCD deployed in that cluster
 * optional (but recommended): 
   * at least 3 worker nodes (for Ceph Rook)
