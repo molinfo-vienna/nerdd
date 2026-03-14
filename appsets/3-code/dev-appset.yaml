@@ -35,7 +35,7 @@ spec:
         # all dev apps were previously put into a common namespace "dev"
         # at the moment, these apps are moved to their own namespace incrementally
         # temporarily declare a custom list of apps that are already migrated
-        namespace: '{{if has (index .path.segments 1) (list "kafka" "s3" "credentials" "cypstrate" "cyplebrity" "fame" "glory" "gloryx" "hitdexter" "np-scout" "skin-doctor-cp")}}dev-{{index .path.segments 1}}{{else}}{{index .path.segments 3}}{{end}}'
+        namespace: '{{if has (index .path.segments 1) (list "kafka" "s3" "credentials" "cypstrate" "cyplebrity" "fame" "glory" "gloryx" "hitdexter" "np-scout" "skin-doctor-cp" "skin-doctor-ternary")}}dev-{{index .path.segments 1}}{{else}}{{index .path.segments 3}}{{end}}'
 
       # Sync policy
       syncPolicy:
