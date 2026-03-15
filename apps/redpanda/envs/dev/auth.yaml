@@ -1,0 +1,37 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: redpanda-auth
+spec:
+  refreshInterval: 8760h # refresh once a year
+  target:
+    name: redpanda-auth
+    template:
+      type: Opaque
+      data:
+        password: "{{ .password }}"
+        auth: "kimberly:{{ .password | bcrypt }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: redpanda-auth-generator
+---
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: redpanda-auth-generator
+spec:
+  length: 25
+---
+apiVersion: gateway.nginx.org/v1alpha1
+kind: AuthenticationFilter
+metadata:
+  name: redpanda-console-auth
+spec:
+  type: Basic
+  basic:
+    secretRef:
+      name: redpanda-auth
+    realm: "Redpanda Console Login"

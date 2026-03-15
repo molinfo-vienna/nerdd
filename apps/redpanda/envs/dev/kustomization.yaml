@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - auth.yaml
   - broker-config-es.yaml
   - route.yaml
