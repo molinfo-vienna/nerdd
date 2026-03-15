@@ -3,13 +3,10 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - route.yaml
 
 patches:
   - target:
       kind: Deployment
       name: redpanda-console
     path: patch-deployment.yaml
-  - target:
-      kind: Ingress
-      name: redpanda-console
-    path: patch-ingress.yaml
