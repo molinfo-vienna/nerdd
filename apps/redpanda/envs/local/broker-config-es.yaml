@@ -1,0 +1,13 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: broker-config-redpanda
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: broker-store
+  target:
+    name: broker-config-redpanda
+  dataFrom:
+    - extract:
+        key: broker-config
