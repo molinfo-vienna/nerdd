@@ -3,7 +3,8 @@ load('../../common.Tiltfile', 'kustomize_resource')
 kustomize_resource(
     workload='redpanda-console',
     kustomization_path='./envs/local/',
-    namespace='local',
+    namespace='redpanda',
+    create_namespace=True,
     resource_deps=['message-broker', 'nginx-gateway'],
     labels=['infra']
 )
