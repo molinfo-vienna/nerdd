@@ -16,6 +16,7 @@ kustomize_resource(
     workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local-{}'.format(project_name),
+    create_namespace=True,
     resource_deps=['message-broker', 'storage', 's3', 'rethinkdb', 'nginx-gateway'],
     labels=['backend']
 )
