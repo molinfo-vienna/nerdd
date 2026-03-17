@@ -37,6 +37,12 @@ docker compose -f https://github.com/molinfo-vienna/nerdd.git#main:stacks/minimu
 ```
 
 
+### Local Preview with Tilt
+
+Requires a running Kubernetes cluster (e.g. [MicroK8s](https://microk8s.io/docs/getting-started), 
+[Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), 
+[k3d](https://k3d.io/stable/#installation), or 
+[kind](https://kind.sigs.k8s.io/docs/user/quick-start/)) and [Tilt](https://tilt.dev/).
 
 ```sh
 # Clone the repository
@@ -47,7 +53,7 @@ cd nerdd
 tilt up
 
 # Open Tilt UI at http://localhost:10350
-# Open NERDD UI at https://localhost:8443 (after Tilt has loaded all components)
+# Open NERDD UI at https://localhost:8443 once all components have loaded
 ```
 
 > [!TIP]
