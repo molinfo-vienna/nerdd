@@ -7,10 +7,14 @@ spec:
     - dev-s3
   metadataPool:
     failureDomain: host
+    deviceClass: ssd
+    enableCrushUpdates: true
     replicated:
       size: 3
   dataPool:
     failureDomain: host
+    deviceClass: ssd
+    enableCrushUpdates: true
     replicated:
       size: 3
   # Keep RGW pools if this resource is removed. Bucket data must be removed
