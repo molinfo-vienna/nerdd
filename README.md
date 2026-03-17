@@ -26,7 +26,7 @@ A few example modules can be found here:
 
 The fastest way to preview NERDD locally is with Tilt. You need the following components on your machine:
 
-* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
+* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
 * [Tilt](https://tilt.dev/)
 
 Then, run NERDD by following these steps:
@@ -78,10 +78,116 @@ kubectl -n minimum port-forward service/nerdd-proxy 8080:80
 > `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/<module>/envs/minimum?ref=main` 
 > and replacing `<module>` (e.g. with `cyplebrity`, `np-scout`).
 
-* ArgoCD deployed in that cluster
-* optional (but recommended): 
-  * at least 3 worker nodes (for Ceph Rook)
-  * at least 3 **unpartitioned** disks on different worker nodes (for Ceph Rook)
+
+## Integrate a new prediction module
+
+A new prediction module usually starts as ordinary code. For this demonstration, we use RDKit to 
+calculate molecular weight:
+
+```python
+from rdkit.Chem import Descriptors
+
+weight = Descriptors.MolWt(mol)
+```
+
+Wrap the calculation in a `nerdd-module` model:
+
+```python
+# molecular_weight.py
+from nerdd_module import Model
+from nerdd_module.preprocessing import Sanitize
+from rdkit.Chem import Descriptors
+
+
+class MolecularWeightModel(Model):
+    def __init__(self):
+        super().__init__([Sanitize()])
+
+    def _predict_mols(self, mols):
+        # yield a dictionary for each molecule containing predictions / computations
+        for mol in mols:
+            yield {"molecular_weight": Descriptors.MolWt(mol)}
+
+    def _get_base_config(self):
+        return {
+            "name": "molecular-weight",
+            "version": "0.1.0",
+            "description": "Calculates molecular weight with RDKit.",
+            # declare all fields that should be visible in prediction results
+            "result_properties": [
+                {
+                    "name": "molecular_weight",
+                    "visible_name": "Molecular weight",
+                    "type": "float",
+                }
+            ],
+        }
+```
+
+Create a `Dockerfile` next to `molecular_weight.py`. In it we need to include `nerdd-link`, which 
+will run `MolecularWeightModel` as a service:
+
+```dockerfile
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY molecular_weight.py .
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libexpat1 libxext6 libxrender1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && python -m venv /env \
+    && /env/bin/pip install --no-cache-dir "nerdd-link==0.6.7"
+
+ENV PYTHONPATH=/app
+```
+
+Push this image to a registry (e.g. [ghcr.io](https://ghcr.io)). For a quick, short-lived test, we 
+use [OCIHub](https://ocihub.com):
+
+```sh
+# create a unique image name
+# (the tag "2h" indicates how long this image will be available)
+IMAGE="ocihub.com/molecular-weight-$(uuidgen):2h"
+docker build -t "$IMAGE" .
+docker push "$IMAGE"
+echo "$IMAGE"
+```
+
+To add the image to a running NERDD cluster, create the following `kustomization.yaml` and replace 
+`<IMAGE>` with the generated image URL obtained above. Here, we assume that the 
+[`minimum` stack](#minimum-cluster-installation) is running. 
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: minimum
+
+components:
+  - https://github.com/molinfo-vienna/nerdd//apps/_common/nerdd-module/envs/minimum?ref=main
+
+configMapGenerator:
+  - name: app-config
+    literals:
+      - appName=molecular-weight
+      - modelClass=molecular_weight.MolecularWeightModel
+      - image=<IMAGE>  # REPLACE
+      - topic=molecular-weight-checkpoints
+      - consumerGroup=predict-checkpoints-molecular-weight
+      - cpuRequest=10m
+      - memRequest=256Mi
+      - cpuLimit=500m
+      - memLimit=512Mi
+```
+
+Apply it from the directory containing `kustomization.yaml`:
+
+```sh
+kubectl apply -k .
+```
+
+After a short delay, the module appears on the local NERDD web page.
+
 
 ## Installation
 
