@@ -13,3 +13,9 @@ configMapGenerator:
     literals:
       - image=fame3r:latest
 
+patches:
+  - target:
+      kind: Deployment
+      name: fame3r
+    path: patch-deployment.yaml
+
