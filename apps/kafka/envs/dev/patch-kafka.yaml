@@ -30,8 +30,8 @@
     # extend timeouts to accommodate slower broker registration and
     # quorum elections in high-latency or unstable network environments
     initial.broker.registration.timeout.ms: 900000
+    controller.quorum.fetch.timeout.ms: 10000
     controller.quorum.election.timeout.ms: 10000
-    controller.quorum.request.timeout.ms: 10000
     controller.quorum.election.backoff.max.ms: 5000
     # avoid rebalance storms
     group.initial.rebalance.delay.ms: 10000
