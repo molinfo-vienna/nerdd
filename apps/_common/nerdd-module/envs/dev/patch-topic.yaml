@@ -1,3 +1,6 @@
 - op: replace
   path: /metadata/namespace
   value: dev-kafka
+- op: replace
+  path: /spec/replicas
+  value: 3
