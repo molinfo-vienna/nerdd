@@ -11,4 +11,4 @@ configMapGenerator:
       - cpuRequest=10m
       - memRequest=100Mi
       - cpuLimit=4
-      - memLimit=9Gi
+      - memLimit=11Gi
