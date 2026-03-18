@@ -6,7 +6,7 @@ resources:
   - ghcr-secret.yaml
 
 components:
-  - ../../../_common/nerdd-module/envs/dev
+  - ../../../_common/nerdd-module/envs/dev-s3
 
 configMapGenerator:
   - name: app-config
