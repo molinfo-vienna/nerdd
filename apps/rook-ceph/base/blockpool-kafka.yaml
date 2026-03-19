@@ -6,7 +6,6 @@ spec:
   failureDomain: host
   replicated:
     size: 2
-    minSize: 1
   deviceClass: ssd
   parameters:
     compression_mode: none
