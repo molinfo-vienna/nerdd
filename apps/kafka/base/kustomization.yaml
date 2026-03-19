@@ -8,7 +8,6 @@ resources:
   # deploy kafka
   - kafka.yaml
   - kafka-config.yaml
-  - node-pool.yaml # TODO: remove soon
   - broker-pool.yaml
   - topic-jobs.yaml
   - topic-results.yaml
