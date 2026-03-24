@@ -9,6 +9,6 @@ configMapGenerator:
       - topic=glory-checkpoints
       - consumerGroup=predict-checkpoints-glory
       - cpuRequest=4
-      - memRequest=4Gi
+      - memRequest=7Gi
       - cpuLimit=6
       - memLimit=7Gi
