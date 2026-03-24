@@ -8,7 +8,7 @@ configMapGenerator:
       - modelClass=fame3r._nerdd.FAME3RModel
       - topic=fame3r-checkpoints
       - consumerGroup=predict-checkpoints-fame3r
-      - cpuRequest=10m
-      - memRequest=100Mi
+      - cpuRequest=4
+      - memRequest=11Gi
       - cpuLimit=4
       - memLimit=11Gi
