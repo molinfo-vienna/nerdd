@@ -9,6 +9,6 @@ configMapGenerator:
       - topic=skin-doctor-ternary-checkpoints
       - consumerGroup=predict-checkpoints-skin-doctor-ternary
       - cpuRequest=1
-      - memRequest=10G
+      - memRequest=12G
       - cpuLimit=1
       - memLimit=12G
