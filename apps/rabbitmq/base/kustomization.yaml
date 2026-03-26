@@ -3,5 +3,3 @@ kind: Kustomization
 
 resources:
   - rabbitmq.yaml
-  - rabbitmq-config.yaml
-  - broker-store.yaml

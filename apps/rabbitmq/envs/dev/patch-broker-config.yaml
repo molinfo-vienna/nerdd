@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/target/template/data/broker_url
-  value: rabbitmq://rabbitmq.dev-rabbitmq.svc.cluster.local:5552
