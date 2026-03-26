@@ -10,6 +10,3 @@
     limits:
       cpu: 1000m
       memory: 1Gi
-- op: replace
-  path: /spec/persistence/storageClassName
-  value: null
