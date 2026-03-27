@@ -9,20 +9,21 @@ resources:
   - s3-config-es.yaml
   - scaler.yaml
 
-patches:
-  - target:
-      kind: Deployment
-    path: patch-deployment.yaml
-  - target:
-      kind: KafkaTopic
-    path: patch-topic.yaml
 
 configMapGenerator:
   - name: app-config
     behavior: merge
     literals:
       - minReplicaCount=1
-      - maxReplicaCount=1
+      - maxReplicaCount=10
+
+patches:
+  - target:
+      kind: KafkaTopic
+    path: patch-topic.yaml
+  - target:
+      kind: Deployment
+    path: patch-deployment.yaml
 
 replacements:
   - source:
@@ -57,4 +58,3 @@ replacements:
         options:
           delimiter: "-"
           index: 0
-

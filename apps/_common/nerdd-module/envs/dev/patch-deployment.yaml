@@ -4,15 +4,9 @@
     - MODEL_CLASS
     - --channel=$(CHANNEL)
     - --broker-url=$(BROKER_URL)
-    - --data-dir=/data
-- op: add
-  path: /spec/template/spec/containers/0/volumeMounts
-  value:
-    - name: data
-      mountPath: "/data"
-- op: add
-  path: /spec/template/spec/volumes
-  value:
-    - name: data
-      persistentVolumeClaim:
-        claimName: pvc-media
+    - --broker-username=$(BROKER_USERNAME)
+    - --broker-password=$(BROKER_PASSWORD)
+    - --s3-url=$(S3_URL)
+    - --s3-bucket=$(S3_BUCKET)
+    - --s3-access-key-id=$(S3_ACCESS_KEY_ID)
+    - --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)
