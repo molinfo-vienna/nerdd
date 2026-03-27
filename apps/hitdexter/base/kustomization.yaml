@@ -4,10 +4,8 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
-      - appName=hitdexter
+      - appName=hitdexter3
       - modelClass=hitdexter.HitDexter3Model
-      - topic=hitdexter3-checkpoints
-      - consumerGroup=predict-checkpoints-hitdexter3
       - cpuRequest=4000m
       - memRequest=2G
       - cpuLimit=4000m

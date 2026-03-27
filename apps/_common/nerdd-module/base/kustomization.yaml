@@ -5,7 +5,6 @@ resources:
   - deployment.yaml
   - topic.yaml
 
-
 replacements:
   - source:
       kind: ConfigMap
@@ -39,9 +38,30 @@ replacements:
           - metadata.labels.deploymentName
           - spec.scaleTargetRef.name
       - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.triggers.0.metadata.topic
+        options:
+          delimiter: "-"
+          index: 0
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.triggers.0.metadata.consumerGroup
+        options:
+          delimiter: "-"
+          index: 2
+      - select:
           kind: KafkaTopic
         fieldPaths:
           - metadata.labels.app
+      - select:
+          kind: KafkaTopic
+        fieldPaths:
+          - metadata.name
+        options:
+          delimiter: "-"
+          index: 0
 
   - source:
       kind: ConfigMap
@@ -62,30 +82,6 @@ replacements:
           kind: Deployment
         fieldPaths:
           - spec.template.spec.containers.0.image
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.topic
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.topic
-      - select:
-          kind: KafkaTopic
-        fieldPaths:
-          - metadata.name
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.consumerGroup
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.consumerGroup
 
   - source:
       kind: ConfigMap

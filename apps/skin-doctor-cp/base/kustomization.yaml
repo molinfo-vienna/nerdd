@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=skin-doctor-cp
       - modelClass=skin_doctor.SkinDoctorCPModel
-      - topic=skin-doctor-cp-checkpoints
-      - consumerGroup=predict-checkpoints-skin-doctor-cp
       - cpuRequest=1
       - memRequest=5Gi
       - cpuLimit=1

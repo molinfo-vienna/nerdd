@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=awesom
       - modelClass=awesom._nerdd.AweSOMModel
-      - topic=awesom-checkpoints
-      - consumerGroup=predict-checkpoints-awesom
       - cpuRequest=4
       - memRequest=9Gi
       - cpuLimit=4

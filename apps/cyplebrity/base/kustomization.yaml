@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=cyplebrity
       - modelClass=cyplebrity.CyplebrityModel
-      - topic=cyplebrity-checkpoints
-      - consumerGroup=predict-checkpoints-cyplebrity
       - cpuRequest=1000m
       - memRequest=4Gi
       - cpuLimit=2000m

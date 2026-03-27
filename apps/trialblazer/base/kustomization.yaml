@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=trialblazer
       - modelClass=trialblazer.Nerdd.TrialblazerModel
-      - topic=trialblazer-checkpoints
-      - consumerGroup=predict-checkpoints-trialblazer
       - cpuRequest=4
       - memRequest=6Gi
       - cpuLimit=5

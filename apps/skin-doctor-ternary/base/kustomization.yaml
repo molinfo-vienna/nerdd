@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=skin-doctor-ternary
       - modelClass=skin_doctor.SkinDoctorTernaryModel
-      - topic=skin-doctor-ternary-checkpoints
-      - consumerGroup=predict-checkpoints-skin-doctor-ternary
       - cpuRequest=1
       - memRequest=12G
       - cpuLimit=1

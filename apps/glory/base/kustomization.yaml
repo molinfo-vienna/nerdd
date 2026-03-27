@@ -6,8 +6,6 @@ configMapGenerator:
     literals:
       - appName=glory
       - modelClass=glory.GloryModel
-      - topic=glory-checkpoints
-      - consumerGroup=predict-checkpoints-glory
       - cpuRequest=4
       - memRequest=7Gi
       - cpuLimit=6
