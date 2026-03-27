@@ -18,10 +18,6 @@ spec:
           image: ghcr.io/molinfo-vienna/nerdd-frontend:latest
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: nginx-main-config-volume
-              subPath: nginx.conf
-              mountPath: /etc/nginx/http.d/default.conf
           resources:
             requests:
               cpu: 100m
@@ -29,7 +25,3 @@ spec:
             limits:
               cpu: 1000m
               memory: 256Mi
-      volumes:
-        - name: nginx-main-config-volume
-          configMap:
-            name: nginx-main-config
