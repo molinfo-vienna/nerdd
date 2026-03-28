@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/cypstrate:latest
       - appName=cypstrate
       - modelClass=cypstrate.CypstrateModel
       - cpuRequest=2000m

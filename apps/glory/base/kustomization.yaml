@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/glory:latest
       - appName=glory
       - modelClass=glory.GloryModel
       - cpuRequest=4

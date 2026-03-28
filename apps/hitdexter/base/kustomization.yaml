@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/hitdexter:latest
       - appName=hitdexter3
       - modelClass=hitdexter.HitDexter3Model
       - cpuRequest=4000m

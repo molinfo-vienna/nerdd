@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/awesom:latest
       - appName=awesom
       - modelClass=awesom._nerdd.AweSOMModel
       - cpuRequest=4

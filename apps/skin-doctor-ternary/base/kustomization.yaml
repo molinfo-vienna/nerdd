@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/skin-doctor-ternary:latest
       - appName=skin-doctor-ternary
       - modelClass=skin_doctor.SkinDoctorTernaryModel
       - cpuRequest=1

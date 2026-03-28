@@ -4,6 +4,7 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/fame3r:latest
       - appName=fame3r
       - modelClass=fame3r._nerdd.FAME3RModel
       - cpuRequest=4
