@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nerdd-process-jobs
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nerdd-process-jobs
