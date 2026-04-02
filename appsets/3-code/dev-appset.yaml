@@ -15,11 +15,6 @@ spec:
   template:
     metadata:
       name: "{{index .path.segments 3}}-{{index .path.segments 1}}"
-      annotations:
-        argocd-image-updater.argoproj.io/update-strategy: digest
-        argocd-image-updater.argoproj.io/image-list: "ghcr.io/molinfo-vienna/{{index .path.segments 1}}:latest"
-        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-
     spec:
       # The project the application belongs to.
       project: default
