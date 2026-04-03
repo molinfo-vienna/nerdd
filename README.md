@@ -286,9 +286,9 @@ dialing backend: tls: failed to verify certificate: x509: certificate is valid f
 
 ## Contribute
 
-* Install docker
-* Install a variant of kubernetes, e.g. microk8s, minikube, k3s, k3d or kind
-* Install tilt
+* install a Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+* install [Tilt](https://tilt.dev/)
+* clone repository
 * `tilt up`
 * visit localhost:10350 for tilt dashboard
 * visit localhost:8443 for frontend application
