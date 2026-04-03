@@ -7,3 +7,11 @@ resources:
 components:
   - ../../../_common/nerdd-module/envs/dev
 
+patches:
+  - target:
+      kind: ImageUpdater
+      name: hitdexter3
+    patch: |-
+      - op: replace
+        path: /spec/applicationRefs/0/namePattern
+        value: dev-hitdexter
