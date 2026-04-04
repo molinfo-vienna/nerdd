@@ -248,11 +248,13 @@ cluster. After deploying, the passwords can be retrieved using `kubectl`:
 ```bash
 kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
 ```
-kubectl get secret grafana-auth -n monitoring -o jsonpath="{.data.password}" | base64 --decode
-kubectl get secret redpanda-auth -n dev -o jsonpath="{.data.password}" | base64 --decode
-kubectl get secret -n argocd git-creds -o jsonpath='{.data.githubAppPrivateKey}' | base64 -d
-```
 
+### Switching the message broker
+
+* tilt: set message_broker variable in `Tiltfile`
+* argocd in dev environment: disable resources in the `kustomization.yaml` file of the currently
+  used broker (e.g. `apps/kafka/envs/dev/kustomization.yaml`) and enable resources of the target
+  message broker (e.g. `apps/rabbitmq/envs/dev/kustomization.yaml`) 
 
 ## Infrastructure
 
