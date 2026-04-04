@@ -256,6 +256,19 @@ kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.pas
   used broker (e.g. `apps/kafka/envs/dev/kustomization.yaml`) and enable resources of the target
   message broker (e.g. `apps/rabbitmq/envs/dev/kustomization.yaml`) 
 
+### Uninstall
+
+```sh
+kubectl delete applicationset dev-appset -n argocd
+kubectl delete applicationset prod-appset -n argocd
+```
+
+```sh
+argocd app delete nerdd-apps
+# confirm that all data will be destroyed
+kubectl -n rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"cleanupPolicy":{"confirmation":"yes-really-destroy-data"}}}'
+```
+
 ## Infrastructure
 
 The NERDD infrastructure is managed by ArgoCD and the structure of this repository follows best 
@@ -268,16 +281,9 @@ a nutshell:
 * `root.yaml` is the entrypoint pointing to all waves available.
 
 The concept of `waves` is an extension (not discussed in the blog post) in order to avoid having 
-multiple git repositories for infrastructure and code. Especially, it enables specifying the order 
+multiple git repositories for infrastructure and code. Specifically, it enables specifying the order 
 of how apps are deployed.
 
-## Uninstall
-
-```sh
-argocd app delete nerdd
-# confirm that all data will be destroyed
-kubectl -n rook-ceph patch cephcluster rook-ceph --type merge -p '{"spec":{"cleanupPolicy":{"confirmation":"yes-really-destroy-data"}}}'
-```
 
 ## Troubleshooting
 
