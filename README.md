@@ -283,6 +283,17 @@ dialing backend: tls: failed to verify certificate: x509: certificate is valid f
   ```bash
   kubectl patch crd scaledobjects.keda.sh -p '{"metadata":{"finalizers":[]}}' --type=merge
   ```
+* Tilt reports `error looking up service account external-secrets/external-secrets-cert-controller: serviceaccount "external-secrets-cert-controller" not found`:
+  * VPN (e.g. ProtonVPN) might interfere with the cluster setup -> disable temporarily
+* Tilt reports `filewatch configs:(Tiltfile): filewatch init: notify.Add("..."): no space left on device`
+  * too many files are watched for changes
+  * -> exclude a non-essential project from the main Tiltfile (e.g. cypstrate)
+  * -> or: increase number of watchable files
+* kubectl gives an error when trying to access a remote url: `error: failed to run '/snap/microk8s/9063/usr/bin/git fetch --depth=1 https://github.com/molinfo-vienna/nerdd main': /usr/lib/git-core/git-remote-https: symbol lookup error: /usr/lib/git-core/git-remote-https: undefined symbol: curl_global_trace, version CURL_GNUTLS_3
+: exit status 128`
+  * This happens when `kubectl` is installed via `snap`
+  * -> option 1: install [standalone kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
+  * -> option 2: clone the repository first and use local file paths
 
 ## Contribute
 
