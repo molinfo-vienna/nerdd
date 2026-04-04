@@ -246,8 +246,8 @@ We use `external-secrets` to generate passwords for all dashboards and external 
 cluster. After deploying, the passwords can be retrieved using `kubectl`:
 
 ```bash
-kubectl get secret prometheus-auth -n monitoring -o jsonpath="{.data.password}" | base64 --decode
-kubectl get secret dashboard-auth -n traefik -o jsonpath="{.data.password}" | base64 --decode
+kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+```
 kubectl get secret grafana-auth -n monitoring -o jsonpath="{.data.password}" | base64 --decode
 kubectl get secret redpanda-auth -n dev -o jsonpath="{.data.password}" | base64 --decode
 kubectl get secret -n argocd git-creds -o jsonpath='{.data.githubAppPrivateKey}' | base64 -d
