@@ -293,3 +293,7 @@ dialing backend: tls: failed to verify certificate: x509: certificate is valid f
 * visit localhost:10350 for tilt dashboard
 * visit localhost:8443 for frontend application
 * visit localhost:8443/api/ for backend api
+
+## License
+
+This repository is licensed under the [BSD 3-Clause License](LICENSE).
