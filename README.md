@@ -200,32 +200,45 @@ kubectl apply -k .
 After a short delay, the module appears on the local NERDD web page.
 
 
-## Installation
+## Development
 
-* Option 1: kubectl
+
+### Setup of our development cluster at univie
+
+Prerequisites:
+
+* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
+* [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) deployment in the cluster
+* at least 3 worker nodes (for Ceph Rook, Kafka, nerdd-backend, etc.)
+* at least 3 **unpartitioned** disks on different worker nodes (for Ceph Rook)
+
 ```sh
+# install nerdd application with all application sets
 kubectl apply -f https://raw.githubusercontent.com/molinfo-vienna/nerdd/refs/heads/main/root.yaml
+
+# make the rook-ceph namespace privileged:
+kubectl label namespace rook-ceph \
+  pod-security.kubernetes.io/enforce=privileged \
+  pod-security.kubernetes.io/audit=privileged \
+  pod-security.kubernetes.io/warn=privileged \
+  --overwrite
+
+# bootstrap the shared GHCR credential (needs permission read:packages)
+kubectl create namespace dev-credentials --dry-run=client -o yaml | kubectl apply -f -
+kubectl create secret docker-registry ghcr-secret \
+  --docker-server=ghcr.io \
+  --docker-username=<github_username> \
+  --docker-password=<personal_access_token> \
+  --docker-email=someone@example.com \
+  -n dev-credentials
+
+# git credentials for letting argocd-image-updater update the repository state to the repo
+# (needs permissions repo & read:packages)
+kubectl -n argocd create secret generic git-creds \
+  --from-literal=githubAppID=<applicationid> \
+  --from-literal=githubAppInstallationID=<installationid> \
+  --from-literal=githubAppPrivateKey='-----BEGIN RSA PRIVATE KEY-----...-----END RSA PRIVATE KEY-----'
 ```
-
-* Option 2: ArgoCD CLI
-```sh
-argocd app create nerdd \
-  --repo https://github.com/molinfo-vienna/nerdd \
-  --path / \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace default
-```
-
-* Option 3: ArgoCD Web UI
-  * (sign in)
-  * create a new app (by clicking on "+ New App" on the top left)
-  * set **application name** to **nerdd**
-  * set **project name** to **default**
-  * set **repository URL** to **https://github.com/molinfo-vienna/nerdd**
-  * set **path** to **/**
-  * set **cluster URL** to **https://kubernetes.default.svc**
-  * set **namespace** to **default**
-
 
 ### Passwords
 
