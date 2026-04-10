@@ -1,8 +1,0 @@
-load('../../common.Tiltfile', 'kustomize_resource')
-
-kustomize_resource(
-    workload='storage',
-    kustomization_path='./envs/local/',
-    namespace='local',
-    labels=['infra']
-)
