@@ -1,6 +1,6 @@
 - op: replace
   path: /spec/minReplicaCount
-  value: 0
+  value: 1
 - op: replace
   path: /spec/maxReplicaCount
   value: 1
