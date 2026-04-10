@@ -1,12 +1,14 @@
 load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_image')
 
 USE_PRODUCTION_IMAGE = False
-project_name = 'fame'
-repository_url = 'https://github.com/molinfo-vienna/{}'.format(project_name)
+project_name = 'fame3'
+repository_name = 'fame'
+repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
 
 build_nerdd_image(
     project_name,
     repository_url,
+    repository_name=repository_name,
     dockerfile_path='Dockerfile' if USE_PRODUCTION_IMAGE else 'Dockerfile.dev',
     live_update=not USE_PRODUCTION_IMAGE,
     live_update_module_and_link=not USE_PRODUCTION_IMAGE,
