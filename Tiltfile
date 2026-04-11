@@ -60,7 +60,6 @@ apps = [
 
     # essential:
     'authelia',
-    'storage',
     's3',
     'external-secrets',
     'gateway-api',
