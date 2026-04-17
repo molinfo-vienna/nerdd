@@ -1,0 +1,8 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='gateway-api',
+    kustomization_path='./envs/local/',
+    namespace='gateway-api',
+    labels=['infra']
+)
