@@ -1,0 +1,11 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='nginx-gateway',
+    kustomization_path='./envs/local/',
+    namespace='nginx-gateway',
+    create_namespace=True,
+    port_forwards=['8443:443', '8080:80'],
+    resource_deps=['external-secrets-webhook', 'cert-manager-webhook', 'cert-manager', 'gateway-api'],
+    labels=['infra']
+)

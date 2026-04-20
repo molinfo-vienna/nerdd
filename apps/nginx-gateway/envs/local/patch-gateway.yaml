@@ -1,0 +1,6 @@
+- op: replace
+  path: /spec/listeners/0/hostname
+  value: localhost
+- op: replace
+  path: /spec/listeners/1/hostname
+  value: localhost

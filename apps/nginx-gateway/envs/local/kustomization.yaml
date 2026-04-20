@@ -7,9 +7,13 @@ resources:
 patches:
   - target:
       kind: Service
-      name: haproxy-kubernetes-ingress
+      name: nerdd-gateway-nginx
     path: patch-service.yaml
   - target:
-      kind: ClusterIssuer
+      kind: Issuer
       name: nerdd-issuer
     path: patch-issuer.yaml
+  - target:
+      kind: Gateway
+      name: nerdd-gateway
+    path: patch-gateway.yaml

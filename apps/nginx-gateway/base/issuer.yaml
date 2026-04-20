@@ -1,5 +1,5 @@
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: nerdd-issuer
 spec:
@@ -11,5 +11,7 @@ spec:
       name: letsencrypt-dev
     solvers:
       - http01:
-          ingress:
-            ingressClassName: haproxy
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: nerdd-gateway
+                namespace: nginx-gateway

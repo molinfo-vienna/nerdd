@@ -6,9 +6,9 @@ resources:
 
 patches:
   - target:
-      kind: Ingress
-      name: nerdd-frontend-ingress-https
-    path: patch-ingress.yaml
+      kind: HTTPRoute
+      name: frontend-route
+    path: patch-route.yaml
   - target:
       kind: Deployment
       name: nerdd-frontend
