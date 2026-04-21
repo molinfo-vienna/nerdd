@@ -7,5 +7,5 @@ resources:
 patches:
   - target:
       kind: Job
-      name: nerdd-init-system-job
+      name: nerdd-init-system
     path: patch-job.yaml

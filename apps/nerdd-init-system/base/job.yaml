@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: nerdd-init-system-job
+  name: nerdd-init-system
   labels:
     app: nerdd-init-system
 spec:
@@ -12,20 +12,42 @@ spec:
     spec:
       containers:
         - name: nerdd-init-system
-          image: confluentinc/cp-kafka:7.7.1
+          image: ghcr.io/molinfo-vienna/nerdd-process-jobs:latest
           imagePullPolicy: IfNotPresent
+          command: [ "/env/bin/nerdd_init" ]
+          args:
+            - --channel=$(CHANNEL)
+            - --broker-url=$(BROKER_URL)
+            - --broker-username=$(BROKER_USERNAME)
+            - --broker-password=$(BROKER_PASSWORD)
           env:
-            - name: KAFKA_BROKER_URL
-              value: <to_patch>
-          command:
-            - /bin/bash
-            - -c
-            - |
-              echo -n "init:{}" | kafka-console-producer \
-                --broker-list $KAFKA_BROKER_URL \
-                --topic system \
-                --property "parse.key=true" \
-                --property "key.separator=:"
+            - name: CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-init-system
+                  key: channel
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-init-system
+                  key: broker_url
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-init-system
+                  key: broker_username
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-init-system
+                  key: broker_password
+          volumeMounts:
+            - name: data
+              mountPath: "/data"
 
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-media
       restartPolicy: Never
   backoffLimit: 4
