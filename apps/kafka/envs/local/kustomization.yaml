@@ -10,6 +10,10 @@ patches:
       name: kafka-cluster
     path: patch-kafka.yaml
   - target:
+      kind: Secret
+      name: kafka-config
+    path: patch-kafka-config.yaml
+  - target:
       kind: KafkaNodePool
       name: controller
     path: patch-nodepool.yaml
@@ -28,6 +32,10 @@ patches:
   - target:
       kind: KafkaTopic
       name: results
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
+      name: result-checkpoints
     path: patch-topic.yaml
   - target:
       kind: KafkaTopic
