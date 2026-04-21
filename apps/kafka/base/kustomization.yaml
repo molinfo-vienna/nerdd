@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - kafka.yaml
   - kafka-config.yaml
+  - broker-store.yaml
   - node-pool.yaml
   - topic-jobs.yaml
   - topic-results.yaml

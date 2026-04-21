@@ -5,7 +5,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: kubernetes-cluster-store
+    name: broker-store
   target:
     name: broker-config-process-jobs
     template:

@@ -6,7 +6,6 @@ namespace: external-secrets
 resources:
   - https://github.com/external-secrets/external-secrets/releases/download/v0.14.4/external-secrets.yaml
   - auth.yaml
-  - cluster-secret-store.yaml
 
 patches:
   - target:

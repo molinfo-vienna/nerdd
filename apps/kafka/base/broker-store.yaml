@@ -1,11 +1,11 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ClusterSecretStore
 metadata:
-  name: kubernetes-cluster-store
+  name: broker-store
 spec:
   provider:
     kubernetes:
-      remoteNamespace: external-secrets
+      remoteNamespace: this-will-be-patched
       server:
         url: https://kubernetes.default.svc
         caProvider:
