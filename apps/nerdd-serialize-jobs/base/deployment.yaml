@@ -16,9 +16,33 @@ spec:
       containers:
         - name: nerdd-serialize-jobs
           image: ghcr.io/molinfo-vienna/nerdd-serialize-jobs:latest
+          args:
+            - --channel=$(CHANNEL)
+            - --broker-url=$(BROKER_URL)
+            - --broker-username=$(BROKER_USERNAME)
+            - --broker-password=$(BROKER_PASSWORD)
+            - --data-dir=/data
           env:
-            - name: KAFKA_BROKER_URL
-              value: <to-patch>
+            - name: CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-serialize-jobs
+                  key: channel
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-serialize-jobs
+                  key: broker_url
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-serialize-jobs
+                  key: broker_username
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config-serialize-jobs
+                  key: broker_password
           volumeMounts:
             - name: data
               mountPath: "/data"

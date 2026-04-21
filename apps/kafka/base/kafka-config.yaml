@@ -21,22 +21,26 @@ spec:
     secret:
       name: kafka-config
   data:
-    - match:
+    - conversionStrategy: None 
+      match:
         secretKey: channel
         remoteRef:
           remoteKey: broker-config
           property: channel
-    - match:
+    - conversionStrategy: None 
+      match:
         secretKey: broker_url
         remoteRef:
           remoteKey: broker-config
           property: broker_url
-    - match:
+    - conversionStrategy: None 
+      match:
         secretKey: broker_username
         remoteRef:
           remoteKey: broker-config
           property: broker_username
-    - match:
+    - conversionStrategy: None 
+      match:
         secretKey: broker_password
         remoteRef:
           remoteKey: broker-config
