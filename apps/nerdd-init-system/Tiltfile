@@ -1,8 +1,41 @@
-load('../../common.Tiltfile', 'kustomize_resource')
+load('../../common.Tiltfile', 'kustomize_resource', 'extract_entrypoint')
+load('ext://restart_process', 'custom_build_with_restart')
+
+USE_PRODUCTION_IMAGE = False
+
+image_name = 'nerdd-process-jobs'
+project_name = 'nerdd-init-system'
+project_dir = '../../repos/nerdd-link'
+
+if USE_PRODUCTION_IMAGE:
+    docker_build(
+        project_name,
+        context=project_dir,
+        dockerfile='{}/Dockerfile.{}'.format(project_dir, image_name),
+    )
+else:
+    dockerfile_path = os.path.join(project_dir, 'Dockerfile.{}.dev'.format(image_name))
+    command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
+        dockerfile_path,
+        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/cypstrate'
+        #       -> repos directory is the parent directory of project_dir
+        os.path.join(project_dir, '..'),
+    )
+
+    custom_build_with_restart(
+        project_name,
+        command=command,
+        deps=[project_dir, "."],
+        dir=project_dir,
+        live_update=[
+            sync(project_dir, "/app"),
+        ],
+        entrypoint=extract_entrypoint('./envs/local', project_name, dockerfile_path)
+    )
 
 # deploy to kubernetes
 kustomize_resource(
-    workload='nerdd-init-system',
+    workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local',
     resource_deps=['kafka', 'keda-operator', 'storage'],

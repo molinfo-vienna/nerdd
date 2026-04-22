@@ -1,8 +1,8 @@
 load('ext://git_resource', 'git_checkout')
-load('../../common.Tiltfile', 'kustomize_resource')
+load('../../common.Tiltfile', 'kustomize_resource', 'extract_entrypoint')
 load('ext://restart_process', 'custom_build_with_restart')
 
-USE_PRODUCTION_IMAGE = True
+USE_PRODUCTION_IMAGE = False
 
 # checkout source code
 project_name = 'np-scout'
@@ -20,10 +20,11 @@ if USE_PRODUCTION_IMAGE:
         context=project_dir,
     )
 else:
+    dockerfile_path = os.path.join(project_dir, 'Dockerfile.dev')
     # build the docker image
     command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
-        os.path.join(project_dir, 'Dockerfile.dev'),
-        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/np_scout'
+        dockerfile_path,
+        # note: path is relative to context of Dockerfile, e.g. project_dir='../../repos/cypstrate'
         #       -> repos directory is the parent directory of project_dir
         os.path.join(project_dir, '..'),
     )
@@ -38,7 +39,7 @@ else:
             sync("../../repos/nerdd-module", "/deps/nerdd-module"),
             sync("../../repos/nerdd-link", "/deps/nerdd-link"),
         ],
-        entrypoint="micromamba run -p /env nerdd_prediction_server np_scout.NPScoutModel --broker-url ${KAFKA_BROKER_URL} --data-dir /data"
+        entrypoint=extract_entrypoint('./envs/local/', project_name, dockerfile_path)
     )
 
 # deploy to kubernetes

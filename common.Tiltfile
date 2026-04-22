@@ -164,3 +164,91 @@ def kustomize_resource(
         k8s_resource(workload=w, **modified_kwargs)
 
     return resources
+
+def _extract_dockerfile_entrypoint(dockerfile_path):
+    entrypoint = []
+    current = ""
+
+    # add an empty line at the end to ensure that the last instruction is processed
+    for raw_line in str(read_file(dockerfile_path)).splitlines() + ['']:
+        line = raw_line.strip()
+        if not line and not current:
+            continue
+
+        if line.startswith('#'):
+            continue
+
+        if line:
+            if current:
+                current += " " + line
+            else:
+                current = line
+
+        if current.endswith('\\'):
+            current = current[:-1].rstrip()
+            continue
+
+        instruction = current
+        current = ""
+
+        if not instruction.upper().startswith('ENTRYPOINT '):
+            continue
+
+        value = instruction[len('ENTRYPOINT '):].strip()
+        if not value:
+            continue
+
+        if value.startswith('['):
+            # value is something like ["executable", "param1", "param2"]
+            docs = decode_yaml_stream(value)
+            if len(docs) == 0 or type(docs[0]) != 'list':
+                fail("Could not parse as JSON array: {}".format(value))
+
+            entrypoint = [str(p) for p in docs[0]]
+        else:
+            # value is something like "executable param1 param2"
+            entrypoint = [value]
+
+    return entrypoint
+
+def extract_entrypoint(kustomization_path, workload_name, dockerfile_path):
+    """
+    Extracts the effective entrypoint from a rendered Deployment/Job manifest.
+
+    Resolution order:
+    1. Kubernetes manifest command + args
+    2. Dockerfile ENTRYPOINT + manifest args
+    """
+    yaml_stream = kustomize(kustomization_path)
+    resources = decode_yaml_stream(yaml_stream)
+
+    for r in resources:
+        if r.get('kind') in ['Deployment', 'Job'] and r.get('metadata', {}).get('name') == workload_name:
+            # Get the first container
+            container = r['spec']['template']['spec']['containers'][0]
+
+            def _to_list(s):
+                if s == None:
+                    return []
+
+                return [str(p) for p in s]
+
+            command = _to_list(container.get('command'))
+            args = _to_list(container.get('args'))
+
+            if command:
+                return " ".join(command + args)
+
+            image_entrypoint = _extract_dockerfile_entrypoint(dockerfile_path)
+            if image_entrypoint:
+                return " ".join(image_entrypoint + args)
+
+            fail(
+                (
+                    "No command found for workload '%s': manifest has no command, "
+                    + "and Dockerfile '%s' has no ENTRYPOINT"
+                )
+                % (workload_name, dockerfile_path)
+            )
+
+    fail("Could not find Deployment '%s' in '%s'" % (workload_name, kustomization_path))
