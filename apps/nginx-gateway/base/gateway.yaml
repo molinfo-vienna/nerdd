@@ -4,7 +4,6 @@ metadata:
   name: nerdd-gateway
   annotations:
     cert-manager.io/issuer: nerdd-issuer
-    nginx.gateway.nginx.org/service-type: ClusterIP
 spec:
   gatewayClassName: nginx
   listeners:

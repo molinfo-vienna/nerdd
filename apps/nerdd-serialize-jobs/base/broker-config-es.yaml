@@ -20,15 +20,31 @@ spec:
       remoteRef:
         key: broker-config
         property: channel
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
     - secretKey: broker_url
       remoteRef:
         key: broker-config
         property: broker_url
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
     - secretKey: broker_username
       remoteRef:
         key: broker-config
         property: broker_username
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
     - secretKey: broker_password
       remoteRef:
         key: broker-config
         property: broker_password
+        # necessary for ArgoCD to avoid "Out of sync"
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
