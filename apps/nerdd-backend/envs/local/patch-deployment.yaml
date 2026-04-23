@@ -1,16 +1,17 @@
-- op: replace
-  path: /spec/replicas
-  value: 1
-- op: replace
-  path: /spec/template/spec/containers/0/image
-  value: nerdd-backend:latest
-- op: replace
-  path: /spec/template/spec/containers/0/args
-  value:
-    [
-      "--config-name",
-      "production",
-      "++db.host=rethinkdb.local",
-      "++db.port=28015",
-      "++channel.broker_url=kafka-cluster-kafka-bootstrap.local:9092",
-    ]
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nerdd-backend
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: nerdd-backend
+          image: nerdd-backend:latest
+          env:
+            - name: DB_HOST
+              value: rethinkdb.local
+            - name: DB_PORT
+              value: "28015"
+      affinity: null

@@ -5,3 +5,5 @@ resources:
   - deployment.yaml
   - service.yaml
   - route.yaml
+  - broker-config-es.yaml
+  - client-settings.yaml
