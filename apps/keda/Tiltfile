@@ -15,6 +15,6 @@ kustomize_resource(
     kustomization_path='./envs/local/',
     namespace='keda',
     create_namespace=True,
-    resource_deps=['kafka', 'remove-keda-finalizers'],
+    resource_deps=['message-broker', 'remove-keda-finalizers'],
     labels=["infra"]
 )

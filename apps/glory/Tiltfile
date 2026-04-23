@@ -42,11 +42,12 @@ else:
         entrypoint=extract_entrypoint('./envs/local/', project_name, dockerfile_path)
     )
 
+
 # deploy to kubernetes
 kustomize_resource(
     workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['kafka', 'keda', 'storage'],
+    resource_deps=['message-broker', 'keda', 'storage'],
     labels=['modules']
 )

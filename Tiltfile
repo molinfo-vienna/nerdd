@@ -1,9 +1,15 @@
 load('ext://namespace', 'namespace_create')
 load('ext://git_resource', 'git_checkout')
 
-
 # limit the number of parallel updates
 update_settings(max_parallel_updates=2)
+
+# load config provided by the user via command line
+MESSAGE_BROKER = 'kafka'
+
+config.define_string("message_broker")
+cfg = config.parse()
+cfg['message_broker'] = cfg.get('message_broker', MESSAGE_BROKER)
 
 # essential repositories used by many apps
 base_repositories = [
@@ -33,9 +39,8 @@ apps = [
     'external-secrets',
     'gateway-api',
     'cert-manager',
-    'haproxy-controller',
-    'strimzi',
-    'kafka',
+    # 'haproxy-controller',
+    'nginx-gateway',
     'keda',
     'rethinkdb',
     'nerdd-init-system',
@@ -45,9 +50,16 @@ apps = [
     'nerdd-serialize-jobs',
 
     # optional for monitoring:
+    'argocd',
     # 'monitoring',
     # 'redpanda',
 ]
+
+message_broker = cfg['message_broker']
+if message_broker == "kafka":
+    apps += ['strimzi', 'kafka']
+elif message_broker == "rabbitmq":
+    apps += ['rabbitmq-system', 'rabbitmq']
 
 # check out base repositories
 for repo in base_repositories:

@@ -35,6 +35,6 @@ kustomize_resource(
     project_name,
     kustomization_path='./envs/local',
     namespace='local',
-    resource_deps=['kafka', 'keda', 'storage'],
+    resource_deps=['message-broker', 'keda', 'storage'],
     labels=["services"],
 )

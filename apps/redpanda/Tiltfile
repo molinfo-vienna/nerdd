@@ -4,6 +4,6 @@ kustomize_resource(
     workload='redpanda-console',
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['kafka', 'nginx-gateway'],
+    resource_deps=['message-broker', 'nginx-gateway'],
     labels=['infra']
 )
