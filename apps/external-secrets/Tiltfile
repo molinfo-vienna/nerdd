@@ -8,3 +8,37 @@ kustomize_resource(
     resource_deps=[],
     labels=["infra"]
 )
+
+# The webhook of external-secrets reports that it is "ready" before it actually accepts requests. 
+# When other services rely on external-secrets, they will fail and we have to wait and restart the
+# affected services manually. In order to prevent that, we add the following local resource that
+# checks if requests are really accepted by the webhook:
+local_resource(
+    'external-secrets-check',
+    cmd="""
+    while ! kubectl apply -f - --dry-run=server <<EOF
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: webhook-check
+  namespace: external-secrets
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: webhook-check
+  target:
+    name: webhook-check
+  data:
+  - secretKey: healthcheck
+    remoteRef:
+      key: healthcheck
+EOF
+    do
+      echo "Waiting for external-secrets webhook to accept requests..."
+      sleep 1
+    done
+    """,
+    resource_deps=['external-secrets'],
+    labels=["infra"]
+)
