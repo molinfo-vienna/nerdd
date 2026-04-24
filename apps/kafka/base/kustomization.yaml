@@ -13,6 +13,7 @@ resources:
   - topic-serialization-requests.yaml
   - topic-serialization-results.yaml
   - topic-logs.yaml
+  - topic-modules.yaml
   # connect kafka metrics with prometheus
   - pod-monitor.yaml
   - kafka-metrics-config.yaml

@@ -16,16 +16,36 @@ spec:
       containers:
         - name: APP_NAME
           image: IMAGE
-          command: ["/env/bin/nerdd_prediction_server"]
+          command: [ "/env/bin/nerdd_prediction_server" ]
           args:
             - MODEL_CLASS
-            - --broker-url
-            - "$(KAFKA_BROKER_URL)"
-            - --data-dir
-            - /data
+            - --channel=$(CHANNEL)
+            - --broker-url=$(BROKER_URL)
+            # TODO: add these args once we upgraded nerdd-link everywhere
+            # - --broker-username=$(BROKER_USERNAME)
+            # - --broker-password=$(BROKER_PASSWORD)
+            - --data-dir=/data
           env:
-            - name: KAFKA_BROKER_URL
-              value: BROKER_URL
+            - name: CHANNEL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config
+                  key: channel
+            - name: BROKER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config
+                  key: broker_url
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config
+                  key: broker_username
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: broker-config
+                  key: broker_password
           volumeMounts:
             - name: data
               mountPath: "/data"

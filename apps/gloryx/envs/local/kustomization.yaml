@@ -12,7 +12,6 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=gloryx:latest
-      - brokerUrl=kafka-cluster-kafka-bootstrap.local:9092
       - minReplicaCount=1
       - maxReplicaCount=1
 

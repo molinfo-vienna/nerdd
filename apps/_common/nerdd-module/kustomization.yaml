@@ -4,6 +4,7 @@ kind: Component
 resources:
   - deployment.yaml
   - topic.yaml
+  - broker-config-es.yaml
   - scaler.yaml
 
 replacements:
@@ -19,11 +20,27 @@ replacements:
           - spec.selector.matchLabels.app
           - spec.template.metadata.labels.app
           - spec.template.spec.containers.0.name
+          - spec.template.spec.containers.0.env.[name=CHANNEL].valueFrom.secretKeyRef.name
+          - spec.template.spec.containers.0.env.[name=BROKER_URL].valueFrom.secretKeyRef.name
+          - spec.template.spec.containers.0.env.[name=BROKER_USERNAME].valueFrom.secretKeyRef.name
+          - spec.template.spec.containers.0.env.[name=BROKER_PASSWORD].valueFrom.secretKeyRef.name
       - select:
           kind: ScaledObject
         fieldPaths:
           - metadata.name
+          - metadata.labels.app
+          - metadata.labels.deploymentName
           - spec.scaleTargetRef.name
+      - select:
+          kind: KafkaTopic
+        fieldPaths:
+          - metadata.labels.app
+      - select:
+          kind: ExternalSecret
+          name: broker-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
 
   - source:
       kind: ConfigMap
@@ -48,30 +65,26 @@ replacements:
   - source:
       kind: ConfigMap
       name: app-config
-      fieldPath: data.brokerUrl
-    targets:
-      - select:
-          kind: Deployment
-        fieldPaths:
-          - spec.template.spec.containers.0.env.[name=KAFKA_BROKER_URL].value
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.bootstrapServers
-
-  - source:
-      kind: ConfigMap
-      name: app-config
       fieldPath: data.topic
     targets:
-      - select:
-          kind: KafkaTopic
-        fieldPaths:
-          - metadata.name
       - select:
           kind: ScaledObject
         fieldPaths:
           - spec.triggers.0.metadata.topic
+      - select:
+          kind: KafkaTopic
+        fieldPaths:
+          - metadata.name
+
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.consumerGroup
+    targets:
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.triggers.0.metadata.consumerGroup
 
   - source:
       kind: ConfigMap
