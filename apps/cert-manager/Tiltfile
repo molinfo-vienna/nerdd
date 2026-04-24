@@ -8,3 +8,28 @@ kustomize_resource(
     resource_deps=['gateway-api'],
     labels=["infra"]
 )
+
+# The webhook of cert-manager reports that it is "ready" before it actually accepts requests. 
+# When other services rely on cert-manager (e.g. for Certificates), they will fail and we 
+# have to wait and restart the affected services manually. In order to prevent that, 
+# we add the following local resource that checks if requests are really accepted by the webhook:
+local_resource(
+    'cert-manager-check',
+    cmd="""
+    while ! kubectl apply -f - --dry-run=server <<EOF
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: webhook-check
+  namespace: cert-manager
+spec:
+  selfSigned: {}
+EOF
+    do
+      echo "Waiting for cert-manager webhook to accept requests..."
+      sleep 1
+    done
+    """,
+    resource_deps=['cert-manager'],
+    labels=["infra"]
+)
