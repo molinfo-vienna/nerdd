@@ -5,7 +5,6 @@ metadata:
 type: Opaque
 stringData:
   channel: "kafka"
-  broker_url: <to-patch>
+  broker_url: <this-will-be-patched>
   broker_username: ""
   broker_password: ""
-

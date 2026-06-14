@@ -16,7 +16,7 @@ spec:
       containers:
         - name: APP_NAME
           image: IMAGE
-          command: [ "/env/bin/nerdd_prediction_server" ]
+          command: ["/env/bin/nerdd_prediction_server"]
           args:
             - MODEL_CLASS
             - --channel=$(CHANNEL)

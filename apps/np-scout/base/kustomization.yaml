@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=np_scout.NPScoutModel
       - topic=np-scout-checkpoints
       - consumerGroup=predict-checkpoints-np-scout
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=10m
       - memRequest=1Gi
       - cpuLimit=1

@@ -5,15 +5,13 @@ resources:
   - ../../base
 
 components:
-  - ../../../_common/nerdd-module
+  - ../../../_common/nerdd-module/envs/local
 
 configMapGenerator:
   - name: app-config
     behavior: merge
     literals:
       - image=skin-doctor-cp:latest
-      - minReplicaCount=1
-      - maxReplicaCount=1
 
 patches:
   - target:

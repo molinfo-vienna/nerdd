@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=cypstrate.CypstrateModel
       - topic=cypstrate-checkpoints
       - consumerGroup=predict-checkpoints-cypstrate
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=10m
       - memRequest=1500Mi
       - cpuLimit=3000m

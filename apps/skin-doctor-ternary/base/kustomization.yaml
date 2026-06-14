@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=skin_doctor.SkinDoctorTernaryModel
       - topic=skin-doctor-ternary-checkpoints
       - consumerGroup=predict-checkpoints-skin-doctor-ternary
-      - minReplicaCount=1
-      - maxReplicaCount=1
       - cpuRequest=1
       - memRequest=10G
       - cpuLimit=1

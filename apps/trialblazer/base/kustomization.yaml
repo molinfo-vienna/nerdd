@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=trialblazer.Nerdd.TrialblazerModel
       - topic=trialblazer-checkpoints
       - consumerGroup=predict-checkpoints-trialblazer
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=4
       - memRequest=3Gi
       - cpuLimit=5

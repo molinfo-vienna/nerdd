@@ -8,8 +8,6 @@ configMapGenerator:
       - modelClass=skin_doctor.SkinDoctorCPModel
       - topic=skin-doctor-cp-checkpoints
       - consumerGroup=predict-checkpoints-skin-doctor-cp
-      - minReplicaCount=3
-      - maxReplicaCount=3
       - cpuRequest=10m
       - memRequest=5Gi
       - cpuLimit=1
