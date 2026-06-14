@@ -41,26 +41,6 @@ def replace_namespace(yaml, new_namespace, replaceable_namespaces=['default']):
 
     return encode_yaml_stream(objects)
 
-def fix_names(yaml):
-    # read yaml 
-    if type(yaml) == 'string':
-        objects = read_yaml_stream(yaml)
-    elif type(yaml) == 'blob':
-        objects = decode_yaml_stream(yaml)
-    else:
-        fail('only takes string or blob, got: %s' % type(yaml))
-
-    for o in objects:
-        if 'metadata' in o and 'name' in o['metadata'] and ':' in o['metadata']['name']:
-            print('Replacing ":" in name %s (namespace: %s, kind: %s)' % (
-                o['metadata']['name'],
-                o['metadata']['namespace'] if 'namespace' in o['metadata'] else 'default',
-                o['kind']
-            ))
-            o['metadata']['name'] = o['metadata']['name'].replace(':', '-')
-
-    return encode_yaml_stream(objects)
-
 def convert_to_tilt_id(resource_object):
     namespace = (
         resource_object['metadata']['namespace'] 
@@ -68,9 +48,13 @@ def convert_to_tilt_id(resource_object):
         else 'default'
     )
 
+    name = resource_object['metadata']['name'].replace(":", "\\:")
+    kind = resource_object['kind'].replace(":", "\\:")
+    namespace = namespace.replace(":", "\\:")
+
     return '%s:%s:%s' % (
-        resource_object['metadata']['name'], 
-        resource_object['kind'], 
+        name, 
+        kind, 
         namespace
     )
 
@@ -98,7 +82,7 @@ def kustomize_resource(
         kustomization_path, 
         namespace, 
         create_namespace=False, 
-        keep_namespaces=['default', 'kube-system'], 
+        replaceable_namespaces=['default'], 
         **kwargs
     ):
     # all resources should be loaded to the given namespace and grouped in Tilt
@@ -106,8 +90,7 @@ def kustomize_resource(
     # -> inject the namespace to all resources
     # -> collect names of all resources using decode_yaml_stream
     resource_stream = kustomize(kustomization_path)
-    resource_stream = replace_namespace(resource_stream, namespace, keep_namespaces)
-    resource_stream = fix_names(resource_stream)
+    resource_stream = replace_namespace(resource_stream, namespace, replaceable_namespaces)
     resources = decode_yaml_stream(resource_stream)
 
     all_objects = [
