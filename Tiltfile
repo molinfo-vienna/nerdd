@@ -1,15 +1,38 @@
 load('ext://namespace', 'namespace_create')
 load('ext://git_resource', 'git_checkout')
 
-# limit the number of parallel updates
-update_settings(max_parallel_updates=2)
+# 
+# Define configuration options that can be set via command line when running `tilt up`, e.g.
+# `tilt up -- --scrub-secrets=true --message-broker=kafka`
+#
+
+# message broker
+DEFAULT_MESSAGE_BROKER = 'kafka'
+config.define_string("message_broker")
+
+# scrub secrets (replace secrets with [redacted] in Tilt UI)
+DEFAULT_SCRUB_SECRETS = True
+config.define_bool("scrub_secrets")
+
+# number of parallel workflows to run when executing `tilt up`
+DEFAULT_PARALLEL_UPDATES = 2
+config.define_string("parallel_updates")
 
 # load config provided by the user via command line
-MESSAGE_BROKER = 'kafka'
-
-config.define_string("message_broker")
 cfg = config.parse()
-cfg['message_broker'] = cfg.get('message_broker', MESSAGE_BROKER)
+cfg['message_broker'] = cfg.get('message_broker', DEFAULT_MESSAGE_BROKER)
+cfg['scrub_secrets'] = cfg.get('scrub_secrets', DEFAULT_SCRUB_SECRETS)
+cfg['parallel_updates'] = int(cfg.get('parallel_updates', DEFAULT_PARALLEL_UPDATES))
+
+# apply secret scrubbing settings
+secret_settings(disable_scrub=not cfg['scrub_secrets'])
+
+# limit the number of parallel updates
+update_settings(max_parallel_updates=cfg['parallel_updates'])
+
+#
+# Define apps to be loaded
+#
 
 # essential repositories used by many apps
 base_repositories = [
@@ -35,6 +58,7 @@ apps = [
     # 'gloryx',
 
     # essential:
+    'authelia',
     'storage',
     'external-secrets',
     'gateway-api',
@@ -51,13 +75,12 @@ apps = [
 
     # optional for monitoring:
     'argocd',
-    # 'monitoring',
-    # 'redpanda',
+    'routeboard',
 ]
 
 message_broker = cfg['message_broker']
 if message_broker == "kafka":
-    apps += ['strimzi', 'kafka']
+    apps += ['strimzi', 'kafka', 'kafka-ui']
 elif message_broker == "rabbitmq":
     apps += ['rabbitmq-system', 'rabbitmq']
 
