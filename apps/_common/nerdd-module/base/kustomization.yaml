@@ -17,6 +17,7 @@ replacements:
           kind: Deployment
         fieldPaths:
           - metadata.name
+          - metadata.labels.app
           - spec.selector.matchLabels.app
           - spec.template.metadata.labels.app
           - spec.template.spec.containers.0.name
@@ -75,16 +76,6 @@ replacements:
           kind: KafkaTopic
         fieldPaths:
           - metadata.name
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.consumerGroup
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.consumerGroup
 
   - source:
       kind: ConfigMap
