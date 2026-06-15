@@ -1,0 +1,37 @@
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: Password
+metadata:
+  name: rabbitmq-password-generator
+spec:
+  length: 40
+  allowRepeat: true
+  noUpper: false
+  symbols: 0
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: broker-config
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: active-broker-store
+  refreshInterval: "100000h"
+  target:
+    name: broker-config
+    template:
+      type: Opaque
+      data:
+        default_user.conf: |
+          default_user = admin
+          default_pass = {{ .password }}
+        channel: "rabbitmq_streams"
+        broker_url: "rabbitmq://rabbitmq.rabbitmq.svc.cluster.local:5552"
+        broker_username: admin
+        broker_password: "{{ .password }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: Password
+          name: rabbitmq-password-generator
