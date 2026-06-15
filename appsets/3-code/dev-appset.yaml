@@ -32,7 +32,8 @@ spec:
       # Destination cluster and namespace to deploy the application
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{index .path.segments 3}}"
+        # temporarily make kafka an exception (later all apps should live in their own namespace)
+        namespace: '{{if eq (index .path.segments 1) "kafka"}}dev-kafka{{else}}{{index .path.segments 3}}{{end}}'
 
       # Sync policy
       syncPolicy:
