@@ -27,6 +27,10 @@ patches:
     path: patch-pod-monitor.yaml
   - target:
       kind: KafkaTopic
+      name: system
+    path: patch-topic.yaml
+  - target:
+      kind: KafkaTopic
       name: jobs
     path: patch-topic.yaml
   - target:
