@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=glory:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: glory-checkpoints
-    path: patch-topic.yaml

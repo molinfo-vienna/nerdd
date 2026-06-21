@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=gloryx:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: gloryx-checkpoints
-    path: patch-topic.yaml

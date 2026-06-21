@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=cypstrate:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: cypstrate-checkpoints
-    path: patch-topic.yaml

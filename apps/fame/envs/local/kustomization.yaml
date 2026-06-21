@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=fame:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: fame3-checkpoints
-    path: patch-topic.yaml

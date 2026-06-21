@@ -13,8 +13,3 @@ configMapGenerator:
     literals:
       - image=hitdexter:latest
 
-patches:
-  - target:
-      kind: KafkaTopic
-      name: hitdexter3-checkpoints
-    path: patch-topic.yaml

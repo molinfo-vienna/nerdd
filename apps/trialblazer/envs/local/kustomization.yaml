@@ -18,7 +18,3 @@ patches:
       kind: Deployment
       name: trialblazer
     path: patch-deployment.yaml
-  - target:
-      kind: KafkaTopic
-      name: trialblazer-checkpoints
-    path: patch-topic.yaml
