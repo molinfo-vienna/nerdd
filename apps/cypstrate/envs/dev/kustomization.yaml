@@ -12,3 +12,5 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=ghcr.io/molinfo-vienna/cypstrate:latest
+      - minReplicaCount=1
+      - maxReplicaCount=10
