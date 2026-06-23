@@ -1,0 +1,28 @@
+load('ext://git_resource', 'git_checkout')
+load('../../common.Tiltfile', 'kustomize_resource')
+
+# checkout source code
+project_name = 'awesom'
+repository_name = 'aweSOM-image'
+repository_url = 'https://github.com/molinfo-vienna/{}'.format(repository_name)
+project_dir = '../../repos/{}'.format(repository_name)
+if not os.path.exists(project_dir):
+    git_checkout(
+        repository_url,
+        checkout_dir=project_dir
+    )
+
+# build docker image
+docker_build(
+    project_name,
+    context=project_dir,
+)
+
+# deploy to kubernetes
+kustomize_resource(
+    workload=project_name,
+    kustomization_path='./envs/local/',
+    namespace='local',
+    resource_deps=['kafka', 'keda', 'storage'],
+    labels=['modules']
+)
