@@ -12,3 +12,9 @@ configMapGenerator:
     behavior: merge
     literals:
       - image=ghcr.io/molinfo-vienna/awesom:latest
+
+patches:
+  - target:
+      kind: Deployment
+      name: awesom
+    path: patch-deployment.yaml
