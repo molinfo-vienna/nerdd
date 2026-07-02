@@ -239,22 +239,22 @@ def extract_entrypoint(kustomization_path, workload_name, dockerfile_path):
     fail("Could not find Deployment '%s' in '%s'" % (workload_name, kustomization_path))
 
 
-def build_nerdd_module(
+def build_nerdd_image(
         project_name,
         repository_url,
         repository_name=None,
         dockerfile_path=None,
+        live_update=False,
         live_update_module_and_link=False,
     ):
     """
-    Checks out and builds a NERDD module. A typical NERDD module repository contains a Dockerfile 
-    to build the container image. If the Dockerfile supports restarts (e.g. tilt can run touch, 
-    chmod, sh), tilt can restart the process in the container when code changes are detected. 
-    
-    When live update is enabled, this function synchronizes the code of the libraries 
-    ``nerdd-module`` and ``nerdd-link`` into the running container at /deps/nerdd-module and 
-    /deps/nerdd-link, respectively. As a result, changes to the code of these libraries will also 
-    be reflected in the running container.
+    Checks out and builds a NERDD module. A typical NERDD module repository contains a Dockerfile
+    to build the container image. If the Dockerfile supports restarts (e.g. Tilt can run touch,
+    chmod, and sh), Tilt can restart the process when code changes are detected.
+
+    When Live Update is enabled, this function synchronizes the project into the running
+    container. It can additionally synchronize the ``nerdd-module`` and ``nerdd-link`` libraries
+    so changes to those libraries are also reflected in the container.
 
     Parameters
     ----------
@@ -263,16 +263,22 @@ def build_nerdd_module(
     repository_url : str
         Git repository to check out when the project directory is missing.
     repository_name : str or None, optional
-        Name of the checkout directory under ``../../repos``. Can be useful if a repository 
+        Name of the checkout directory under ``../../repos``. Can be useful if a repository
         contains multiple NERDD modules. If None, ``project_name`` is used. Defaults to None.
     dockerfile_path : str or None, optional
-        Dockerfile to build. Defaults to ``Dockerfile`` in the project directory. Relative paths 
+        Dockerfile to build. Defaults to ``Dockerfile`` in the project directory. Relative paths
         are resolved against the project directory; absolute paths are used unchanged.
+    live_update : bool, optional
+        Whether to build with process restart and synchronize the project into ``/app`` when code
+        changes are detected. When false, uses a standard Docker build without Live Update.
     live_update_module_and_link : bool, optional
-        Whether to build with process restart on code changes. This also synchronizes the project
-        files, as well as the code of the libraries ``nerdd-module``, and ``nerdd-link`` into the 
-        running container. When false, uses a standard Docker build without Live Update. 
+        Whether to watch and synchronize ``nerdd-module`` and ``nerdd-link`` into
+        ``/deps/nerdd-module`` and ``/deps/nerdd-link`` during Live Update. Requires
+        ``live_update`` to be true.
     """
+    if live_update_module_and_link and not live_update:
+        fail("live_update_module_and_link requires live_update=True")
+
     if repository_name == None:
         repository_name = project_name
 
@@ -305,7 +311,7 @@ def build_nerdd_module(
     if not is_absolute_path:
         dockerfile_path = os.path.join(project_dir, dockerfile_path)
 
-    if live_update_module_and_link:
+    if live_update:
         # build the docker image
         command = "docker buildx build -f {} -t $EXPECTED_REF --build-context repos={} .".format(
             dockerfile_path,
@@ -314,18 +320,21 @@ def build_nerdd_module(
             os.path.join(project_dir, '..'),
         )
 
+        deps = [project_dir, "."]
+        live_update_steps = [sync(project_dir, "/app")]
+        if live_update_module_and_link:
+            deps += ["../../repos/nerdd-module", "../../repos/nerdd-link"]
+            live_update_steps += [
+                sync("../../repos/nerdd-module", "/deps/nerdd-module"),
+                sync("../../repos/nerdd-link", "/deps/nerdd-link"),
+            ]
+
         custom_build_with_restart(
             project_name,
             command=command,
-            deps=[project_dir, "../../repos/nerdd-module", "../../repos/nerdd-link", "."],
+            deps=deps,
             dir=project_dir,
-            # mount nerdd-module and nerdd-link into the container to get live updates when
-            # changing files in those projects
-            live_update=[
-                sync(project_dir, "/app"),
-                sync("../../repos/nerdd-module", "/deps/nerdd-module"),
-                sync("../../repos/nerdd-link", "/deps/nerdd-link"),
-            ],
+            live_update=live_update_steps,
             entrypoint=extract_entrypoint('./envs/local/', project_name, dockerfile_path)
         )
     else:
