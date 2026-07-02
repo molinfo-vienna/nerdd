@@ -1,35 +1,12 @@
-load('ext://git_resource', 'git_checkout')
-load('../../common.Tiltfile', 'kustomize_resource')
+load('../../common.Tiltfile', 'kustomize_resource', 'build_nerdd_module')
 
-# checkout source code
 project_name = 'hitdexter'
 repository_url = 'https://github.com/molinfo-vienna/{}'.format(project_name)
-project_dir = '../../repos/{}'.format(project_name)
-if not os.path.exists(project_dir):
-    git_checkout(
-        repository_url, 
-        checkout_dir=project_dir
-    )
 
-# build docker image
-# custom_build(
-#     project_name,
-#     command="docker buildx build -f ../../k8s/cypstrate/Dockerfile -t $EXPECTED_REF --build-context nerdd-link=../nerdd-link --build-context nerdd-module=../nerdd-module .",
-#     deps=[project_dir, '../../repos/nerdd-module', '../../repos/nerdd-link', '.'],
-#     dir=project_dir,
-#     live_update=[
-#         sync(project_dir, '/app'),
-#         sync('../../repos/nerdd-module', '/deps/nerdd-module'),
-#         sync('../../repos/nerdd-link', '/deps/nerdd-link'),
-#         run('touch /app/RESTART')
-#     ]
-# )
-docker_build(
+build_nerdd_module(
     project_name,
-    context=project_dir,
-    live_update=[
-        sync(project_dir, '/app')
-    ],
+    repository_url,
+    live_update_module_and_link=False,
 )
 
 # deploy to kubernetes
