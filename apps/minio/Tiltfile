@@ -1,0 +1,11 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='minio',
+    kustomization_path='./envs/local/',
+    create_namespace=True,
+    namespace='local-minio',
+    port_forwards=['9000:9000', '9001:9001'],
+    resource_deps=['storage', 'external-secrets-check'],
+    labels=['infra']
+)
