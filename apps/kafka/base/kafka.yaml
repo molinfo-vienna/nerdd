@@ -3,7 +3,6 @@ kind: Kafka
 metadata:
   name: kafka-cluster
   annotations:
-    strimzi.io/pause-reconciliation: "true"
     strimzi.io/kraft: enabled
     strimzi.io/node-pools: enabled
 spec:
