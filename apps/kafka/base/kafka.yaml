@@ -30,6 +30,7 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 5
     config:
+      initial.broker.registration.timeout.ms: 300000
       auto.create.topics.enable: "false"
       producer.max.request.size: 10485760
       consumer.max.request.size: 10485760
