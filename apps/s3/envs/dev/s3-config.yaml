@@ -22,7 +22,13 @@ spec:
       remoteRef:
         key: rook-ceph-object-user-rook-ceph-s3-job-data
         property: AccessKey
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
     - secretKey: SECRET_KEY
       remoteRef:
         key: rook-ceph-object-user-rook-ceph-s3-job-data
         property: SecretKey
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None

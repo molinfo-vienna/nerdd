@@ -1,0 +1,46 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: APP_NAME-s3-config
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: s3-store
+  target:
+    name: APP_NAME-s3-config
+    template:
+      type: Opaque
+      data:
+        s3_url: "{{ .s3_url }}"
+        s3_bucket: "{{ .s3_bucket }}"
+        s3_username: "{{ .s3_username }}"
+        s3_password: "{{ .s3_password }}"
+  data:
+    - secretKey: s3_url
+      remoteRef:
+        key: s3-config
+        property: s3_url
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: s3_bucket
+      remoteRef:
+        key: s3-config
+        property: s3_bucket_name
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: s3_username
+      remoteRef:
+        key: s3-config
+        property: s3_username
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+    - secretKey: s3_password
+      remoteRef:
+        key: s3-config
+        property: s3_password
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
