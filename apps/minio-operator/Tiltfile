@@ -1,0 +1,10 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='minio-operator',
+    kustomization_path='./envs/local/',
+    create_namespace=True,
+    namespace='minio-operator',
+    resource_deps=['external-secrets-check'],
+    labels=['infra']
+)

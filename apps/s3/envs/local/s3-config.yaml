@@ -9,9 +9,15 @@ spec:
     template:
       type: Opaque
       data:
-        s3_url: <this-will-be-patched>
+        s3_url: "http://minio.local-s3.svc"
         s3_username: "taboo"
         s3_password: "{{ .password }}"
+        s3_bucket_name: "job-data"
+        accesskey: "taboo"
+        secretkey: "{{ .password }}"
+        config.env: |
+          export MINIO_ROOT_USER="taboo"
+          export MINIO_ROOT_PASSWORD="{{ .password }}"
   dataFrom:
     - sourceRef:
         generatorRef:

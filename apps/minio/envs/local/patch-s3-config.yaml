@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/target/template/data/s3_url
-  value: http://minio.local-minio.svc:9000

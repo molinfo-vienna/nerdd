@@ -5,7 +5,7 @@ metadata:
 spec:
   provider:
     kubernetes:
-      remoteNamespace: local
+      remoteNamespace: dev-s3
       server:
         url: https://kubernetes.default.svc
         caProvider:

@@ -1,11 +1,11 @@
 load('../../common.Tiltfile', 'kustomize_resource')
 
 kustomize_resource(
-    workload='minio',
+    workload='s3',
     kustomization_path='./envs/local/',
+    namespace='local-s3',
     create_namespace=True,
-    namespace='local-minio',
-    port_forwards=['9000:9000', '9001:9001'],
-    resource_deps=['storage', 'external-secrets-check'],
+    port_forwards=['9000:9000', '9090:9090'],
+    resource_deps=['minio-operator', 'external-secrets-check'],
     labels=['infra']
 )

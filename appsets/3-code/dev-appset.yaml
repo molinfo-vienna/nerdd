@@ -33,7 +33,7 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         # temporarily make kafka an exception (later all apps should live in their own namespace)
-        namespace: '{{if eq (index .path.segments 1) "kafka"}}dev-kafka{{else}}{{index .path.segments 3}}{{end}}'
+        namespace: '{{if has (index .path.segments 1) (list "kafka" "s3")}}dev-{{index .path.segments 1}}{{else}}{{index .path.segments 3}}{{end}}'
 
       # Sync policy
       syncPolicy:

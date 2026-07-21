@@ -1,0 +1,10 @@
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStoreUser
+metadata:
+  name: s3-job-data
+spec:
+  clusterNamespace: rook-ceph
+  store: rook-ceph
+  displayName: S3 access for the job-data bucket
+  quotas:
+    maxBuckets: 1

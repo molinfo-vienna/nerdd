@@ -1,0 +1,21 @@
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStore
+metadata:
+  name: rook-ceph
+spec:
+  allowUsersInNamespaces:
+    - dev-s3
+  metadataPool:
+    failureDomain: host
+    replicated:
+      size: 3
+  dataPool:
+    failureDomain: host
+    replicated:
+      size: 3
+  # Keep RGW pools if this resource is removed. Bucket data must be removed
+  # deliberately, rather than as a side effect of deleting the object store.
+  preservePoolsOnDelete: true
+  gateway:
+    port: 80
+    instances: 3

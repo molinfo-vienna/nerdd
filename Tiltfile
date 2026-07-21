@@ -52,6 +52,7 @@ apps = [
     # 'trialblazer',
 
     # github permissions are necessary for these modules:
+    # 'awesom',
     # 'fame',
     # 'fame3r',
     # 'glory',
@@ -60,6 +61,7 @@ apps = [
     # essential:
     'authelia',
     'storage',
+    's3',
     'external-secrets',
     'gateway-api',
     'cert-manager',
@@ -67,6 +69,7 @@ apps = [
     'nginx-gateway',
     'keda',
     'rethinkdb',
+    'minio-operator',
     'nerdd-init-system',
     'nerdd-backend',
     'nerdd-frontend',
