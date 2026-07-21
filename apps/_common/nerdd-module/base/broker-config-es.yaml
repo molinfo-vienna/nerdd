@@ -1,13 +1,13 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: broker-config
+  name: APP_NAME-broker-config
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: broker-store
   target:
-    name: broker-config
+    name: APP_NAME-broker-config
     template:
       type: Opaque
       data:

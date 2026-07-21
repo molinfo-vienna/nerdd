@@ -22,10 +22,16 @@ replacements:
           - spec.selector.matchLabels.app
           - spec.template.metadata.labels.app
           - spec.template.spec.containers.0.name
+      - select:
+          kind: Deployment
+        fieldPaths:
           - spec.template.spec.containers.0.env.[name=CHANNEL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_URL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_USERNAME].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=BROKER_PASSWORD].valueFrom.secretKeyRef.name
+        options:
+          delimiter: "-"
+          index: 0
       - select:
           kind: Deployment
         fieldPaths:
@@ -49,10 +55,13 @@ replacements:
           - metadata.labels.app
       - select:
           kind: ExternalSecret
-          name: broker-config
+          name: APP_NAME-broker-config
         fieldPaths:
           - metadata.name
           - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
       - select:
           kind: ExternalSecret
           name: APP_NAME-s3-config
