@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/trialblazer:latest@sha256:f3066633068e41e27a8ac7cdc0710bf7b1077e0f677d3da5bc944c78dce9b144
+  - ghcr.io/molinfo-vienna/trialblazer:latest@sha256:47d3706b1acc3f4e4579d0ad1f3051e6bd2c1ef289e982e38c06dafbb07c5e26
