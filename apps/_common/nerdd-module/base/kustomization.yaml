@@ -37,8 +37,8 @@ replacements:
         fieldPaths:
           - spec.template.spec.containers.0.env.[name=S3_URL].valueFrom.secretKeyRef.name
           - spec.template.spec.containers.0.env.[name=S3_BUCKET].valueFrom.secretKeyRef.name
-          - spec.template.spec.containers.0.env.[name=S3_USERNAME].valueFrom.secretKeyRef.name
-          - spec.template.spec.containers.0.env.[name=S3_PASSWORD].valueFrom.secretKeyRef.name
+          - spec.template.spec.containers.0.env.[name=S3_ACCESS_KEY_ID].valueFrom.secretKeyRef.name
+          - spec.template.spec.containers.0.env.[name=S3_SECRET_ACCESS_KEY].valueFrom.secretKeyRef.name
         options:
           delimiter: "-"
           index: 0
