@@ -10,6 +10,10 @@ patches:
       name: broker-store
     path: patch-store.yaml
   - target:
+      kind: ExternalSecret
+      name: broker-config
+    path: patch-broker-config.yaml
+  - target:
       kind: RabbitmqCluster
       name: rabbitmq
     path: patch-rabbitmq.yaml

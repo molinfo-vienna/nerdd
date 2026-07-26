@@ -130,7 +130,8 @@ def kustomize_resource(
     create_extra_workload = (workload not in workloads) and (len(all_objects) > 0)
 
     if create_extra_workload:
-        k8s_resource(new_name=workload, objects=all_objects, **kwargs)
+        extra_objects = kwargs.pop('objects', [])
+        k8s_resource(new_name=workload, objects=all_objects + extra_objects, **kwargs)
 
     for w in workloads:
         # The automatically created workloads might depend on other resources (e.g. namespaces, 
