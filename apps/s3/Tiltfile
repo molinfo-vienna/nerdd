@@ -7,5 +7,6 @@ kustomize_resource(
     create_namespace=True,
     port_forwards=['9000:9000', '9090:9090'],
     resource_deps=['minio-operator', 'external-secrets-check'],
+    objects=['operator:Service:minio-operator'],
     labels=['infra']
 )

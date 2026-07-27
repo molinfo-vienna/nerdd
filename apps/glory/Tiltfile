@@ -17,6 +17,6 @@ kustomize_resource(
     workload=project_name,
     kustomization_path='./envs/local/',
     namespace='local',
-    resource_deps=['message-broker', 'keda', 'storage'],
+    resource_deps=['message-broker', 'keda', 'storage', 's3'],
     labels=['modules']
 )
