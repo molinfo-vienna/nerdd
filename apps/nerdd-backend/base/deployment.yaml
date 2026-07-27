@@ -27,6 +27,7 @@ spec:
             - ++channel.broker_url=$(BROKER_URL)
             - ++channel.broker_username=$(BROKER_USERNAME)
             - ++channel.broker_password=$(BROKER_PASSWORD)
+            - ++media_root=/data
           env:
             - name: DB_HOST
               value: ""
