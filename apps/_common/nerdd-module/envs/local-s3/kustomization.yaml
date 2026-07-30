@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+components:
+  - ../../base
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - minReplicaCount=1
+      - maxReplicaCount=3
+
+patches:
+  - target:
+      kind: KafkaTopic
+    patch: |-
+      - op: replace
+        path: /metadata/namespace
+        value: local-kafka
+      - op: replace
+        path: /spec/replicas
+        value: 1
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/volumeMounts/0
+      - op: remove
+        path: /spec/template/spec/volumes/0
+      - op: remove
+        path: /spec/template/spec/containers/0/args/5
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --s3-url=$(S3_URL)
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --s3-bucket=$(S3_BUCKET)
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --s3-access-key-id=$(S3_ACCESS_KEY_ID)
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --s3-secret-access-key=$(S3_SECRET_ACCESS_KEY)
