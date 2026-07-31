@@ -7,14 +7,10 @@
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: strimzi.io/cluster
+                  - key: strimzi.io/name
                     operator: In
                     values:
-                      - kafka-cluster
-                  - key: strimzi.io/kind
-                    operator: In
-                    values:
-                      - Kafka
+                      - kafka-cluster-kafka
               topologyKey: kubernetes.io/hostname
 - op: replace
   path: /spec/kafka/config
