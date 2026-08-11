@@ -8,7 +8,6 @@ resources:
   # deploy kafka
   - kafka.yaml
   - kafka-config.yaml
-  - broker-store.yaml
   - node-pool.yaml
   - topic-jobs.yaml
   - topic-results.yaml
@@ -18,6 +17,6 @@ resources:
   - topic-serialization-results.yaml
   - topic-logs.yaml
   - topic-modules.yaml
-  # connect kafka metrics with prometheus
-  - pod-monitor.yaml
+  # Connect Kafka metrics with Prometheus when the Prometheus Operator is installed.
+  # - pod-monitor.yaml
   - kafka-metrics-config.yaml

@@ -8,5 +8,4 @@ spec:
   resources:
     requests:
       storage: 300Gi
-  storageClassName: rook-cephfs
   volumeMode: Filesystem
