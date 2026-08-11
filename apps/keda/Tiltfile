@@ -13,7 +13,7 @@ local_resource(
 
 kustomize_resource(
     workload='keda',
-    kustomization_path='./envs/local/',
+    kustomization_path='./envs/infra/',
     namespace='keda',
     create_namespace=True,
     resource_deps=['message-broker', 'remove-keda-finalizers'],
