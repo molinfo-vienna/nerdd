@@ -1,4 +1,4 @@
 - op: add
   path: /spec/template/spec/imagePullSecrets
   value:
-    - name: ghcr-secret
+    - name: fame3r-ghcr-secret
