@@ -6,12 +6,25 @@ spec:
   replicas: 1
   template:
     spec:
+      affinity: null
       containers:
         - name: nerdd-backend
           image: nerdd-backend:latest
+          args:
+            - --config-name
+            - production
+            - ++db.host=$(DB_HOST)
+            - ++db.port=$(DB_PORT)
+            - ++channel.name=$(CHANNEL)
+            - ++channel.broker_url=$(BROKER_URL)
+            - ++channel.broker_username=$(BROKER_USERNAME)
+            - ++channel.broker_password=$(BROKER_PASSWORD)
+            - ++s3_url=$(S3_URL)
+            - ++s3_bucket=$(S3_BUCKET)
+            - ++s3_access_key_id=$(S3_ACCESS_KEY_ID)
+            - ++s3_secret_access_key=$(S3_SECRET_ACCESS_KEY)
           env:
             - name: DB_HOST
               value: rethinkdb.local
-            - name: DB_PORT
-              value: "28015"
-      affinity: null
+
+

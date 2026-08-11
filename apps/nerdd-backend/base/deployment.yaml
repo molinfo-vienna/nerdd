@@ -18,6 +18,8 @@ spec:
         - name: nerdd-backend
           image: ghcr.io/molinfo-vienna/nerdd-backend:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
           args:
             - --config-name
             - production
@@ -34,9 +36,9 @@ spec:
             - ++s3_secret_access_key=$(S3_SECRET_ACCESS_KEY)
           env:
             - name: DB_HOST
-              value: ""
+              value: rethinkdb
             - name: DB_PORT
-              value: ""
+              value: "28015"
             - name: CHANNEL
               valueFrom:
                 secretKeyRef:
@@ -77,13 +79,9 @@ spec:
                 secretKeyRef:
                   name: s3-config-backend
                   key: s3_secret_access_key
+            # let users see a maintenance page and disable api:
             # - name: MAINTENANCE_MODE
             #   value: "true"
-          ports:
-            - containerPort: 8000
-          volumeMounts:
-            - name: data
-              mountPath: "/data"
           resources:
             requests:
               cpu: 500m
@@ -91,10 +89,6 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: pvc-media
       # put this container on same host as the database if possible
       affinity:
         podAffinity:

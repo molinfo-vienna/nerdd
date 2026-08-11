@@ -10,5 +10,11 @@ spec:
           env:
             - name: DB_HOST
               value: rethinkdb.dev
-            - name: DB_PORT
-              value: "28015"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-media
+
