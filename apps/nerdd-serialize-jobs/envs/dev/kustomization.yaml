@@ -3,3 +3,11 @@ kind: Kustomization
 
 resources:
   - ../../base
+  - broker-config-es.yaml
+  - s3-config-es.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      name: nerdd-serialize-jobs
+    path: patch-deployment.yaml
