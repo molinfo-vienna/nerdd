@@ -3,4 +3,3 @@ kind: Kustomization
 
 resources:
   - job.yaml
-  - broker-config-es.yaml

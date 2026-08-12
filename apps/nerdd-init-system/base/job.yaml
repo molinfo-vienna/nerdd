@@ -14,7 +14,8 @@ spec:
         - name: nerdd-init-system
           image: ghcr.io/molinfo-vienna/nerdd-process-jobs:latest
           imagePullPolicy: IfNotPresent
-          command: [ "/env/bin/nerdd_init" ]
+          command:
+            - /env/bin/nerdd_init
           args:
             - --channel=$(CHANNEL)
             - --broker-url=$(BROKER_URL)
@@ -41,13 +42,6 @@ spec:
                 secretKeyRef:
                   name: broker-config-init-system
                   key: broker_password
-          volumeMounts:
-            - name: data
-              mountPath: "/data"
-
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: pvc-media
       restartPolicy: Never
+
   backoffLimit: 4
