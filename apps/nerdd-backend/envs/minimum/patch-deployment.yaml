@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nerdd-backend
+spec:
+  replicas: 1
+  template:
+    spec:
+      affinity: null
+      containers:
+        - name: nerdd-backend
+          env:
+            - name: DB_HOST
+              value: rethinkdb.minimum
+

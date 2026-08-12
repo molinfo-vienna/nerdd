@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+secretGenerator:
+  - name: broker-config-serialize-jobs
+    literals:
+      - channel=kafka
+      - broker_url=kafka-cluster-kafka-bootstrap.minimum:9092
+      - broker_username=""
+      - broker_password=""
+  - name: s3-config-serialize-jobs
+    literals:
+      - s3_url=http://minio.minimum.svc
+      - s3_bucket=job-data
+      - s3_access_key_id=minioadmin
+      - s3_secret_access_key=minioadmin
+
+patches:
+  - target:
+      kind: Deployment
+      name: nerdd-serialize-jobs
+    path: patch-deployment.yaml
+

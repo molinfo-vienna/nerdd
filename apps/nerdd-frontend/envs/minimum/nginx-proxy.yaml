@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nerdd-proxy-config
+data:
+  nginx.conf: |
+    events {}
+
+    http {
+      server {
+        listen 8080;
+
+        location /api {
+          proxy_pass http://nerdd-backend.minimum.svc.cluster.local:8000;
+          proxy_set_header Host $http_host;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        location /websocket {
+          proxy_pass http://nerdd-backend.minimum.svc.cluster.local:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $http_host;
+        }
+
+        location / {
+          proxy_pass http://nerdd-frontend.minimum.svc.cluster.local:80;
+          proxy_set_header Host $http_host;
+        }
+      }
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nerdd-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nerdd-proxy
+  template:
+    metadata:
+      labels:
+        app: nerdd-proxy
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: config
+          configMap:
+            name: nerdd-proxy-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nerdd-proxy
+spec:
+  selector:
+    app: nerdd-proxy
+  ports:
+    - port: 80
+      targetPort: 8080

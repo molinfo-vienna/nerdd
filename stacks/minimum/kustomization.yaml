@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: minimum
+resources:
+  - ../../apps/kafka/envs/minimum
+  - ../../apps/s3/envs/minimum
+  - ../../apps/rethinkdb/envs/minimum
+  - ../../apps/nerdd-init-system/envs/minimum
+  - ../../apps/nerdd-backend/envs/minimum
+  - ../../apps/nerdd-frontend/envs/minimum
+  - ../../apps/nerdd-process-jobs/envs/minimum
+  - ../../apps/nerdd-serialize-jobs/envs/minimum
+  - ../../apps/cypstrate/envs/minimum
