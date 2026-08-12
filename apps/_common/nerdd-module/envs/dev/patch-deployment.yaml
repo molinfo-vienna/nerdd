@@ -1,0 +1,18 @@
+- op: replace
+  path: /spec/template/spec/containers/0/args
+  value:
+    - MODEL_CLASS
+    - --channel=$(CHANNEL)
+    - --broker-url=$(BROKER_URL)
+    - --data-dir=/data
+- op: add
+  path: /spec/template/spec/containers/0/volumeMounts
+  value:
+    - name: data
+      mountPath: "/data"
+- op: add
+  path: /spec/template/spec/volumes
+  value:
+    - name: data
+      persistentVolumeClaim:
+        claimName: pvc-media

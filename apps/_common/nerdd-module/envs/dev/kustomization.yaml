@@ -4,6 +4,20 @@ kind: Component
 components:
   - ../../base
 
+resources:
+  - broker-config-es.yaml
+  - scaler.yaml
+
+
+patches:
+  - target:
+      kind: Deployment
+    path: patch-deployment.yaml
+  - target:
+      kind: KafkaTopic
+    path: patch-topic.yaml
+
+
 configMapGenerator:
   - name: app-config
     behavior: merge
@@ -11,10 +25,28 @@ configMapGenerator:
       - minReplicaCount=1
       - maxReplicaCount=1
 
-patches:
-  - target:
-      kind: KafkaTopic
-    patch: |-
-      - op: replace
-        path: /metadata/namespace
-        value: dev-kafka
+replacements:
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.modelClass
+    targets:
+      - select:
+          kind: Deployment
+        fieldPaths:
+          - spec.template.spec.containers.0.args.0
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.appName
+    targets:
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-broker-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
+
