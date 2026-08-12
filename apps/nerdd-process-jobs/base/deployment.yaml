@@ -22,7 +22,6 @@ spec:
             - --broker-url=$(BROKER_URL)
             - --broker-username=$(BROKER_USERNAME)
             - --broker-password=$(BROKER_PASSWORD)
-            - --data-dir=/data
             - --s3-url=$(S3_URL)
             - --s3-bucket=$(S3_BUCKET)
             - --s3-access-key-id=$(S3_ACCESS_KEY_ID)
@@ -68,9 +67,6 @@ spec:
                 secretKeyRef:
                   name: s3-config-process-jobs
                   key: s3_secret_access_key
-          volumeMounts:
-            - name: data
-              mountPath: "/data"
           resources:
             requests:
               cpu: "1"
@@ -78,7 +74,3 @@ spec:
             limits:
               cpu: "1"
               memory: 6G
-      volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: pvc-media
