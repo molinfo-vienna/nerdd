@@ -65,7 +65,6 @@ apps = [
     'external-secrets',
     'gateway-api',
     'cert-manager',
-    # 'haproxy-controller',
     'nginx-gateway',
     'keda',
     'rethinkdb',

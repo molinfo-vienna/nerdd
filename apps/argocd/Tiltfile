@@ -1,0 +1,10 @@
+load('../../common.Tiltfile', 'kustomize_resource')
+
+kustomize_resource(
+    workload='argocd',
+    kustomization_path='./envs/local/',
+    namespace='argocd',
+    create_namespace=True,
+    resource_deps=['gateway-api'],
+    labels=["infra"]
+)

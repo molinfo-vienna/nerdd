@@ -20,9 +20,64 @@ A few example modules can be found here:
 * [NPScout](https://github.com/molinfo-vienna/np-scout)
 
 
-## Prerequisites
+## Installation
 
-* Kubernetes cluster
+### Quick Preview
+
+The fastest way to preview NERDD locally is with Tilt. You need the following components on your machine:
+
+* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/).
+* [Tilt](https://tilt.dev/)
+
+Then, run NERDD by following these steps:
+
+```sh
+# Clone the repository
+git clone https://github.com/molinfo-vienna/nerdd
+cd nerdd
+
+# Run tilt
+tilt up
+
+# Open Tilt UI at http://localhost:10350
+# Open NERDD UI at https://localhost:8443 (after Tilt has loaded all components)
+```
+
+> [!TIP]
+> By default, only the `cypstrate` prediction module is loaded. You can enable additional 
+> prediction modules by editing the `apps` list in `Tiltfile`.
+
+
+### Minimum cluster installation
+
+To deploy a lightweight version of NERDD into a cluster, you need the following infrastructure 
+components:
+
+* [Strimzi](https://strimzi.io/)
+  * option 1: official installation guide
+  * option 2: `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/strimzi/envs/infra?ref=main`
+* [MinIO](https://operator.min.io/)
+  * option 1: official installation guide
+  * option 2: `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/minio-operator/envs/minimum?ref=main`
+
+Install the NERDD components (i.e. frontend, backend, job workers, database, kafka, s3 storage, cypstrate):
+
+```sh
+kubectl create namespace minimum
+kubectl apply -k https://github.com/molinfo-vienna/nerdd//stacks/minimum?ref=main
+
+# Forward service ports
+kubectl -n minimum port-forward service/nerdd-proxy 8080:80
+
+# Open http://localhost:8080
+```
+
+> [!TIP]
+> By default, only the `cypstrate` prediction module is loaded. You can enable additional 
+> prediction modules by running 
+> `kubectl apply -k https://github.com/molinfo-vienna/nerdd//apps/<module>/envs/minimum?ref=main` 
+> and replacing `<module>` (e.g. with `cyplebrity`, `np-scout`).
+
 * ArgoCD deployed in that cluster
 * optional (but recommended): 
   * at least 3 worker nodes (for Ceph Rook)
