@@ -48,3 +48,13 @@ replacements:
         options:
           delimiter: "-"
           index: 0
+      - select:
+          kind: ExternalSecret
+          name: APP_NAME-s3-config
+        fieldPaths:
+          - metadata.name
+          - spec.target.name
+        options:
+          delimiter: "-"
+          index: 0
+
