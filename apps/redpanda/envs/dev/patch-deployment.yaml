@@ -1,3 +1,0 @@
-- op: replace
-  path: /spec/template/spec/containers/0/env/0/value
-  value: kafka-cluster-kafka-bootstrap.dev:9092

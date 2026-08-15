@@ -3,9 +3,6 @@ kind: Kustomization
 
 resources:
   - ../../base
-
-patches:
-  - target:
-      kind: Deployment
-      name: redpanda-console
-    path: patch-deployment.yaml
+  - auth.yaml
+  - broker-config-es.yaml
+  - route.yaml

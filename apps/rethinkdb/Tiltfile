@@ -4,7 +4,6 @@ local_resource(
     name='reset-statefulset-data',
     cmd='kubectl delete pvc -l app=rethinkdb -n local || true',
     deps=[],
-    trigger_mode=TRIGGER_MODE_MANUAL,
     labels=['infra']
 )
 

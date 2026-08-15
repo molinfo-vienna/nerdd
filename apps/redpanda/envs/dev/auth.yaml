@@ -1,4 +1,3 @@
----
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -10,9 +9,8 @@ spec:
     template:
       type: Opaque
       data:
-        # store in plain text so we can recover it on server side
         password: "{{ .password }}"
-        kimberly: "{{ .password | bcrypt }}"
+        auth: "kimberly:{{ .password | bcrypt }}"
   dataFrom:
     - sourceRef:
         generatorRef:
@@ -26,3 +24,14 @@ metadata:
   name: redpanda-auth-generator
 spec:
   length: 25
+---
+apiVersion: gateway.nginx.org/v1alpha1
+kind: AuthenticationFilter
+metadata:
+  name: redpanda-console-auth
+spec:
+  type: Basic
+  basic:
+    secretRef:
+      name: redpanda-auth
+    realm: "Redpanda Console Login"

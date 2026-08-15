@@ -82,7 +82,7 @@ apps = [
 
 message_broker = cfg['message_broker']
 if message_broker == "kafka":
-    apps += ['strimzi', 'kafka', 'kafka-ui']
+    apps += ['strimzi', 'kafka', 'redpanda']
 elif message_broker == "rabbitmq":
     apps += ['rabbitmq-system', 'rabbitmq']
 
