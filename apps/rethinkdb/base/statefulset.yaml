@@ -42,12 +42,19 @@ spec:
               if [ "$ordinal" -eq 0 ]; then
                 # the first pod is the seed node
                 echo "Starting seed node rethinkdb-0...";
-                exec rethinkdb --bind all --cache-size 8192;
+                exec rethinkdb --bind all --cache-size 4096;
               else
                 # all other pods join the first pod
                 echo "Starting peer node with join rethinkdb-0...";
-                exec rethinkdb --bind all --cache-size 8192 --join rethinkdb-0.rethinkdb-internal;
+                exec rethinkdb --bind all --cache-size 4096 --join rethinkdb-0.rethinkdb-internal;
               fi
+          resources:
+            requests:
+              cpu: 500m
+              memory: 5Gi
+            limits:
+              cpu: "2"
+              memory: 6Gi
           volumeMounts:
             - name: data
               mountPath: /data
