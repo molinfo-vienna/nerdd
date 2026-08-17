@@ -1,0 +1,228 @@
+name: nerdd-minimum
+
+services:
+  kafka:
+    image: apache/kafka:4.0.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --list"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - kafka-data:/tmp/kraft-combined-logs
+
+  kafka-init:
+    image: apache/kafka:4.0.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: "no"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        for topic in jobs results system result-checkpoints serialization-requests serialization-results logs modules; do
+          /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic "$$topic" --partitions 1 --replication-factor 1
+        done
+
+  minio:
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    volumes:
+      - minio-data:/data
+
+  minio-init:
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+    depends_on:
+      minio:
+        condition: service_started
+    restart: "no"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        until mc alias set local http://minio:9000 minioadmin minioadmin; do sleep 1; done
+        mc mb --ignore-existing local/job-data
+
+  rethinkdb:
+    image: rethinkdb:2.4.4-bookworm-slim
+    command: rethinkdb --bind all
+    healthcheck:
+      test: ["CMD-SHELL", "rethinkdb --version"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - rethinkdb-data:/data
+
+  nerdd-init-system:
+    image: ghcr.io/molinfo-vienna/nerdd-process-jobs:latest
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+    restart: "no"
+    entrypoint: ["/env/bin/nerdd_init"]
+    command:
+      - --channel=kafka
+      - --broker-url=kafka:9092
+      - --broker-username=
+      - --broker-password=
+
+  nerdd-backend:
+    image: ghcr.io/molinfo-vienna/nerdd-backend:latest
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+      minio-init:
+        condition: service_completed_successfully
+      rethinkdb:
+        condition: service_healthy
+    command:
+      - --config-name
+      - production
+      - ++db.host=rethinkdb
+      - ++db.port=28015
+      - ++channel.name=kafka
+      - ++channel.broker_url=kafka:9092
+      - ++channel.broker_username=
+      - ++channel.broker_password=
+      - ++media_root=/data
+      - ++s3_url=http://minio:9000
+      - ++s3_bucket=job-data
+      - ++s3_access_key_id=minioadmin
+      - ++s3_secret_access_key=minioadmin
+
+  nerdd-process-jobs:
+    image: ghcr.io/molinfo-vienna/nerdd-process-jobs:latest
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+      minio-init:
+        condition: service_completed_successfully
+    command:
+      - --channel=kafka
+      - --broker-url=kafka:9092
+      - --broker-username=
+      - --broker-password=
+      - --s3-url=http://minio:9000
+      - --s3-bucket=job-data
+      - --s3-access-key-id=minioadmin
+      - --s3-secret-access-key=minioadmin
+
+  nerdd-serialize-jobs:
+    image: ghcr.io/molinfo-vienna/nerdd-serialize-jobs:latest
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+      minio-init:
+        condition: service_completed_successfully
+    command:
+      - --channel=kafka
+      - --broker-url=kafka:9092
+      - --broker-username=
+      - --broker-password=
+      - --s3-url=http://minio:9000
+      - --s3-bucket=job-data
+      - --s3-access-key-id=minioadmin
+      - --s3-secret-access-key=minioadmin
+
+  cypstrate:
+    image: ghcr.io/molinfo-vienna/cypstrate:latest
+    depends_on:
+      kafka-init:
+        condition: service_completed_successfully
+      cypstrate-topic-init:
+        condition: service_completed_successfully
+      minio-init:
+        condition: service_completed_successfully
+    entrypoint: ["/env/bin/nerdd_prediction_server"]
+    command:
+      - cypstrate.CypstrateModel
+      - --channel=kafka
+      - --broker-url=kafka:9092
+      - --broker-username=
+      - --broker-password=
+      - --s3-url=http://minio:9000
+      - --s3-bucket=job-data
+      - --s3-access-key-id=minioadmin
+      - --s3-secret-access-key=minioadmin
+
+  cypstrate-topic-init:
+    image: apache/kafka:4.0.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    restart: "no"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists \
+          --topic cypstrate-checkpoints --partitions 1 --replication-factor 1
+
+  frontend:
+    image: ghcr.io/molinfo-vienna/nerdd-frontend:latest
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        rm -f /etc/nginx/http.d/default.conf
+        exec nginx -g 'daemon off;'
+
+  proxy:
+    image: nginx:alpine
+    depends_on:
+      nerdd-backend:
+        condition: service_started
+      frontend:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        cat > /etc/nginx/conf.d/default.conf <<'EOF'
+        server {
+          listen 8080;
+          location /api {
+            proxy_pass http://nerdd-backend:8000;
+            proxy_set_header Host $$http_host;
+            proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+          }
+          location /websocket {
+            proxy_pass http://nerdd-backend:8000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $$http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $$http_host;
+          }
+          location / {
+            proxy_pass http://frontend:80;
+            proxy_set_header Host $$http_host;
+          }
+        }
+        EOF
+        exec nginx -g 'daemon off;'
+
+volumes:
+  kafka-data:
+  minio-data:
+  rethinkdb-data:

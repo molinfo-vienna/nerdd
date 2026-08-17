@@ -22,14 +22,27 @@ A few example modules can be found here:
 
 ## Installation
 
-### Quick Preview
+### Local preview with Docker Compose
 
-The fastest way to preview NERDD locally is with Tilt. You need the following components on your machine:
+```sh
+docker compose -f https://github.com/molinfo-vienna/nerdd.git#main:stacks/minimum/compose.yaml up -d
 
-* Kubernetes cluster, e.g. [MicroK8s](https://microk8s.io/docs/getting-started), [Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), [k3d](https://k3d.io/stable/#installation), or [kind](https://kind.sigs.k8s.io/docs/user/quick-start/)
-* [Tilt](https://tilt.dev/)
+# Open http://localhost:8080
+```
 
-Then, run NERDD by following these steps:
+Stop the stack:
+
+```sh
+docker compose -f https://github.com/molinfo-vienna/nerdd.git#main:stacks/minimum/compose.yaml down
+```
+
+
+### Local Preview with Tilt
+
+Requires a running Kubernetes cluster (e.g. [MicroK8s](https://microk8s.io/docs/getting-started), 
+[Minikube](https://minikube.sigs.k8s.io/docs/start/), [K3s](https://docs.k3s.io/quick-start), 
+[k3d](https://k3d.io/stable/#installation), or 
+[kind](https://kind.sigs.k8s.io/docs/user/quick-start/)) and [Tilt](https://tilt.dev/).
 
 ```sh
 # Clone the repository
@@ -40,7 +53,7 @@ cd nerdd
 tilt up
 
 # Open Tilt UI at http://localhost:10350
-# Open NERDD UI at https://localhost:8443 (after Tilt has loaded all components)
+# Open NERDD UI at https://localhost:8443 once all components have loaded
 ```
 
 > [!TIP]
