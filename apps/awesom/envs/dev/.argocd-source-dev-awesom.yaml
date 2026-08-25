@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/awesom:latest@sha256:f449e33960a8e43f782c7fe32529bbfe1e0e882068e93e86e6df6be405f60e1d
+  - ghcr.io/molinfo-vienna/awesom:latest@sha256:60cbae96339be1e5ad889e3aef616443e9f3ee5ca33e864a00ba332d5c448f8d
