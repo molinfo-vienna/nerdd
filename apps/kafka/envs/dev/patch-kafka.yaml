@@ -29,7 +29,7 @@
     min.insync.replicas: 2
     # extend timeouts to accommodate slower broker registration and
     # quorum elections in high-latency or unstable network environments
-    initial.broker.registration.timeout.ms: 300000
+    initial.broker.registration.timeout.ms: 900000
     controller.quorum.election.timeout.ms: 10000
     controller.quorum.request.timeout.ms: 10000
     controller.quorum.election.backoff.max.ms: 5000
