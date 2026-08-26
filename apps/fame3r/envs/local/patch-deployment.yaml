@@ -1,8 +1,4 @@
 - op: add
-  path: /spec/template/spec/imagePullSecrets
-  value:
-    - name: fame3r-ghcr-secret
-- op: add
   path: /spec/template/spec/containers/0/env/-
   value:
     name: OMP_NUM_THREADS
