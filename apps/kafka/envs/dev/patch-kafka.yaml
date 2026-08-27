@@ -4,14 +4,19 @@
     pod:
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: strimzi.io/name
-                    operator: In
-                    values:
-                      - kafka-cluster-kafka
-              topologyKey: kubernetes.io/hostname
+          # TODO: REVERT TO requiredDuringSchedulingIgnoredDuringExecution AFTER MIGRATION
+          # Temporarily set to preferredDuringSchedulingIgnoredDuringExecution to allow co-locating
+          # old and new broker pods on clusters with fewer than 6 worker nodes during node pool migration.
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: strimzi.io/name
+                      operator: In
+                      values:
+                        - kafka-cluster-kafka
+                topologyKey: kubernetes.io/hostname
 - op: replace
   path: /spec/kafka/config
   value:

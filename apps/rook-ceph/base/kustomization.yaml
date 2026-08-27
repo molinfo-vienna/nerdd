@@ -13,5 +13,8 @@ resources:
   # block storage
   - blockpool.yaml
   - storageclass-block.yaml
+  # block storage designed for kafka
+  - blockpool-kafka.yaml
+  - storageclass-block-kafka.yaml
   # rados object storage
   - objectstore.yaml
