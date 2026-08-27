@@ -16,9 +16,5 @@ patches:
     path: patch-kafka-config.yaml
   - target:
       kind: KafkaNodePool
-      name: controller
-    path: patch-nodepool.yaml
-  - target:
-      kind: KafkaNodePool
       name: broker-pool
-    path: patch-nodepool2.yaml
+    path: patch-nodepool.yaml
