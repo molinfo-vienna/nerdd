@@ -8,7 +8,7 @@ configMapGenerator:
       - modelClass=cypstrate.CypstrateModel
       - topic=cypstrate-checkpoints
       - consumerGroup=predict-checkpoints-cypstrate
-      - cpuRequest=10m
-      - memRequest=1500Mi
+      - cpuRequest=2000m
+      - memRequest=5000Mi
       - cpuLimit=3000m
       - memLimit=5000Mi

@@ -9,6 +9,6 @@ configMapGenerator:
       - topic=gloryx-checkpoints
       - consumerGroup=predict-checkpoints-gloryx
       - cpuRequest=4
-      - memRequest=5Gi
+      - memRequest=8Gi
       - cpuLimit=6
       - memLimit=8Gi
