@@ -4,10 +4,9 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/trialblazer:latest
       - appName=trialblazer
       - modelClass=trialblazer.Nerdd.TrialblazerModel
-      - topic=trialblazer-checkpoints
-      - consumerGroup=predict-checkpoints-trialblazer
       - cpuRequest=4
       - memRequest=6Gi
       - cpuLimit=5

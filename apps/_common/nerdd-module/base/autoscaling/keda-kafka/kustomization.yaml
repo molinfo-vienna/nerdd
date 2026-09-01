@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+resources:
+  - scaler.yaml
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.appName
+    targets:
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - metadata.name
+          - metadata.labels.app
+          - metadata.labels.deploymentName
+          - spec.scaleTargetRef.name
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.triggers.0.metadata.topic
+        options:
+          delimiter: "-"
+          index: 0
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.triggers.0.metadata.consumerGroup
+        options:
+          delimiter: "-"
+          index: 2
+
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.minReplicaCount
+    targets:
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.minReplicaCount
+
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.maxReplicaCount
+    targets:
+      - select:
+          kind: ScaledObject
+        fieldPaths:
+          - spec.maxReplicaCount

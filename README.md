@@ -185,8 +185,6 @@ configMapGenerator:
       - appName=molecular-weight
       - modelClass=molecular_weight.MolecularWeightModel
       - image=<IMAGE>  # REPLACE
-      - topic=molecular-weight-checkpoints
-      - consumerGroup=predict-checkpoints-molecular-weight
       - cpuRequest=10m
       - memRequest=256Mi
       - cpuLimit=500m

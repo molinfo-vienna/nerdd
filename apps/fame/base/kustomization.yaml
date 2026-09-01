@@ -4,10 +4,9 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
-      - appName=fame
+      - image=ghcr.io/molinfo-vienna/fame:latest
+      - appName=fame3
       - modelClass=fame.Fame3Model
-      - topic=fame3-checkpoints
-      - consumerGroup=predict-checkpoints-fame3
       - cpuRequest=4
       - memRequest=17G
       - cpuLimit=5

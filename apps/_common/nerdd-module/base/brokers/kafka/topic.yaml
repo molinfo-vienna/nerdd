@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: TOPIC
+  name: APP_NAME-checkpoints
   namespace: KAFKA_NAMESPACE
   labels:
     app: APP_NAME

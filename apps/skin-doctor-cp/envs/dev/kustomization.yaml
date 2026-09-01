@@ -5,10 +5,5 @@ resources:
   - ../../base
 
 components:
-  - ../../../_common/nerdd-module/envs/dev-s3
+  - ../../../_common/nerdd-module/envs/dev
 
-configMapGenerator:
-  - name: app-config
-    behavior: merge
-    literals:
-      - image=ghcr.io/molinfo-vienna/skin-doctor-cp:latest

@@ -4,10 +4,9 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/cyplebrity:latest
       - appName=cyplebrity
       - modelClass=cyplebrity.CyplebrityModel
-      - topic=cyplebrity-checkpoints
-      - consumerGroup=predict-checkpoints-cyplebrity
       - cpuRequest=1000m
       - memRequest=4Gi
       - cpuLimit=2000m

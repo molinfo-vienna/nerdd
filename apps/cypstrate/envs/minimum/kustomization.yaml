@@ -7,8 +7,3 @@ resources:
 components:
   - ../../../_common/nerdd-module/envs/minimum
 
-configMapGenerator:
-  - name: app-config
-    behavior: merge
-    literals:
-      - image=ghcr.io/molinfo-vienna/cypstrate:latest

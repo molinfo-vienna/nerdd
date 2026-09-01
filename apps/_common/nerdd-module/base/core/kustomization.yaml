@@ -3,8 +3,6 @@ kind: Component
 
 resources:
   - deployment.yaml
-  - topic.yaml
-
 
 replacements:
   - source:
@@ -31,17 +29,6 @@ replacements:
         options:
           delimiter: "-"
           index: 0
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - metadata.name
-          - metadata.labels.app
-          - metadata.labels.deploymentName
-          - spec.scaleTargetRef.name
-      - select:
-          kind: KafkaTopic
-        fieldPaths:
-          - metadata.labels.app
 
   - source:
       kind: ConfigMap
@@ -62,50 +49,6 @@ replacements:
           kind: Deployment
         fieldPaths:
           - spec.template.spec.containers.0.image
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.topic
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.topic
-      - select:
-          kind: KafkaTopic
-        fieldPaths:
-          - metadata.name
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.consumerGroup
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.triggers.0.metadata.consumerGroup
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.minReplicaCount
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.minReplicaCount
-
-  - source:
-      kind: ConfigMap
-      name: app-config
-      fieldPath: data.maxReplicaCount
-    targets:
-      - select:
-          kind: ScaledObject
-        fieldPaths:
-          - spec.maxReplicaCount
 
   - source:
       kind: ConfigMap

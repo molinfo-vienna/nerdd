@@ -4,10 +4,9 @@ kind: Kustomization
 configMapGenerator:
   - name: app-config
     literals:
+      - image=ghcr.io/molinfo-vienna/glory:latest
       - appName=glory
       - modelClass=glory.GloryModel
-      - topic=glory-checkpoints
-      - consumerGroup=predict-checkpoints-glory
       - cpuRequest=4
       - memRequest=7Gi
       - cpuLimit=6

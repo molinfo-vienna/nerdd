@@ -15,9 +15,9 @@ spec:
   triggers:
     - type: kafka
       metadata:
-        topic: TOPIC
+        topic: APP_NAME-checkpoints
         offsetResetPolicy: earliest
         bootstrapServersFromEnv: BROKER_URL
-        consumerGroup: CONSUMER_GROUP
+        consumerGroup: predict-checkpoints-APP_NAME
         lagThreshold: "5"
         limitToPartitionsWithLag: "true"
