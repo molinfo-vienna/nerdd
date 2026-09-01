@@ -12,5 +12,5 @@ components:
 patches:
   - target:
       kind: Deployment
-      name: fame
+      name: fame3
     path: patch-deployment.yaml
