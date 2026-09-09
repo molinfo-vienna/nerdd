@@ -16,7 +16,7 @@ patches:
     path: patch-kafka-config.yaml
   - target:
       kind: KafkaNodePool
-      name: controller
+      name: broker-pool
     path: patch-nodepool.yaml
   - target:
       kind: ClusterSecretStore
