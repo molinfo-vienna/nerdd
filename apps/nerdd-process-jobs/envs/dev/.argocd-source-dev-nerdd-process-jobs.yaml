@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - ghcr.io/molinfo-vienna/nerdd-process-jobs:latest@sha256:7c031fb12d3a90013762ff56c8b76267c0778c403da81be4bdc017755afc1d23
+  - ghcr.io/molinfo-vienna/nerdd-process-jobs:latest@sha256:3a62385b454992fe3d60e071d565da24b644b6ba9cd0d5acc8dcfea6f3a5ccd1
