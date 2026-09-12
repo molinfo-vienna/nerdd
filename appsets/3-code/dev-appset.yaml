@@ -34,8 +34,8 @@ spec:
         server: https://kubernetes.default.svc
         # all dev apps were previously put into a common namespace "dev"
         # at the moment, these apps are moved to their own namespace incrementally
-        # temporarily declare a custom list of apps that are already migrated
-        namespace: '{{if has (index .path.segments 1) (list "kafka" "s3" "credentials" "nerdd-process-jobs" "nerdd-serialize-jobs" "nerdd-frontend" "awesom" "cypstrate" "cyplebrity" "fame" "fame3r" "glory" "gloryx" "hitdexter" "np-scout" "redpanda" "skin-doctor-cp" "skin-doctor-ternary" "trialblazer")}}dev-{{index .path.segments 1}}{{else}}{{index .path.segments 3}}{{end}}'
+        # temporarily declare a custom list of apps that are not yet migrated
+        namespace: '{{if has (index .path.segments 1) (list "nerdd-backend" "rethinkdb" "storage")}}{{index .path.segments 3}}{{else}}dev-{{index .path.segments 1}}{{end}}'
 
       # Sync policy
       syncPolicy:
