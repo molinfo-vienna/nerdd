@@ -2,7 +2,7 @@ load('../../common.Tiltfile', 'kustomize_resource')
 
 local_resource(
     name='reset-statefulset-data',
-    cmd='kubectl delete pvc -l app=rethinkdb -n local || true',
+    cmd='kubectl delete pvc -l app=rethinkdb -n local-rethinkdb || true',
     deps=[],
     labels=['infra']
 )
@@ -10,7 +10,8 @@ local_resource(
 kustomize_resource(
     workload='rethinkdb',
     kustomization_path='./envs/local/',
-    namespace='local',
+    namespace='local-rethinkdb',
+    create_namespace=True,
     port_forwards=['8084:8080', '28015:28015', '29015:29015'],
     resource_deps=[
         'storage', 'nginx-gateway', 'external-secrets-check', 'reset-statefulset-data'

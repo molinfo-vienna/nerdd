@@ -5,11 +5,26 @@ metadata:
 spec:
   template:
     spec:
+      # put this container on same host as the database if possible
+      affinity:
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app: rethinkdb
+                namespaces:
+                  - dev-rethinkdb
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: nerdd-backend
           env:
             - name: DB_HOST
-              value: rethinkdb.dev
+              value: rethinkdb.dev-rethinkdb
+            # let users see a maintenance page and disable api:
+            # - name: MAINTENANCE_MODE
+            #   value: "true"
           volumeMounts:
             - name: data
               mountPath: /data
@@ -17,4 +32,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: pvc-media
-

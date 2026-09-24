@@ -25,6 +25,5 @@ spec:
             - ++s3_secret_access_key=$(S3_SECRET_ACCESS_KEY)
           env:
             - name: DB_HOST
-              value: rethinkdb.local
-
+              value: rethinkdb.local-rethinkdb
 

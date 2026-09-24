@@ -89,16 +89,7 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
-      # put this container on same host as the database if possible
       affinity:
-        podAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app: rethinkdb
-                topologyKey: kubernetes.io/hostname
         # distribute instances across nodes
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

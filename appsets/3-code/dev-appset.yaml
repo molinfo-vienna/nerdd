@@ -35,7 +35,7 @@ spec:
         # all dev apps were previously put into a common namespace "dev"
         # at the moment, these apps are moved to their own namespace incrementally
         # temporarily declare a custom list of apps that are not yet migrated
-        namespace: '{{if has (index .path.segments 1) (list "nerdd-backend" "rethinkdb" "storage")}}{{index .path.segments 3}}{{else}}dev-{{index .path.segments 1}}{{end}}'
+        namespace: '{{if has (index .path.segments 1) (list "nerdd-backend" "storage")}}{{index .path.segments 3}}{{else}}dev-{{index .path.segments 1}}{{end}}'
 
       # Sync policy
       syncPolicy:
