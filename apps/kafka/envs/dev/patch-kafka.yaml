@@ -13,6 +13,14 @@
                       - kafka-cluster-kafka
               topologyKey: kubernetes.io/hostname
 - op: replace
+  path: /spec/kafka/livenessProbe
+  value:
+    # for slow cluster nodes:
+    initialDelaySeconds: 30 # default: 15
+    timeoutSeconds: 15 # default: 5
+    periodSeconds: 15 # default: 10
+    failureThreshold: 5 # default: 3
+- op: replace
   path: /spec/kafka/config
   value:
     auto.create.topics.enable: "false"
