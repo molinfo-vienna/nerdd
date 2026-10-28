@@ -7,7 +7,7 @@ configMapGenerator:
       - image=ghcr.io/molinfo-vienna/gloryx:latest
       - appName=gloryx
       - modelClass=gloryx.GloryXModel
-      - cpuRequest=4
-      - memRequest=8Gi
-      - cpuLimit=6
-      - memLimit=8Gi
+      - cpuRequest=2.5
+      - memRequest=5Gi
+      - cpuLimit=4.5
+      - memLimit=6.5Gi
