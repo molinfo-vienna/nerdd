@@ -5,7 +5,7 @@ resources:
   # argocd
   - https://raw.githubusercontent.com/argoproj/argo-cd/v2.13.3/manifests/install.yaml
   # argocd image updater
-  - https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/v0.15.2/manifests/install.yaml
+  - https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/v1.4.0/config/install.yaml
 
 patches:
   - path: argocd-cm-patch.yaml

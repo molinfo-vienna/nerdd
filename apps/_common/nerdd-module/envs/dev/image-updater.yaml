@@ -1,0 +1,17 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: APP_NAME
+  namespace: argocd
+spec:
+  commonUpdateSettings:
+    updateStrategy: digest
+  writeBackConfig:
+    method: git:secret:git-creds
+    gitConfig:
+      branch: main
+  applicationRefs:
+    - namePattern: dev-APP_NAME
+      images:
+        - alias: app
+          imageName: IMAGE

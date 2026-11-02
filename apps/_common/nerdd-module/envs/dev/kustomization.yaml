@@ -9,6 +9,8 @@ components:
 resources:
   - broker-config-es.yaml
   - s3-config-es.yaml
+  # automatically update a module if a new image version exists:
+  - image-updater.yaml
 
 configMapGenerator:
   - name: app-config
@@ -55,3 +57,24 @@ replacements:
         options:
           delimiter: "-"
           index: 0
+      - select:
+          kind: ImageUpdater
+          name: APP_NAME
+        fieldPaths:
+          - metadata.name
+      - select:
+          kind: ImageUpdater
+        fieldPaths:
+          - spec.applicationRefs.0.namePattern
+        options:
+          delimiter: "-"
+          index: 1
+  - source:
+      kind: ConfigMap
+      name: app-config
+      fieldPath: data.image
+    targets:
+      - select:
+          kind: ImageUpdater
+        fieldPaths:
+          - spec.applicationRefs.0.images.0.imageName

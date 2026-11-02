@@ -5,3 +5,5 @@ resources:
   - ../../base
   - route.yaml
   - rate-limit-policy.yaml
+  # automatically update container images when a new version is available:
+  - image-updater.yaml

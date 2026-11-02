@@ -1,0 +1,17 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: nerdd-process-jobs
+  namespace: argocd
+spec:
+  commonUpdateSettings:
+    updateStrategy: digest
+  writeBackConfig:
+    method: git:secret:git-creds
+    gitConfig:
+      branch: main
+  applicationRefs:
+    - namePattern: dev-nerdd-process-jobs
+      images:
+        - alias: app
+          imageName: ghcr.io/molinfo-vienna/nerdd-process-jobs:latest
