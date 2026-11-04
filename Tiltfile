@@ -45,7 +45,7 @@ apps = [
     # openly accessible:
     'cypstrate',
     # 'cyplebrity',
-    # 'hitdexter',
+    # 'hitdexter3',
     # 'np-scout',
     # 'skin-doctor-cp',
     # 'skin-doctor-ternary',
