@@ -53,7 +53,7 @@ apps = [
 
     # github permissions are necessary for these modules:
     # 'awesom',
-    # 'fame',
+    # 'fame3',
     # 'fame3r',
     # 'glory',
     # 'gloryx',
