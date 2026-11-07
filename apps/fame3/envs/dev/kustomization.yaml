@@ -8,7 +8,6 @@ resources:
 components:
   - ../../../_common/nerdd-module/envs/dev
 
-
 patches:
   - target:
       kind: Deployment

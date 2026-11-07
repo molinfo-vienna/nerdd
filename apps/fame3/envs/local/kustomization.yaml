@@ -11,11 +11,10 @@ configMapGenerator:
   - name: app-config
     behavior: merge
     literals:
-      - image=fame:latest
+      - image=fame3:latest
 
 patches:
   - target:
       kind: ScaledObject
       name: fame3
     path: patch-scaled-object.yaml
-
