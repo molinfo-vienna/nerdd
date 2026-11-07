@@ -106,7 +106,6 @@ services:
       - ++channel.broker_url=kafka:9092
       - ++channel.broker_username=
       - ++channel.broker_password=
-      - ++media_root=/data
       - ++s3_url=http://minio:9000
       - ++s3_bucket=job-data
       - ++s3_access_key_id=minioadmin
