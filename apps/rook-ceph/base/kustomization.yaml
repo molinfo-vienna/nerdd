@@ -7,9 +7,6 @@ resources:
   - operator.yaml
   - cluster.yaml
   - toolbox.yaml
-  # cephfs storage
-  - filesystem.yaml
-  - storageclass-cephfs.yaml
   # block storage
   - blockpool.yaml
   - storageclass-block.yaml
