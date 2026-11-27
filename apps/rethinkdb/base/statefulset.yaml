@@ -38,23 +38,27 @@ spec:
               echo "Starting rethinkdb node rethinkdb-$ordinal...";
               # avoid creating default databases
               rethinkdb create;
-              # create the cluster
-              if [ "$ordinal" -eq 0 ]; then
-                # the first pod is the seed node
-                echo "Starting seed node rethinkdb-0...";
-                exec rethinkdb --bind all --cache-size 4096;
-              else
-                # all other pods join the first pod
-                echo "Starting peer node with join rethinkdb-0...";
-                exec rethinkdb --bind all --cache-size 4096 --join rethinkdb-0.rethinkdb-internal;
-              fi
+              # join all other resolvable peers so any restarting node reconnects to the cluster
+              join_args=""
+              for i in 0 1 2; do
+                if [ "$i" -ne "$ordinal" ]; then
+                  peer="rethinkdb-$i.rethinkdb-internal"
+                  if getent hosts "$peer" >/dev/null 2>&1; then
+                    join_args="$join_args --join $peer:29015"
+                  fi
+                fi
+              done
+              exec rethinkdb --bind all --cache-size 4096 $join_args
+          readinessProbe:
+            tcpSocket:
+              port: 28015
           resources:
             requests:
               cpu: 500m
-              memory: 5Gi
+              memory: 6Gi
             limits:
               cpu: "2"
-              memory: 6Gi
+              memory: 8Gi
           volumeMounts:
             - name: data
               mountPath: /data
