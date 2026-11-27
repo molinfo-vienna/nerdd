@@ -17,6 +17,9 @@ spec:
     enableCrushUpdates: true
     replicated:
       size: 3
+    parameters:
+      compression_mode: aggressive
+      compression_algorithm: lz4
   # Keep RGW pools if this resource is removed. Bucket data must be removed
   # deliberately, rather than as a side effect of deleting the object store.
   preservePoolsOnDelete: true
