@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - crds.yaml
   - common.yaml
+  - csi-operator.yaml
   - operator.yaml
   - cluster.yaml
   - toolbox.yaml
